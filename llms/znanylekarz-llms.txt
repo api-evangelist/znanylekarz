@@ -1,0 +1,122 @@
+# ZnanyLekarz
+
+> ZnanyLekarz (znanylekarz.pl) is the Polish healthcare marketplace and practice-management
+> platform operated by Docplanner Group, listing over 146,000 doctors and giving medical practices
+> online booking, calendars, reminders, reviews, e-prescriptions, video consultations and payments.
+> Its public developer surface is the Docplanner Integrations API — an OAuth 2.0 REST API served on
+> the www.znanylekarz.pl host that lets medical-software vendors synchronise facilities, doctors,
+> addresses, services, insurance providers, calendars, breaks, slots and bookings, and receive
+> push or pull notifications when patients book, move, confirm or cancel visits.
+
+Generated 2026-09-05 by API Evangelist from the provider's own published surface.
+Method: generated. This file is NOT published by ZnanyLekarz; the provider serves no llms.txt.
+
+## What an agent needs to know first
+
+- Base URL (Poland): https://www.znanylekarz.pl/api/v3/integration
+  The published OpenAPI server is templated — https://www.{domain}/api/v3/integration — because one
+  contract serves thirteen Docplanner marketplaces. The specification's own locale table maps
+  Poland to znanylekarz.pl. HTTPS is mandatory on every request.
+- Auth: OAuth 2.0 client_credentials, scope `integration`, tokens valid 3600 seconds.
+  Token endpoint: https://www.znanylekarz.pl/oauth/v2/token (note: SSO is v2 while the API is v3).
+- ACCESS IS GATED. The documentation is fully public; the credentials are not. The API is
+  "exclusively available to medical software providers" and credentials are issued only after a
+  sandbox request, a kick-off meeting, acceptance testing and production approval. An unauthenticated
+  call returns 401 {"message":"Authentication credentials could not be found."}
+- THIS IS A LIVE CLINICAL SCHEDULING SURFACE. Writes create, move and cancel real patient
+  appointments. There is NO idempotency mechanism and NO dry-run mode. A blind retry of bookSlot,
+  moveBooking or replaceSlots can duplicate or destroy a real appointment.
+
+## Specifications
+
+- [OpenAPI 3.0.3 (v1.14.0)](openapi/znanylekarz-integrations-api.yml): 32 paths, 44 operations,
+  82 schemas, 166 named examples, 17 typed event callbacks.
+- [Original harvested spec](openapi/_original/znanylekarz-integrations-api-openapi.json)
+- [API Evangelist overlay](overlays/znanylekarz-integrations-api-overlay.yaml): adds the resolved
+  Polish server and the operation summaries the contract omits.
+- [Postman collection](postman/znanylekarz-integrations-api.postman_collection.json)
+
+## Documentation
+
+- API reference (Redoc): https://integrations.docplanner.com/docs/
+- Guide: https://integrations.docplanner.com/guide/
+- Integration process / getting started: https://integrations.docplanner.com/guide/integration-process.html
+- Authorization: https://integrations.docplanner.com/guide/fundamentals/authorization.html
+- Errors: https://integrations.docplanner.com/guide/fundamentals/errors.html
+- Extensions (the `with` parameter): https://integrations.docplanner.com/guide/fundamentals/extensions.html
+- Rate limits: https://integrations.docplanner.com/guide/fundamentals/rate-limits.html
+- Resources: https://integrations.docplanner.com/guide/api-objects/resources.html
+- Push vs pull callbacks: https://integrations.docplanner.com/guide/callbacks/push-vs-pull.html
+- NFZ public healthcare (Poland): https://integrations.docplanner.com/guide/api-objects/public-healthcare-nfz-poland.html
+- Changelog: https://integrations.docplanner.com/guide/changelog/
+
+## Operations by area
+
+- Facilities: getFacilities, getFacility
+- Doctors: getDoctors, getDoctor
+- Addresses: getAddresses, getAddress, updateAddress, removeAddressIntegration
+- Services: getServices, getAddressServices, getAddressService, addAddressService,
+  updateAddressService, deleteAddressService
+- Insurances: getInsuranceProviders, getInsurancePlans, getAddressInsuranceProviders,
+  addAddressInsuranceProvider, updateOrCreateAddressInsuranceProvider, deleteAddressInsuranceProvider
+- Calendars: getCalendar, enableCalendar, disableCalendar
+- Calendar breaks: getCalendarBreaks, getCalendarBreak, addCalendarBreak, moveCalendarBreak,
+  deleteCalendarBreak
+- Slots: getSlots, replaceSlots, bookSlot, deleteSlots
+- Bookings: getBookings, getBooking, cancelBooking, moveBooking, confirmBooking, requestOpinion
+- Patient presence: markPatientPresence, markPatientAbsence
+- Notifications: Pull Notification, Pull Multiple Notification, Release Notifications
+
+## Runtime semantics
+
+- Pagination is OPT-IN: `page` and `limit` (default 100). Omit `page` and the collection comes back
+  unpaginated. Responses are `{"_items": [...]}` with no total, no cursor and no Link header.
+- Field expansion uses `with` — closed enums per operation, e.g. `facility.doctors`,
+  `doctor.addresses`, `booking.patient`, `slot.services`. These widen the payload; they do not
+  grant permission.
+- Errors: application/vnd.error+docplanner+json carrying {"errors": [], "message": "..."}.
+  Not RFC 9457. No machine-readable error code.
+- Rate limits: X-RateLimit-Limit / -Reset / -Used / -Remaining, 429 on exhaustion. The numeric
+  ceilings are per-client and not published. Missing headers mean limiting is disabled.
+  POST /notifications/release is hard-limited to 1 request per hour with Retry-After.
+- getSlots accepts a maximum date range of 180 days; wider returns 400.
+
+## Events
+
+17 typed callbacks, delivered by push (retried after 5 and 10 minutes, replayable via
+POST /notifications/release for 14 days) or pulled FIFO from /notifications (expiring after 72
+hours). Two are BLOCKING — `slot-booking` and `booking-moving` — where a non-2xx from your endpoint
+denies the patient's booking or move. Source IPs are published as machine-readable JSON at
+https://www.znanylekarz.pl/public/docs/public-ips.json
+
+## Client libraries
+
+- PHP (official, current): composer require docplanner/integrations-api-sdk-php — v1.14.0,
+  released 2026-08-26, tracking the API version exactly.
+- .NET (official): Integrations.Api.Sdk, distributed only from a private Docplanner Azure DevOps
+  Artifacts feed — not on nuget.org, no public version metadata.
+- The legacy DocPlannerSDK on GitHub is deprecated by its own README.
+
+## Not published
+
+- No MCP server, no A2A agent card, no llms.txt, no GraphQL, no gRPC, no SOAP/WSDL, no AsyncAPI.
+- No OpenID Connect or OAuth authorization-server metadata document; the token endpoint is
+  documented only inside the OpenAPI securityScheme.
+- No /.well-known/api-catalog. The only well-known document served is a minimal security.txt
+  (Contact: mailto:bugreporting@docplanner.com), with no Expires field.
+- No idempotency keys, no dry-run, no request-id header, no deprecation policy, no SLA.
+- No security certification or audit report is published; trust.docplanner.com is a content-
+  moderation transparency report, not a security trust center.
+
+## Company
+
+- Website: https://www.znanylekarz.pl/
+- Pricing (practitioner plans, PLN/month + VAT): https://pro.znanylekarz.pl/cennik/znanylekarz-dla-lekarzy
+- Sign up: https://www.znanylekarz.pl/rejestracja-wybor
+- Support: https://help.docplanner.com/ · integrations@docplanner.com for integrations
+- Status: https://status.docplanner.com/
+- Terms: https://www.znanylekarz.pl/regulamin · Privacy: https://www.znanylekarz.pl/prywatnosc
+- GitHub: https://github.com/DocPlanner
+- Parent: Docplanner Group. Sibling locales run the SAME contract on their own hosts —
+  doctoralia.es/.mx/.com.br/.cl/.co/.pt, miodottore.it, jameda.de, doktortakvimi.com,
+  znamylekar.cz, doctoraliar.com and doctoralia.pe.

@@ -1,0 +1,81 @@
+generated: '2026-09-05'
+method: searched
+source: https://integrations.docplanner.com/guide/
+versioning:
+  scheme: uri-path major + semantic document version
+  uri_version: v3
+  current_document_version: 1.14.0
+  sso_version: v2
+  documented_versions: 70
+  breaking_major_declared: false
+  note: >-
+    70 versions are documented in the contract's own x-changelog, all in the 1.x line. The API
+    generation in the URI (v3) has not moved across any of them, and the changelog records only
+    additive changes, clarifications and bug fixes — new optional fields, new response extensions,
+    new endpoints. No breaking change is announced in any entry.
+  source: openapi/znanylekarz-integrations-api.yml
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: 0
+  note: >-
+    No deprecation policy, notice period or sunset commitment is published anywhere on the
+    developer surface, and no operation, parameter or schema in the OpenAPI carries
+    `deprecated: true`. RFC 8594 Sunset and Deprecation headers are not used. The only deprecation
+    signal in the estate is outside the contract: the legacy DocPlannerSDK repository titles itself
+    "(deprecated, new api: ...)" in its README, which is a library deprecation, not an API one.
+    No Deprecation pointer is emitted in apis.yml — there is no policy to point at.
+status_page:
+  published: true
+  url: https://status.docplanner.com/
+  scope: Docplanner Group (covers the ZnanyLekarz locale)
+  probed: '2026-09-05'
+  http_status: 200
+  note: >-
+    Group-level status page. A ZnanyLekarz-branded host, status.znanylekarz.pl, resolves but
+    returned 502 when probed on 2026-09-05 — recorded here so the dead branded host is not later
+    mistaken for a second status surface.
+  evidence:
+  - url: https://status.docplanner.com/
+    status: 200
+  - url: https://status.znanylekarz.pl/
+    status: 502
+sla:
+  published: false
+  note: >-
+    No uptime commitment, latency target or credit schedule is published on the public developer
+    surface. Integration terms are settled in the partner onboarding conversation.
+support:
+  channels:
+  - kind: help-center
+    url: https://help.docplanner.com/
+  - kind: email
+    address: integrations@docplanner.com
+    scope: integration partners, sandbox and production credentials, rate-limit increases
+  - kind: email
+    address: bugreporting@docplanner.com
+    scope: security vulnerability reports (from /.well-known/security.txt)
+onboarding:
+  gated: true
+  audience: medical software providers
+  stages:
+  - Request sandbox access via the form on the Docplanner homepage
+  - Install a client library and make test API calls against the sandbox
+  - Kick-off meeting with a Docplanner specialist (integrations@docplanner.com)
+  - Development and implementation
+  - Acceptance testing
+  - Production activation — credentials released via the clinic's Customer Success specialist, or
+    to the partner on emailed client approval
+  - Ongoing blackbox testing
+  note: >-
+    "Only integrations with all required methods implemented receive production approval." The
+    documentation is fully public and machine-readable; the credentials are not.
+  source: https://integrations.docplanner.com/guide/integration-process.html
+changelog:
+  published: true
+  location: >-
+    Both a rendered page at https://integrations.docplanner.com/guide/changelog/ and, more usefully,
+    an x-changelog extension inside the OpenAPI info object carrying all 70 versions.
+  see_also: changelog/znanylekarz-changelog.yml

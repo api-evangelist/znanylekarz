@@ -1,0 +1,27 @@
+generated: '2026-09-05'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.znanylekarz.pl
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan 12 23:59:59 2027 GMT
+  hsts: false
+- host: integrations.docplanner.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan 13 23:59:59 2027 GMT
+  hsts: false
+domains:
+- domain: znanylekarz.pl
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine
+- domain: docplanner.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine

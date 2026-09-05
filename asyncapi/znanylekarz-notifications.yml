@@ -1,0 +1,163 @@
+generated: '2026-09-05'
+method: derived
+source: openapi/znanylekarz-integrations-api.yml
+docs: https://integrations.docplanner.com/guide/callbacks/push-vs-pull.html
+type: webhooks
+note: >-
+  ZnanyLekarz publishes NO AsyncAPI document. It does publish a complete, first-class event
+  surface, and unusually it publishes it INSIDE the OpenAPI: the POST /{client-endpoint-url}
+  operation carries 17 OpenAPI 3.0 `callbacks` entries, each with a named event key, a summary,
+  a $ref'd notification schema and documented response semantics. This artifact is that catalog,
+  derived verbatim from those callback definitions plus the push-vs-pull guide. Nothing here is
+  authored — every event name, schema name and response code is read out of the contract.
+delivery:
+  modes:
+  - mode: push
+    description: >-
+      Docplanner POSTs event data to a client-supplied endpoint URL in real time. "Regardless of
+      the response status (500, 200, 400) from the client endpoint, the events will be pushed
+      only once" for ordinary events; failed pushes are retried twice more, after 5 and 10 minutes.
+    retries: 2
+    retry_schedule: [5 minutes, 10 minutes]
+    recovery: POST /notifications/release
+    recovery_limit: 1 request per hour
+    retention: Failed notifications are permanently deleted 14 days after creation.
+  - mode: pull
+    description: >-
+      The client polls GET /notifications for the earliest unpulled notification (FIFO, one per
+      request), or GET /notifications/multiple for up to 100 at a time with a remaining count.
+    endpoints:
+    - GET /notifications
+    - GET /notifications/multiple
+    - POST /notifications/release
+    retention: Notifications not pulled within 72 hours are marked expired and deleted.
+    content_type: application/vnd.docplanner+json; charset=UTF-8
+  both_supported: true
+  transport: HTTPS POST from a single Docplanner IP address
+  ip_allowlist: https://www.znanylekarz.pl/public/docs/public-ips.json
+  ip_allowlist_note: >-
+    Machine-readable IP allowlist served per locale at /public/docs/public-ips.json (HTTP 200,
+    application/json, an "API" key holding the source addresses) — the templated form
+    https://www.{domain}/public/docs/public-ips.json is referenced from the contract itself.
+signature_verification:
+  supported: false
+  note: >-
+    No webhook signing secret, HMAC header or message-signature scheme is documented. Receiver
+    authenticity rests on the published source-IP allowlist alone. Recorded as a gap, not invented.
+event_count: 17
+blocking_events: 2
+events:
+- event: slot-booking
+  summary: Slot booking
+  schema: SlotBookingNotification
+  optional: true
+  blocking: true
+  description: >-
+    Sent before a patient booking is committed. A 2xx from the partner approves the booking;
+    anything other than 2xx denies it. Enabled on request.
+  responses: ['200', '400', '500']
+- event: slot-booked
+  summary: Slot booked
+  schema: SlotBookedNotification
+  optional: false
+  blocking: false
+  description: Patient booked a visit, or the doctor booked it from their calendar.
+  responses: ['200']
+- event: booking-canceled
+  summary: Booking canceled
+  schema: BookingCanceledNotification
+  optional: false
+  blocking: false
+  responses: ['200']
+- event: booking-moved
+  summary: Booking moved
+  schema: BookingMovedNotification
+  optional: false
+  blocking: false
+  responses: ['200']
+- event: booking-moving
+  summary: Booking moving
+  schema: BookingMovingNotification
+  optional: true
+  blocking: true
+  description: Real-time pre-move check; non-2xx rejects the move.
+  responses: ['200', '400', '500']
+- event: booking-confirmed
+  summary: Booking confirmed
+  schema: BookingConfirmedNotification
+  optional: true
+  blocking: false
+  responses: ['200']
+- event: booking-payment-status-changed
+  summary: Booking payment status changed
+  schema: BookingPaymentStatusChangedNotification
+  optional: true
+  blocking: false
+  responses: ['200']
+- event: break-created
+  summary: Break created
+  schema: BreakCreatedNotification
+  optional: true
+  blocking: false
+  responses: ['200']
+- event: break-removed
+  summary: Break removed
+  schema: BreakRemovedNotification
+  optional: true
+  blocking: false
+  responses: ['200']
+- event: break-moved
+  summary: Break moved
+  schema: BreakMovedNotification
+  optional: true
+  blocking: false
+  responses: ['200']
+- event: presence-marked
+  summary: Presence marked
+  schema: PresenceMarkedNotification
+  optional: false
+  blocking: false
+  responses: ['200']
+- event: address-service-created
+  summary: Address service created
+  schema: AddressServiceCreatedNotification
+  optional: true
+  blocking: false
+  responses: ['200']
+- event: address-service-deleted
+  summary: Address service deleted
+  schema: AddressServiceDeletedNotification
+  optional: true
+  blocking: false
+  responses: ['200']
+- event: address-service-changed
+  summary: Address service changed
+  schema: AddressServiceChangedNotification
+  optional: true
+  blocking: false
+  responses: ['200']
+- event: address-commercial-type-changed
+  summary: Address commercial type changed
+  schema: AddressCommercialTypeChangedNotification
+  optional: true
+  blocking: false
+  responses: ['200']
+- event: address-assigned
+  summary: Address assigned
+  schema: AddressAssignedNotification
+  optional: true
+  blocking: false
+  availability: Docplanner PMS clients only
+  responses: ['200']
+- event: address-unassigned
+  summary: Address unassigned
+  schema: AddressUnassignedNotification
+  optional: true
+  blocking: false
+  availability: Docplanner PMS clients only
+  responses: ['200']
+asyncapi_published: false
+asyncapi_note: >-
+  No AsyncAPI document is published on any ZnanyLekarz or Docplanner host. None is generated here:
+  the callback definitions are the provider's own event contract and are already machine-readable
+  inside the OpenAPI, so a derived AsyncAPI would add a second, weaker copy rather than a finding.

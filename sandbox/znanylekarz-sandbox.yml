@@ -1,0 +1,65 @@
+generated: '2026-09-05'
+method: searched
+source: https://integrations.docplanner.com/guide/integration-process.html
+note: >-
+  A real sandbox exists and is the FIRST step of the documented integration process, not an
+  afterthought. It is a separate credentialed tenant with its own API keys and seeded test data,
+  not a test-mode flag on the production key. No test values are published: there are no public
+  test client IDs, no fixed test facility or doctor identifiers, and no magic identifiers of the
+  kind payments or comms APIs publish. Everything below is what the provider states; nothing is
+  invented, and no placeholder credential is recorded because none is published.
+available: true
+model: separate-tenant
+test_vs_live:
+  distinction: separate credential sets
+  key_prefixes: null
+  key_prefix_note: >-
+    No key-prefix convention is documented — sandbox and production credentials are not
+    distinguishable by their shape, only by which set you were issued. Guidance is procedural:
+    "Always use your sandbox API keys for testing and development to avoid affecting live
+    customer data."
+  separate_host: false
+  host_note: >-
+    No sandbox hostname is published. The locale host (www.znanylekarz.pl) is the documented base
+    for both; the environment is selected by credential, which is a footgun worth noting — a
+    production key against the same URL writes to live clinic calendars.
+access:
+  gated: true
+  audience: medical software providers
+  request_method: Form on the Docplanner homepage
+  contact: integrations@docplanner.com
+  provisioning: >-
+    "Sandbox access includes a sample API client along with test clinic and doctor profiles."
+  followed_by: >-
+    A kick-off meeting with a Docplanner specialist to organise the project plan.
+seeded_fixtures:
+- kind: api-client
+  description: A sample API client is provisioned with sandbox access.
+  values_published: false
+- kind: facility
+  description: Test clinic profiles.
+  values_published: false
+- kind: doctor
+  description: Test doctor profiles.
+  values_published: false
+test_data:
+  published_values: false
+  test_cards: null
+  magic_identifiers: null
+  time_simulation: null
+  note: >-
+    No test cards, magic phone numbers, test national identification numbers, test clocks or
+    fixture-trigger tooling are documented, even though the production API carries a payments
+    surface (visit_payment, visit_payment_status, booking-payment-status-changed) and collects
+    patient NINs. A partner cannot rehearse a payment-status transition from published material.
+acceptance:
+  stage: Acceptance testing precedes production activation.
+  requirement: >-
+    "Only integrations with all required methods implemented receive production approval."
+  ongoing: Blackbox testing continues after go-live.
+console:
+  interactive_try_it: false
+  note: >-
+    The reference at integrations.docplanner.com/docs/ is Redoc — read-only. There is no in-browser
+    request console. The published Postman collection is the intended hands-on surface, and it
+    requires the integrator to set the baseURL variable to their locale domain.

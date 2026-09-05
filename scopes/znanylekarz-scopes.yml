@@ -1,0 +1,66 @@
+generated: '2026-09-05'
+method: searched
+source: https://integrations.docplanner.com/guide/fundamentals/authorization.html
+schemes:
+- name: oauth2
+  source: openapi/znanylekarz-integrations-api.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://www.{domain}/oauth/v2/token
+  description: "The API utilizes the industry-standard [OAuth 2.0](https://tools.ietf.org/html/rfc6749)\
+    \ protocol.\n\nAll requests to our API must be authenticated and must include a valid access token.\n\
+    \n`NOTE! Our SSO Api version is v2 while our Integration Api version is v3`\n\nYou can get a token\
+    \ for testing purposes with cURL\n\n```\ncurl -u {client_id}:{client_secret} https://www.{domain}/oauth/v2/token\
+    \ -d 'grant_type=client_credentials&scope=integration'\n```\n\nA response example you can expect\n\
+    \n```\n{\n    \"access_token\": \"03807cb390319329bdf6c777d4dfae9c0d3b3c35\",\n    \"expires_in\"\
+    : 3600,\n    \"token_type\": \"bearer\",\n    \"scope\": null\n}\n```\n\nAnd then with every request\
+    \ in the `request header` you should add your bearer token like so:\n\n```\nAuthorization: Bearer\
+    \ {access_token}\n```"
+scopes:
+- scope: integration
+  description: API integration
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/znanylekarz-integrations-api.yml
+docs: https://integrations.docplanner.com/guide/fundamentals/authorization.html
+derived_from: openapi/znanylekarz-integrations-api.yml
+note: 'The OAuth surface is deliberately flat: ONE scope, `integration`, requested at token exchange,
+  granting the whole API. There is no read/write split, no per-resource scope and no least-privilege story
+  — a token that can read a doctor''s calendar can also cancel their patients'' appointments. Authorization
+  is instead enforced out-of-band, by which facilities the API client is provisioned for (403 outside
+  that estate). Searched the docs for a scope or permissions reference page; none exists beyond the single
+  scope named in the token example.'
+scope_count: 1
+granularity: all-or-nothing
+least_privilege_supported: false
+authorization_model: Estate-based rather than scope-based. Each API client is provisioned against specific
+  facilities; operations on a facility, doctor or address outside that estate return 403.
+response_extensions_are_not_scopes:
+  note: The `with` query parameter values in this API are named like scopes — booking.patient, doctor.addresses,
+    address_service.public_insurance_flow — and the OpenAPI even calls their enum schemas *Scopes. They
+    are NOT OAuth scopes. They widen the response payload; they do not grant permission, and they are
+    not presented at the token endpoint. Recorded here so the naming does not later get mistaken for a
+    scope catalog.
+  documented_in: conventions/znanylekarz-conventions.yml (field_expansion)
+  docs: https://integrations.docplanner.com/guide/fundamentals/extensions.html
+  values:
+  - facility.doctors
+  - doctor.profile_url
+  - doctor.specializations
+  - doctor.addresses
+  - doctor.license_numbers
+  - address.booking_extra_fields
+  - address.online_only
+  - address.visit_payment
+  - address.commercial_type
+  - address.insurance_support
+  - address_service.allowed_patients
+  - address_service.custom_name
+  - address_service.public_insurance_flow
+  - booking.patient
+  - booking.address_service
+  - booking.presence
+  - booking.moving
+  - services.only_diagnostics
+  - slot.services

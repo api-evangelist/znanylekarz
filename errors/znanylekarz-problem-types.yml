@@ -1,0 +1,132 @@
+generated: '2026-09-05'
+method: searched
+source: https://integrations.docplanner.com/guide/fundamentals/errors.html
+derived_from: openapi/znanylekarz-integrations-api.yml
+format: vendor
+rfc9457: false
+note: >-
+  The API does not use RFC 9457 problem+json. It returns a custom vendor media type,
+  application/vnd.error+docplanner+json, wrapping a two-field envelope. There is no machine-readable
+  error identifier in that envelope — no `type` URI, no `code`, no `error` slug — so a client
+  branches on HTTP status plus, at best, string-matching `message`. The one place a numeric code
+  appears is the real-time booking-denial flow, which is the partner's own response back to
+  Docplanner rather than a Docplanner error. Status meanings are taken verbatim from the errors
+  guide; the per-operation status inventory is derived from the OpenAPI responses.
+envelope:
+  content_type: application/vnd.error+docplanner+json
+  schema:
+    errors:
+      type: array
+      items: string
+    message:
+      type: string
+  example: '{"errors": [], "message": "Object not found"}'
+  machine_readable_code: false
+realtime_denial_envelope:
+  content_type: application/json
+  schema:
+    error_code:
+      type: integer
+  example: '{"error_code": 1}'
+  direction: partner -> Docplanner
+  note: >-
+    Returned by the PARTNER's endpoint on a slot-booking or booking-moving callback to deny the
+    booking with a custom message shown to the patient.
+  docs: https://integrations.docplanner.com/guide/callbacks/real-time-requests.html
+status_codes:
+- status: 200
+  title: Success
+  meaning: The request was processed successfully.
+- status: 201
+  title: Created
+  meaning: A new resource has been successfully created.
+- status: 202
+  title: Accepted
+  meaning: Accepted for asynchronous processing. Returned by removeAddressIntegration.
+- status: 204
+  title: No Content
+  meaning: The request was successful, but there's no content in the response.
+- status: 400
+  title: Bad Request
+  meaning: The request was malformed or contained invalid data.
+  remediation: >-
+    Validate the payload against the schema. Known concrete causes documented in the changelog:
+    a price with more than 2 decimal places (1.12.0), and a getSlots date range exceeding 180
+    days (1.9.3).
+- status: 401
+  title: Unauthorized
+  meaning: Request failed due to invalid or missing authentication credentials.
+  remediation: >-
+    Re-issue a client_credentials token at https://www.znanylekarz.pl/oauth/v2/token; tokens
+    expire after 3600 seconds.
+  observed: >-
+    Probed 2026-09-05 — GET https://www.znanylekarz.pl/api/v3/integration/facilities with no
+    credentials returned 401 with body {"message":"Authentication credentials could not be found."}
+- status: 403
+  title: Forbidden
+  meaning: Access to the requested resource or action is denied.
+  remediation: >-
+    The facility, doctor or address is outside the API client's granted estate, the client is not
+    enabled, or the operation requires a communication model the client does not use (for example
+    Release Notifications is 403 for pull-only clients).
+- status: 404
+  title: Not Found
+  meaning: The requested resource does not exist (possibly deleted).
+- status: 405
+  title: Method Not Allowed
+  meaning: The HTTP method used is not supported for this endpoint.
+- status: 409
+  title: Conflict
+  meaning: The request conflicts with the current state of the server (e.g. duplicate resource).
+  remediation: >-
+    Read the current state before retrying. Concrete cases in the contract: a calendar break with
+    an identical timeframe already exists, a service is already assigned to the address, the
+    calendar is already enabled or disabled, or the booking is already confirmed.
+- status: 422
+  title: Unprocessable Entity
+  meaning: >-
+    Semantically valid but rejected by business rules. Not listed on the errors guide page but
+    present on six operations in the contract.
+  remediation: >-
+    Documented case (changelog 1.13.0): moveBooking returns 422 when the booking still holds money
+    and the target address is billed through a different payment account — "Cancel the booking and
+    create a new one instead."
+- status: 429
+  title: Too Many Requests
+  meaning: Rate limit exceeded.
+  remediation: >-
+    Back off exponentially and read X-RateLimit-Reset. On POST /notifications/release a Retry-After
+    header carries the seconds remaining against the 1-per-hour limit.
+- status: 500
+  title: Server Error
+  meaning: An error occurred on Docplanner's side (should be rare).
+- status: 502
+  title: Server Error
+  meaning: An error occurred on Docplanner's side (should be rare).
+- status: 503
+  title: Server Error
+  meaning: An error occurred on Docplanner's side (should be rare).
+- status: 504
+  title: Server Error
+  meaning: An error occurred on Docplanner's side (should be rare).
+documented_error_examples:
+  count: 166
+  note: >-
+    The spec ships 166 named components.examples, a large share of them error bodies keyed by
+    cause (ObjectNotFound, CalendarNotFoundForAddress, AddressServiceValidationError,
+    AddAddressInsuranceValidationError, DeleteAddressInsuranceValidationError,
+    NotificationNotFound, NotificationsReleaseForbiddenError, and others). These carry the
+    human-readable message strings a client would otherwise have to discover at runtime.
+  samples:
+  - name: ObjectNotFound
+    body: '{"errors": [], "message": "Object not found"}'
+  - name: CalendarNotFoundForAddress
+    body: '{"errors": [], "message": "Calendar not found for this address"}'
+  - name: AddressServiceValidationError
+    body: '{"errors": [], "message": "Validation error message, e.g.: Invalid price value for service. Price should be either null or integer greater or equal 0."}'
+  - name: AddAddressInsuranceValidationError
+    body: '{"errors": [], "message": "Validation error message, e.g.: Insurance provider with given ID is already assigned to this address."}'
+gaps:
+- No error type URI or stable error code in the general envelope.
+- No documented error-code registry beyond HTTP status semantics.
+- 422 is used by the contract but is absent from the published status table in the errors guide.

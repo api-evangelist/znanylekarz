@@ -1,0 +1,158 @@
+generated: '2026-09-05'
+method: derived
+source: openapi/znanylekarz-integrations-api.yml
+docs: https://integrations.docplanner.com/guide/api-objects/resources.html
+note: >-
+  Entity graph derived from the 82 components.schemas and the URI hierarchy, cross-checked against
+  the Resources guide. The API's identity model is strictly hierarchical and path-borne: nearly
+  every operation is scoped
+  /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/..., so ADDRESS — a doctor's
+  presence at one location — is the real anchor entity, not the doctor. The guide warns that
+  identifiers can change through actions taken either in the API or in the Docplanner interface,
+  so a client must treat them as mutable and re-read rather than cache indefinitely.
+identity:
+  id_format: opaque
+  id_prefixes: none
+  note: >-
+    No typed or prefixed identifiers. IDs are plain values scoped by their position in the path;
+    an address_id is only meaningful under its facility_id and doctor_id. There is no global
+    lookup by id and no id-prefix scheme to tell entity types apart out of context.
+  mutability: >-
+    "identifiers can change through actions in the API or the Docplanner interface" — the docs
+    explicitly decline to guarantee identifier stability.
+anchor_entity: Address
+entities:
+- name: Facility
+  description: A clinic profile. The top of the hierarchy and the unit of API authorization.
+  fields: [id, name, doctors]
+  operations: [getFacilities, getFacility]
+- name: Doctor
+  description: >-
+    A healthcare professional at a facility. Only commercial (paid) Docplanner clients linked to
+    the facility are returned by the API.
+  fields: [id, name, surname, addresses, specialization, license_numbers]
+  operations: [getDoctors, getDoctor]
+- name: Address
+  description: >-
+    A doctor's presence at one location. The anchor for bookings, slots, services, insurances and
+    calendar. One doctor may have many addresses.
+  fields: [id, name, city_name, post_code, street, is_online_only, visit_payment, booking_extra_fields, commercial_type, insurance_support]
+  operations: [getAddresses, getAddress, updateAddress, removeAddressIntegration]
+- name: Service
+  description: A dictionary (standardised, reusable) visit type shared across the marketplace.
+  fields: [id, name]
+  operations: [getServices]
+- name: AddressService
+  description: A visit type as offered at one address — the priced, durationed, bookable unit.
+  fields: [id, name, price, is_price_from, is_default, service_id, description, duration, is_visible, allowed_patients, custom_name]
+  operations: [getAddressServices, getAddressService, addAddressService, updateAddressService, deleteAddressService]
+- name: Calendar
+  description: >-
+    Online booking availability for an address. Has no identifier of its own — it is created
+    automatically when slots are added or enableCalendar is invoked.
+  fields: [status]
+  operations: [getCalendar, enableCalendar, disableCalendar]
+- name: CalendarBreak
+  description: A period that hides slots (lunch, holiday). Breaks may overlap; duplicates are 409.
+  fields: [id, since, till, description]
+  operations: [getCalendarBreaks, getCalendarBreak, addCalendarBreak, moveCalendarBreak, deleteCalendarBreak]
+- name: Slot
+  description: >-
+    A bookable time interval. Clients submit work periods with durations rather than individual
+    slots; Docplanner computes the segmentation.
+  fields: [start, address_services]
+  operations: [getSlots, replaceSlots, bookSlot, deleteSlots]
+- name: Booking
+  description: An appointment, created by a patient, the doctor, or an external system.
+  fields: [id, status, start_at, end_at, duration, booked_by, canceled_by, booked_at, canceled_at, moving, patient, address_service, comment, presence, insurance, visit_payment, visit_payment_status, videocall_url]
+  operations: [getBookings, getBooking, cancelBooking, moveBooking, confirmBooking, markPatientPresence, markPatientAbsence]
+- name: BookingPatient
+  description: >-
+    The patient on a booking. Carries directly identifying and special-category personal data
+    (name, email, phone, birth date, national identification number, gender, insurance number)
+    in an EU health context — the single most sensitive payload in this contract.
+  fields: [name, surname, email, phone, birth_date, nin, gender, is_returning, insurance_number]
+  pii: true
+  gdpr_special_category: true
+  exposed_via: booking.patient response extension on getBookings
+- name: InsuranceProvider
+  description: An insurer accepted at an address. Availability and semantics vary by locale.
+  fields: [insurance_provider_id, name]
+  operations: [getInsuranceProviders, getAddressInsuranceProviders, addAddressInsuranceProvider, updateOrCreateAddressInsuranceProvider, deleteAddressInsuranceProvider]
+- name: InsurancePlan
+  description: A plan under an insurance provider.
+  operations: [getInsurancePlans]
+- name: Specialization
+  description: A doctor's medical specialization; also filters the service dictionary.
+- name: LicenseNumber
+  description: A doctor's professional licence number (Polish PWZ and equivalents).
+- name: Notification
+  description: A queued event envelope — event name, payload, creation timestamp.
+  fields: [name, data, created_at]
+  operations: [Pull Notification, Pull Multiple Notification, Release Notifications]
+relationships:
+- from: Facility
+  to: Doctor
+  kind: has_many
+  via: facility_id (path) / facility.doctors response extension
+- from: Doctor
+  to: Address
+  kind: has_many
+  via: doctor_id (path) / doctor.addresses response extension
+- from: Doctor
+  to: Specialization
+  kind: has_many
+  via: doctor.specializations response extension
+- from: Doctor
+  to: LicenseNumber
+  kind: has_many
+  via: doctor.license_numbers response extension
+- from: Address
+  to: AddressService
+  kind: has_many
+  via: address_id (path)
+- from: AddressService
+  to: Service
+  kind: belongs_to
+  via: service_id
+- from: Address
+  to: Calendar
+  kind: has_one
+  via: address_id (path); no independent identifier
+- from: Address
+  to: CalendarBreak
+  kind: has_many
+  via: address_id (path)
+- from: Address
+  to: Slot
+  kind: has_many
+  via: address_id (path)
+- from: Slot
+  to: AddressService
+  kind: has_many
+  via: address_services / slot.services response extension
+- from: Address
+  to: Booking
+  kind: has_many
+  via: address_id (path)
+- from: Booking
+  to: BookingPatient
+  kind: has_one
+  via: patient (booking.patient response extension)
+- from: Booking
+  to: AddressService
+  kind: belongs_to
+  via: address_service (booking.address_service response extension)
+- from: Booking
+  to: Insurance
+  kind: has_one
+  via: insurance
+- from: Address
+  to: InsuranceProvider
+  kind: has_many
+  via: address_id (path)
+- from: InsuranceProvider
+  to: InsurancePlan
+  kind: has_many
+  via: insurance_provider_id (path)
+schema_count: 82

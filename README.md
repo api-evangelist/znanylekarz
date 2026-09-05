@@ -64,5 +64,31 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-ZnanyLekarz is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/znanylekarz_stock/
+ZnanyLekarz (znanylekarz.pl) is the Polish healthcare marketplace and practice-management platform
+operated by Docplanner Group, listing over 146,000 doctors and giving medical practices online
+booking, calendars, appointment reminders, patient reviews, e-prescriptions, video consultations and
+online payments. It is the founding brand of the Docplanner Group and the Polish locale of a
+marketplace that also trades as Doctoralia, MioDottore, Jameda, Doktor Takvimi and Znamylekar.
+
+## API surface
+
+The public developer surface is the **Docplanner Integrations API** — an OAuth 2.0 REST API
+(v1.14.0) served on the `www.znanylekarz.pl` host, for medical-software vendors synchronising
+facilities, doctors, addresses, services, insurance providers, calendars, breaks, slots and
+bookings, plus 17 typed push/pull event notifications.
+
+- Base URL (Poland): `https://www.znanylekarz.pl/api/v3/integration`
+- API reference: https://integrations.docplanner.com/docs/
+- Guide: https://integrations.docplanner.com/guide/
+
+The OpenAPI 3.0.3 contract is not served as a file at any conventional path — it is embedded in the
+`__redoc_state` of the Redoc reference page and was harvested from there verbatim. Ownership was
+confirmed from the specification itself rather than the fetch URL: its Fundamentals section maps the
+Poland locale to `znanylekarz.pl`, and an unauthenticated call to
+`https://www.znanylekarz.pl/api/v3/integration/facilities` returns HTTP 401.
+
+Documentation is fully public; **credentials are not** — access is described as "exclusively
+available to medical software providers" and is issued only after a sandbox request, a kick-off
+meeting, acceptance testing and production approval.
+
+- Harvest source: https://forgeglobal.com/znanylekarz_stock/

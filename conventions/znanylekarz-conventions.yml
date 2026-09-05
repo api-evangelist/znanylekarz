@@ -1,0 +1,260 @@
+generated: '2026-09-05'
+method: searched
+source: https://integrations.docplanner.com/guide/
+derived_from: openapi/znanylekarz-integrations-api.yml
+note: >-
+  Cross-cutting runtime semantics for the Docplanner Integrations API as served on
+  www.znanylekarz.pl. Read from the Fundamentals guide (authorization, errors, extensions, rate
+  limits) and derived from the OpenAPI where the guide is silent.
+auth:
+  style: oauth2-client-credentials
+  token_endpoint: https://www.{domain}/oauth/v2/token
+  token_endpoint_pl: https://www.znanylekarz.pl/oauth/v2/token
+  grant: client_credentials
+  scope: integration
+  token_lifetime_seconds: 3600
+  header: 'Authorization: Bearer {access_token}'
+  transport: HTTPS required — "Every request has to be made using HTTPS connection."
+  note: >-
+    Client credentials are exchanged with HTTP Basic (curl -u {client_id}:{client_secret}).
+    The SSO API is v2 while the Integration API is v3 — the docs call this out explicitly.
+  see_also: authentication/znanylekarz-authentication.yml
+idempotency:
+  supported: false
+  coverage: none
+  mechanism: null
+  header: null
+  retention: null
+  note: >-
+    No replay-protection mechanism exists. There is no Idempotency-Key header, no client-supplied
+    request identifier and no documented safe-retry contract anywhere in the guide or the OpenAPI,
+    across 15 mutating operations (POST/PUT/PATCH/DELETE). The only adjacent guarantee runs the
+    other way: for push notifications, "Regardless of the response status (500, 200, 400) from the
+    client endpoint, the events will be pushed only once" — at-most-once delivery outbound, which
+    is not idempotency inbound. Some duplicate writes are rejected by state rather than by a key:
+    addAddressService returns 409 on a duplicate, addCalendarBreak returns 409 when a break with
+    the same timeframe already exists, and enableCalendar/disableCalendar return 409 when the
+    calendar is already in the requested state. That is conflict detection on a natural key, not
+    an idempotency contract, and it does not cover bookSlot, moveBooking or replaceSlots.
+    No Idempotency pointer is emitted in apis.yml.
+  conflict_detection:
+    supported: true
+    status: 409
+    operations: [addAddressService, addCalendarBreak, enableCalendar, disableCalendar, moveBooking, confirmBooking]
+reversibility:
+  grade: documented
+  note: >-
+    Every destructive write on the booking and calendar surface has a named reversal operation in
+    the contract — cancel, move-back, delete, disable, mark-absent — so the reversal PATH is fully
+    documented. No reversal WINDOW is stated for any of them: the docs nowhere say how long a
+    booking may be cancelled or moved, so an agent cannot know before acting whether the action is
+    still takeable back an hour or a week later. Graded documented, not verified, on that basis.
+    The only stated windows in this API are on the outbound notification queue (14 days to
+    re-dispatch a failed push, 72 hours before an unpulled notification expires), which govern
+    event recovery rather than the reversal of a write, and are recorded as verified in their own
+    rows below without lifting the overall grade.
+  surfaces:
+  - write: bookSlot
+    operationId: bookSlot
+    reversal: cancelBooking
+    reversal_operationId: cancelBooking
+    window: null
+    grade: documented
+    note: >-
+      A booking can be cancelled at any time via DELETE .../bookings/{booking_id}. No cancellation
+      deadline is stated in the API docs, so no window is asserted here.
+  - write: moveBooking
+    operationId: moveBooking
+    reversal: moveBooking
+    reversal_operationId: moveBooking
+    window: null
+    grade: documented
+    note: >-
+      A move is reversed by moving back. The contract states one hard irreversibility: a booking
+      that still holds money cannot be moved to an address billed through a different payment
+      account and returns 422 — "Cancel the booking and create a new one instead." A payment that
+      was fully refunded or charged back holds no money and does not restrict the move.
+      (API changelog 1.13.0.)
+  - write: addCalendarBreak
+    operationId: addCalendarBreak
+    reversal: deleteCalendarBreak
+    reversal_operationId: deleteCalendarBreak
+    window: null
+    grade: documented
+    note: >-
+      Since 1.14.0, deleteCalendarBreak and moveCalendarBreak also remove or move the coupled
+      breaks created on the doctor's other addresses by apply_on_coupled_addresses.
+  - write: enableCalendar
+    operationId: enableCalendar
+    reversal: disableCalendar
+    reversal_operationId: disableCalendar
+    window: null
+    grade: documented
+  - write: addAddressService
+    operationId: addAddressService
+    reversal: deleteAddressService
+    reversal_operationId: deleteAddressService
+    window: null
+    grade: documented
+  - write: addAddressInsuranceProvider
+    operationId: addAddressInsuranceProvider
+    reversal: deleteAddressInsuranceProvider
+    reversal_operationId: deleteAddressInsuranceProvider
+    window: null
+    grade: documented
+  - write: markPatientPresence
+    operationId: markPatientPresence
+    reversal: markPatientAbsence
+    reversal_operationId: markPatientAbsence
+    window: null
+    grade: documented
+    note: A true toggle — the same path, POST to mark present and DELETE to mark absent.
+  - write: 'push notification delivery failure (outbound)'
+    operationId: Release Notifications
+    reversal: Release Notifications
+    reversal_operationId: Release Notifications
+    window: 14 days from notification creation
+    grade: verified
+    docs: https://integrations.docplanner.com/guide/callbacks/push-vs-pull.html
+    note: >-
+      "Failed notifications are permanently deleted 14 days after creation" — a re-dispatch of a
+      missed event is recoverable inside that window and irrecoverable outside it. The release
+      itself can be triggered only once every 60 minutes.
+  - write: 'pull notification queue (outbound)'
+    operationId: Pull Notification
+    reversal: null
+    window: 72 hours from notification creation
+    grade: verified
+    docs: https://integrations.docplanner.com/guide/callbacks/push-vs-pull.html
+    note: >-
+      "Notifications that are not pulled in 72 hours are marked as expired and deleted from the
+      system." An unread event is unrecoverable after 72 hours; there is no replay for it.
+  irreversible:
+  - operation: removeAddressIntegration
+    note: >-
+      DELETE .../addresses/{address_id}/integration detaches the address from the integration and
+      returns 202. No re-attach operation is published in the contract.
+  - operation: deleteSlots
+    note: >-
+      Deletes a day of slots. Slots can be re-published with replaceSlots, but any booking state
+      tied to the removed slots is not restored by the contract.
+dry_run:
+  supported: false
+  note: >-
+    No dry-run, preview, validate-only or simulate parameter exists on any operation. The closest
+    facility is the sandbox environment (see sandbox/znanylekarz-sandbox.yml), which is a separate
+    tenant with test clinics rather than a rehearsal mode on the production surface.
+pagination:
+  style: page-number
+  params:
+  - name: page
+    in: query
+    required: false
+    description: >-
+      "Page number to use for pagination. If not provided the pagination is not applied." —
+      pagination is OPT-IN, and omitting the parameter returns the unpaginated collection.
+  - name: limit
+    in: query
+    required: false
+    default: 100
+    description: >-
+      "Maximum number of items per page. If not provided the default value of 100 is applied if
+      pagination is used."
+  response_envelope: _items
+  response_note: >-
+    Collections are returned as an object with a single `_items` array (Facilities, Doctors,
+    Addresses, Services, Slots, Bookings, CalendarBreaks, InsuranceProviders all share this shape).
+    No total count, page count, next-cursor or Link header is returned, so a client cannot know it
+    has reached the last page except by receiving a short page.
+  cursor_support: false
+  separate_scheme:
+    endpoint: GET /notifications/multiple
+    param: limit
+    range: 1 to 100
+    default: 1
+    note: >-
+      The notification queue uses its own limit parameter and returns the count of remaining
+      notifications alongside the batch — the only collection in the API that reports a remainder.
+field_expansion:
+  supported: true
+  style: with-parameter
+  param: with
+  syntax: >-
+    A comma-separated array on the `with` query parameter; multiple parameters combined with `&`.
+    Docplanner calls these "extensions".
+  docs: https://integrations.docplanner.com/guide/fundamentals/extensions.html
+  purpose: >-
+    "Instead of multiple API calls, related data can be requested and returned alongside the
+    original resource, enhancing performance."
+  enumerated_in_spec: true
+  values:
+  - operation: getFacility
+    allowed: [facility.doctors]
+  - operation: getDoctors
+    allowed: [doctor.profile_url, doctor.specializations, doctor.license_numbers]
+  - operation: getDoctor
+    allowed: [doctor.profile_url, doctor.addresses, doctor.license_numbers, address.booking_extra_fields, address.online_only, address.visit_payment, address.commercial_type]
+  - operation: getAddress / getAddresses
+    allowed: [address.online_only, address.visit_payment, address.commercial_type, address.insurance_support]
+  - operation: getAddressService / getAddressServices
+    allowed: [address_service.allowed_patients, address_service.custom_name, address_service.public_insurance_flow]
+  - operation: getBookings
+    allowed: [booking.patient, booking.address_service, booking.presence, address_service.public_insurance_flow]
+  - operation: getBooking
+    allowed: [booking.moving, address_service.public_insurance_flow]
+  - operation: moveBooking
+    allowed: [address_service.public_insurance_flow]
+  - operation: getServices
+    allowed: [services.only_diagnostics]
+  - operation: getSlots
+    allowed: [slot.services]
+  note: >-
+    These are response-shape extensions, not OAuth scopes — they widen the payload, they do not
+    grant permission. They are enumerated as closed enums in the OpenAPI components, which is why
+    this artifact can list them exhaustively rather than pointing at prose.
+sparse_fields:
+  supported: false
+metadata:
+  supported: false
+  note: No customer-defined metadata bag on any resource.
+request_id_tracing:
+  supported: false
+  note: >-
+    No request-id, correlation-id or trace header is documented on requests or responses. An
+    integrator has no published handle to quote back to support for a specific call.
+versioning:
+  style: uri-path
+  current: v3
+  path_segment: /api/v3/integration
+  spec_version: 1.14.0
+  note: >-
+    Two version numbers coexist and mean different things: the URI carries the major API
+    generation (v3, with SSO still on v2), while the OpenAPI info.version carries a semantic
+    document version (1.14.0) that increments with every additive change. All 70 documented
+    versions are 1.x — no breaking major has been declared on this contract.
+  see_also: changelog/znanylekarz-changelog.yml
+errors:
+  envelope: '{"errors": [], "message": "..."}'
+  content_type: application/vnd.error+docplanner+json
+  rfc9457: false
+  note: >-
+    A custom vendor error media type, not application/problem+json. `errors` is an array of
+    strings and `message` carries the human-readable text; there is no machine-readable error
+    code in the general envelope. The one exception is the real-time booking denial flow, which
+    uses application/json with a numeric {"error_code": 1} body.
+  see_also: errors/znanylekarz-problem-types.yml
+rate_limit_signaling:
+  headers: [X-RateLimit-Limit, X-RateLimit-Reset, X-RateLimit-Used, X-RateLimit-Remaining]
+  exhaustion_status: 429
+  retry_after: Documented only on POST /notifications/release.
+  see_also: rate-limits/znanylekarz-rate-limits.yml
+content_types:
+  request: application/json
+  response: application/vnd.docplanner+json; charset=UTF-8
+  error: application/vnd.error+docplanner+json
+  note: Vendor media types on both success and error responses.
+network:
+  ip_allowlist: https://www.znanylekarz.pl/public/docs/public-ips.json
+  note: >-
+    Docplanner publishes its outbound source IPs as machine-readable JSON per locale, for partners
+    who firewall their webhook receiver. Confirmed HTTP 200 application/json on 2026-09-05.

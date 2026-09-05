@@ -1,18 +1,65 @@
 aid: znanylekarz
 name: ZnanyLekarz
-description: 'ZnanyLekarz is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  ZnanyLekarz is the Polish healthcare marketplace and practice-management platform operated by
+  Docplanner Group, connecting patients with over 146,000 listed doctors and equipping medical
+  practices with online booking, calendar management, appointment reminders, patient reviews,
+  e-prescriptions, video consultations and online payments. ZnanyLekarz.pl is the founding brand
+  of the Docplanner Group and the Polish locale of the group's marketplace, which also trades as
+  Doctoralia, MioDottore, Jameda, Doktor Takvimi and Znamylekar. Its public developer surface is
+  the Docplanner Integrations API — an OAuth 2.0 REST API served on the www.znanylekarz.pl host
+  that lets medical-software vendors synchronise facilities, doctors, addresses, services,
+  insurance providers, calendars, breaks, slots and bookings, and receive push or pull event
+  notifications when patients book, move, confirm or cancel visits.
 url: https://raw.githubusercontent.com/api-evangelist/znanylekarz/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-parent: docplanner
 specificationVersion: '0.20'
 created: '2026-09-05'
 modified: '2026-09-05'
+image: https://platform.docplanner.com/img/pl/open-graph/og-v0.png
 tags:
 - Company
-apis: []
+- Healthcare
+- Health Tech
+- Appointments
+- Booking
+- Medical
+- Marketplace
+- Doctors
+- Scheduling
+- Poland
+- Practice Management
+- Telemedicine
+apis:
+- aid: znanylekarz:docplanner-integrations-api
+  name: Docplanner Integrations API
+  description: >-
+    OAuth 2.0 REST API (v1.14.0) for medical-software vendors integrating a practice-management
+    system with the ZnanyLekarz marketplace. 44 operations across facilities, doctors, addresses,
+    services, insurance providers, calendars, calendar breaks, slots, bookings and patient
+    presence, plus 17 push/pull event notification callbacks. The Polish locale resolves the
+    templated server host to www.znanylekarz.pl, as stated in the specification's own locale table.
+  humanURL: https://integrations.docplanner.com/docs/
+  image: https://platform.docplanner.com/img/pl/open-graph/og-v0.png
+  baseURL: https://www.znanylekarz.pl/api/v3/integration
+  tags:
+  - Booking
+  - Scheduling
+  - Healthcare
+  - Appointments
+  properties:
+  - type: OpenAPI
+    url: openapi/znanylekarz-integrations-api.yml
+  - type: Overlay
+    url: overlays/znanylekarz-integrations-api-overlay.yaml
+  - type: Postman
+    url: postman/znanylekarz-integrations-api.postman_collection.json
+  - type: Webhooks
+    url: asyncapi/znanylekarz-notifications.yml
+  - type: X-MCPServerCandidate
+    url: mcp/znanylekarz-mcp.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +67,85 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://forgeglobal.com/znanylekarz_stock/
+  url: https://www.znanylekarz.pl/
+- type: DeveloperPortal
+  url: https://integrations.docplanner.com/
+- type: Documentation
+  url: https://integrations.docplanner.com/guide/
+- type: APIReference
+  url: https://integrations.docplanner.com/docs/
+- type: GettingStarted
+  url: https://integrations.docplanner.com/guide/integration-process.html
+- type: Postman
+  url: https://www.postman.com/run-collection/7fd8db9bb1fd14e0f0f7
+- type: Support
+  url: https://help.docplanner.com/
+- type: Blog
+  url: https://www.znanylekarz.pl/blog/
+- type: GitHubOrganization
+  url: https://github.com/DocPlanner
+- type: Pricing
+  url: https://pro.znanylekarz.pl/cennik/znanylekarz-dla-lekarzy
+- type: SignUp
+  url: https://www.znanylekarz.pl/rejestracja-wybor
+- type: TermsOfService
+  url: https://www.znanylekarz.pl/regulamin
+- type: PrivacyPolicy
+  url: https://www.znanylekarz.pl/prywatnosc
+- type: StatusPage
+  url: https://status.docplanner.com/
+- type: Packages
+  url: packages/znanylekarz-packages.yml
+- type: SDKs
+  url: packages/znanylekarz-packages.yml
+- type: WellKnown
+  url: well-known/znanylekarz-well-known.yml
+- type: SecurityTxt
+  url: well-known/znanylekarz-security.txt
+- type: Security
+  url: security/znanylekarz-vulnerability-disclosure.yml
+- type: VulnerabilityDisclosure
+  url: security/znanylekarz-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/znanylekarz-domain-security.yml
+- type: Authentication
+  url: authentication/znanylekarz-authentication.yml
+- type: OAuthScopes
+  url: scopes/znanylekarz-scopes.yml
+- type: Conventions
+  url: conventions/znanylekarz-conventions.yml
+- type: ErrorCatalog
+  url: errors/znanylekarz-problem-types.yml
+- type: Conformance
+  url: conformance/znanylekarz-conformance.yml
+- type: Lifecycle
+  url: lifecycle/znanylekarz-lifecycle.yml
+- type: ChangeLog
+  url: changelog/znanylekarz-changelog.yml
+- type: DataModel
+  url: data-model/znanylekarz-data-model.yml
+- type: Sandbox
+  url: sandbox/znanylekarz-sandbox.yml
+- type: Examples
+  url: examples/znanylekarz-examples.yml
+- type: Plans
+  url: plans/znanylekarz-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/znanylekarz-rate-limits.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/znanylekarz-llms.txt
+x-enrichment:
+  date: '2026-09-05'
+  status: enriched
+  artifacts_added: 28
+  pass: local-v3
+  note: >-
+    Contract discovery hit on the second pass: the Docplanner Integrations API OpenAPI 3.0.3
+    (v1.14.0, 32 paths, 44 operations, 82 schemas, 166 examples, 17 typed callbacks) is not served
+    as a file anywhere — it is embedded in the __redoc_state of the Redoc docs page at
+    integrations.docplanner.com/docs/, and every conventional spec path on that host 404s.
+    Ownership confirmed from the spec itself, not from the fetch URL: its Fundamentals section maps
+    Poland -> znanylekarz.pl, and https://www.znanylekarz.pl/api/v3/integration/facilities returns
+    401 live. No MCP server, no agent card, no llms.txt, no AsyncAPI.

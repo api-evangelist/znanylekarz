@@ -1,0 +1,74 @@
+generated: '2026-09-05'
+method: searched
+source: https://integrations.docplanner.com/guide/fundamentals/rate-limits.html
+docs: https://integrations.docplanner.com/guide/fundamentals/rate-limits.html
+note: >-
+  The runtime signal is fully documented — four X-RateLimit-* response headers and a 429 on
+  exhaustion — but the numeric thresholds for the two general limiter levels are NOT published.
+  The page names an hourly request quota and a per-minute WRITE limit and then says limits "can be
+  increased on a client-specific basis", so the general ceiling is per-client and negotiated, not
+  a public number. Two operation-scoped numeric limits ARE published, inside the OpenAPI itself.
+  An agent can therefore read its remaining budget at runtime from the headers, but cannot know it
+  in advance from the docs.
+limit_count: 2
+headers:
+- name: X-RateLimit-Limit
+  meaning: Maximum number of requests allowed in the current time span.
+- name: X-RateLimit-Reset
+  meaning: Date and time when the rate limit will reset, formatted in ISO8601.
+- name: X-RateLimit-Used
+  meaning: Number of requests used within the current time span.
+- name: X-RateLimit-Remaining
+  meaning: Number of requests still available in the current time span.
+- name: Retry-After
+  meaning: >-
+    Seconds until the next call is available. Documented in the OpenAPI on the 429 response of
+    the Release Notifications operation only, not as a general limiter header.
+  scope: notifications/release
+exhaustion_status: 429
+absent_headers_meaning: >-
+  "If API responses lack rate limiter-specific headers, it indicates that rate limiting has been
+  disabled." — the docs treat missing headers as limiter-off, not as an unknown.
+rate_limits:
+- scope: per-api-client
+  window: hour
+  limit: null
+  applies_to: all requests
+  description: >-
+    "Hourly Request Quota: Limits the total number of requests your client can make in an hour."
+    No numeric value is published; raise requests go to integrations@docplanner.com.
+  source: https://integrations.docplanner.com/guide/fundamentals/rate-limits.html
+- scope: per-api-client
+  window: minute
+  limit: null
+  applies_to: WRITE operations (PUT, POST, DELETE)
+  description: >-
+    "Per-Minute WRITE Limit: Restricts the number of WRITE operations (PUT, POST, DELETE) per
+    minute." No numeric value is published.
+  source: https://integrations.docplanner.com/guide/fundamentals/rate-limits.html
+- scope: per-endpoint
+  operation: Release Notifications
+  path: POST /notifications/release
+  window: hour
+  limit: 1
+  status_on_exhaustion: 429
+  headers: [Retry-After]
+  description: >-
+    "You have reached the limit of 1 request per hour" — published verbatim in the OpenAPI 429
+    response for POST /notifications/release, with a Retry-After header carrying the seconds
+    until the next call is available.
+  source: openapi/znanylekarz-integrations-api.yml
+- scope: per-request
+  operation: getSlots
+  window: request
+  limit: 180
+  unit: days
+  status_on_exhaustion: 400
+  description: >-
+    "Adding maximum date range validation of 180 days to getSlots endpoint. Requests exceeding
+    this range will return a 400 Bad Request error" (API changelog 1.9.3). A payload ceiling
+    rather than a call-frequency limit, recorded here because it constrains request planning.
+  source: openapi/znanylekarz-integrations-api.yml
+guidance: >-
+  "We strongly recommend implementing an exponential backoff strategy for requests when
+  approaching rate limits to optimize usage and avoid throttling."

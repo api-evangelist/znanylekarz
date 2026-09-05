@@ -1,0 +1,299 @@
+overlay: 1.0.0
+info:
+  title: ZnanyLekarz / Docplanner Integrations API — API Evangelist enhancements
+  version: 1.0.0
+extends: openapi/znanylekarz-integrations-api.yml
+x-generated: '2026-09-05'
+x-method: generated
+x-source: openapi/znanylekarz-integrations-api.yml
+x-note: 'Non-destructive overlay over the provider''s own OpenAPI 1.14.0. It does two things and nothing else: it
+  adds the resolved Polish locale server next to the templated one, and it fills the single systematic gap in an
+  otherwise strong contract — every one of the 44 operations has a description, tags, an operationId and $ref''d
+  examples, but NONE has a summary, so reference renderers and agent tool-listings have no short label to show.
+  Summaries here are humanized operationIds, which introduces no claim the spec does not already make. The original
+  spec is never mutated.'
+x-gaps-not-fixed:
+- No idempotency mechanism — cannot be added by overlay; it is a server behaviour.
+- No machine-readable error code in the error envelope.
+- No request-id / correlation header.
+- No reversal windows stated for cancelBooking or moveBooking.
+- No published numeric values for the hourly and per-minute rate limits.
+actions:
+- target: $
+  description: Add the resolved Polish locale server. ZnanyLekarz is the pl locale of the Docplanner marketplace;
+    the specification's Fundamentals section maps Poland -> znanylekarz.pl, so https://www.znanylekarz.pl/api/v3/integration
+    is the concrete form of the templated https://www.{domain}/api/v3/integration base. The templated server is
+    NOT removed.
+  update:
+    servers:
+    - url: https://www.{domain}/api/v3/integration
+      description: \{domain} - locale of docplanner marketplace ex. znanylekarz.pl
+    - url: https://www.znanylekarz.pl/api/v3/integration
+      description: ZnanyLekarz (Poland, pl locale) — resolved from the templated server using the locale table in
+        the Fundamentals section of this specification.
+      x-added-by: api-evangelist-overlay
+      x-locale: pl
+- target: $.paths['/facilities'].get
+  description: Add a missing operation summary for getFacilities. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Get Facilities
+- target: $.paths['/facilities/{facility_id}'].get
+  description: Add a missing operation summary for getFacility. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Get Facility
+- target: $.paths['/facilities/{facility_id}/doctors'].get
+  description: Add a missing operation summary for getDoctors. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Get Doctors
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}'].get
+  description: Add a missing operation summary for getDoctor. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Get Doctor
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses'].get
+  description: Add a missing operation summary for getAddresses. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Get Addresses
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}'].get
+  description: Add a missing operation summary for getAddress. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Get Address
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}'].patch
+  description: Add a missing operation summary for updateAddress. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Update Address
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/integration'].delete
+  description: Add a missing operation summary for removeAddressIntegration. The contract describes all 44 operations
+    but gives none of them a summary; this restates the existing operationId in human form and adds no meaning the
+    contract does not already carry.
+  update:
+    summary: Remove Address Integration
+- target: $.paths['/services'].get
+  description: Add a missing operation summary for getServices. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Get Services
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/services'].get
+  description: Add a missing operation summary for getAddressServices. The contract describes all 44 operations
+    but gives none of them a summary; this restates the existing operationId in human form and adds no meaning the
+    contract does not already carry.
+  update:
+    summary: Get Address Services
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/services'].post
+  description: Add a missing operation summary for addAddressService. The contract describes all 44 operations but
+    gives none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Add Address Service
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/services/{address_service_id}'].get
+  description: Add a missing operation summary for getAddressService. The contract describes all 44 operations but
+    gives none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Get Address Service
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/services/{address_service_id}'].patch
+  description: Add a missing operation summary for updateAddressService. The contract describes all 44 operations
+    but gives none of them a summary; this restates the existing operationId in human form and adds no meaning the
+    contract does not already carry.
+  update:
+    summary: Update Address Service
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/services/{address_service_id}'].delete
+  description: Add a missing operation summary for deleteAddressService. The contract describes all 44 operations
+    but gives none of them a summary; this restates the existing operationId in human form and adds no meaning the
+    contract does not already carry.
+  update:
+    summary: Delete Address Service
+- target: $.paths['/insurance-providers'].get
+  description: Add a missing operation summary for getInsuranceProviders. The contract describes all 44 operations
+    but gives none of them a summary; this restates the existing operationId in human form and adds no meaning the
+    contract does not already carry.
+  update:
+    summary: Get Insurance Providers
+- target: $.paths['/insurance-providers/{insurance_provider_id}/plans'].get
+  description: Add a missing operation summary for getInsurancePlans. The contract describes all 44 operations but
+    gives none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Get Insurance Plans
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/insurance-providers'].get
+  description: Add a missing operation summary for getAddressInsuranceProviders. The contract describes all 44 operations
+    but gives none of them a summary; this restates the existing operationId in human form and adds no meaning the
+    contract does not already carry.
+  update:
+    summary: Get Address Insurance Providers
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/insurance-providers'].post
+  description: Add a missing operation summary for addAddressInsuranceProvider. The contract describes all 44 operations
+    but gives none of them a summary; this restates the existing operationId in human form and adds no meaning the
+    contract does not already carry.
+  update:
+    summary: Add Address Insurance Provider
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/insurance-providers'].put
+  description: Add a missing operation summary for updateOrCreateAddressInsuranceProvider. The contract describes
+    all 44 operations but gives none of them a summary; this restates the existing operationId in human form and
+    adds no meaning the contract does not already carry.
+  update:
+    summary: Update Or Create Address Insurance Provider
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/insurance-providers/{insurance_provider_id}'].delete
+  description: Add a missing operation summary for deleteAddressInsuranceProvider. The contract describes all 44
+    operations but gives none of them a summary; this restates the existing operationId in human form and adds no
+    meaning the contract does not already carry.
+  update:
+    summary: Delete Address Insurance Provider
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/calendar'].get
+  description: Add a missing operation summary for getCalendar. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Get Calendar
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/calendar/enable'].post
+  description: Add a missing operation summary for enableCalendar. The contract describes all 44 operations but
+    gives none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Enable Calendar
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/calendar/disable'].post
+  description: Add a missing operation summary for disableCalendar. The contract describes all 44 operations but
+    gives none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Disable Calendar
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/breaks'].get
+  description: Add a missing operation summary for getCalendarBreaks. The contract describes all 44 operations but
+    gives none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Get Calendar Breaks
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/breaks'].post
+  description: Add a missing operation summary for addCalendarBreak. The contract describes all 44 operations but
+    gives none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Add Calendar Break
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/breaks/{break_id}'].get
+  description: Add a missing operation summary for getCalendarBreak. The contract describes all 44 operations but
+    gives none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Get Calendar Break
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/breaks/{break_id}'].patch
+  description: Add a missing operation summary for moveCalendarBreak. The contract describes all 44 operations but
+    gives none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Move Calendar Break
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/breaks/{break_id}'].delete
+  description: Add a missing operation summary for deleteCalendarBreak. The contract describes all 44 operations
+    but gives none of them a summary; this restates the existing operationId in human form and adds no meaning the
+    contract does not already carry.
+  update:
+    summary: Delete Calendar Break
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/slots'].get
+  description: Add a missing operation summary for getSlots. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Get Slots
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/slots'].put
+  description: Add a missing operation summary for replaceSlots. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Replace Slots
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/slots/{start}/book'].post
+  description: Add a missing operation summary for bookSlot. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Book Slot
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/slots/{date}'].delete
+  description: Add a missing operation summary for deleteSlots. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Delete Slots
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings'].get
+  description: Add a missing operation summary for getBookings. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Get Bookings
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}'].get
+  description: Add a missing operation summary for getBooking. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Get Booking
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}'].delete
+  description: Add a missing operation summary for cancelBooking. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Cancel Booking
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}/move'].post
+  description: Add a missing operation summary for moveBooking. The contract describes all 44 operations but gives
+    none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Move Booking
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}/confirm'].put
+  description: Add a missing operation summary for confirmBooking. The contract describes all 44 operations but
+    gives none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Confirm Booking
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/opinion-request'].put
+  description: Add a missing operation summary for requestOpinion. The contract describes all 44 operations but
+    gives none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Request Opinion
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}/presence/patient'].post
+  description: Add a missing operation summary for markPatientPresence. The contract describes all 44 operations
+    but gives none of them a summary; this restates the existing operationId in human form and adds no meaning the
+    contract does not already carry.
+  update:
+    summary: Mark Patient Presence
+- target: $.paths['/facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}/presence/patient'].delete
+  description: Add a missing operation summary for markPatientAbsence. The contract describes all 44 operations
+    but gives none of them a summary; this restates the existing operationId in human form and adds no meaning the
+    contract does not already carry.
+  update:
+    summary: Mark Patient Absence
+- target: $.paths['/{client-endpoint-url}'].post
+  description: Add a missing operation summary for Push Notifications. The contract describes all 44 operations
+    but gives none of them a summary; this restates the existing operationId in human form and adds no meaning the
+    contract does not already carry.
+  update:
+    summary: Push Notifications
+- target: $.paths['/notifications'].get
+  description: Add a missing operation summary for Pull Notification. The contract describes all 44 operations but
+    gives none of them a summary; this restates the existing operationId in human form and adds no meaning the contract
+    does not already carry.
+  update:
+    summary: Pull Notification
+- target: $.paths['/notifications/multiple'].get
+  description: Add a missing operation summary for Pull Multiple Notification. The contract describes all 44 operations
+    but gives none of them a summary; this restates the existing operationId in human form and adds no meaning the
+    contract does not already carry.
+  update:
+    summary: Pull Multiple Notification
+- target: $.paths['/notifications/release'].post
+  description: Add a missing operation summary for Release Notifications. The contract describes all 44 operations
+    but gives none of them a summary; this restates the existing operationId in human form and adds no meaning the
+    contract does not already carry.
+  update:
+    summary: Release Notifications

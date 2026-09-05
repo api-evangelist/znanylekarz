@@ -1,0 +1,129 @@
+generated: '2026-09-05'
+method: derived
+source: openapi/znanylekarz-integrations-api.yml
+status: candidate
+note: >-
+  NO MCP SERVER EXISTS. Searched the developer portal, the guide's Tools and Libraries section
+  (which lists exactly three items — a PHP SDK, a .NET SDK and a Postman collection), the
+  DocPlanner GitHub organisation, and the npm registry for any docplanner/znanylekarz package.
+  Nothing was found, and no /mcp endpoint is advertised on any host. The tools[] below are a
+  CANDIDATE surface derived from real operationIds in the provider's own OpenAPI — a proposal for
+  what a server would expose, not a description of anything that exists. No endpoint URL is
+  invented. The apis.yml pointer is type X-MCPServerCandidate, deliberately not MCPServer.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: oauth
+  auth_note: >-
+    Any future server would front an OAuth 2.0 client_credentials API whose credentials are issued
+    per integration partner after a manual onboarding, so it could not be an anonymous public
+    server; each tenant would supply its own client_id/client_secret.
+  verified: searched
+searched:
+- surface: https://integrations.docplanner.com/guide/ (Tools and libraries)
+  result: PHP SDK, .NET SDK and Postman collection only — no MCP server.
+- surface: https://github.com/DocPlanner
+  result: no MCP server repository found.
+- surface: 'npm registry search: docplanner'
+  result: zero packages.
+- surface: /.well-known/ probes on five hosts
+  result: no ai-plugin.json, no agent card, nothing pointing at an MCP endpoint.
+candidate_tools:
+- tool: list_facilities
+  rest: [getFacilities]
+  category: read
+  description: List the clinics this API client is authorized for.
+- tool: get_facility
+  rest: [getFacility]
+  category: read
+- tool: list_doctors
+  rest: [getDoctors]
+  category: read
+- tool: get_doctor
+  rest: [getDoctor]
+  category: read
+- tool: list_addresses
+  rest: [getAddresses]
+  category: read
+- tool: get_address
+  rest: [getAddress]
+  category: read
+- tool: update_address
+  rest: [updateAddress]
+  category: write
+- tool: list_services
+  rest: [getServices, getAddressServices]
+  category: read
+- tool: manage_address_service
+  rest: [addAddressService, updateAddressService, deleteAddressService, getAddressService]
+  category: write
+  consequence: Changes what patients can book and at what price.
+- tool: list_insurance_providers
+  rest: [getInsuranceProviders, getInsurancePlans, getAddressInsuranceProviders]
+  category: read
+- tool: manage_address_insurance
+  rest: [addAddressInsuranceProvider, updateOrCreateAddressInsuranceProvider, deleteAddressInsuranceProvider]
+  category: write
+- tool: get_calendar
+  rest: [getCalendar]
+  category: read
+- tool: set_calendar_state
+  rest: [enableCalendar, disableCalendar]
+  category: write
+  consequence: Turns online booking on or off for a doctor at an address.
+- tool: manage_calendar_breaks
+  rest: [getCalendarBreaks, getCalendarBreak, addCalendarBreak, moveCalendarBreak, deleteCalendarBreak]
+  category: write
+- tool: list_slots
+  rest: [getSlots]
+  category: read
+  constraint: Maximum date range 180 days; wider ranges return 400.
+- tool: publish_slots
+  rest: [replaceSlots, deleteSlots]
+  category: write
+  consequence: Replaces published availability. Destructive — deleteSlots removes a day of slots.
+- tool: book_slot
+  rest: [bookSlot]
+  category: write
+  consequence: Creates a real patient appointment. Reversible via cancel_booking; no stated window.
+- tool: list_bookings
+  rest: [getBookings, getBooking]
+  category: read
+  pii: Returns patient personal data when the booking.patient extension is requested.
+- tool: cancel_booking
+  rest: [cancelBooking]
+  category: write
+  consequence: Cancels a real patient appointment.
+- tool: move_booking
+  rest: [moveBooking]
+  category: write
+  consequence: >-
+    Reschedules a real appointment. Returns 422 when the booking holds money and the target address
+    bills through a different payment account.
+- tool: confirm_booking
+  rest: [confirmBooking]
+  category: write
+- tool: mark_patient_presence
+  rest: [markPatientPresence, markPatientAbsence]
+  category: write
+- tool: request_opinion
+  rest: [requestOpinion]
+  category: write
+  consequence: Triggers a patient-facing review request.
+- tool: pull_notifications
+  rest: [Pull Notification, Pull Multiple Notification, Release Notifications]
+  category: read/write
+  constraint: Release is limited to 1 request per hour.
+candidate_tool_count: 24
+covers_operations: 44
+input_schema_source: >-
+  Each candidate tool would inherit its inputSchema directly from the backing operation's path
+  parameters, query parameters and requestBody in openapi/znanylekarz-integrations-api.yml. Those
+  schemas are complete and typed, so no schema needs authoring.
+agent_readiness_caveat: >-
+  This is a write-heavy clinical scheduling surface with no idempotency mechanism and no dry-run
+  mode. An agent that retries a failed book_slot, publish_slots or move_booking has no protection
+  against duplicating a real patient appointment. Any MCP server over this API should add
+  idempotency at the server layer before exposing the write tools.

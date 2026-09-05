@@ -1,0 +1,69 @@
+generated: '2026-09-05'
+method: searched
+source: https://integrations.docplanner.com/guide/tools-and-libraries/sdk-php.html
+note: >-
+  Two first-party SDKs are published for the Docplanner Integrations API that ZnanyLekarz serves.
+  The PHP SDK is on Packagist and is current with the API — v1.14.0, released 2026-08-26, matching
+  the OpenAPI info.version of 1.14.0 exactly, which is the strongest currency signal available here.
+  The .NET SDK is NOT on nuget.org: the docs point at a private Azure DevOps Artifacts feed, which
+  publishes no anonymous metadata endpoint, so its version cannot be read and is recorded as null.
+  The legacy DocPlannerSDK on GitHub is explicitly deprecated by its own README in favour of the
+  Integrations API SDKs and is recorded as such rather than counted as a current client library.
+packages:
+- name: docplanner/integrations-api-sdk-php
+  language: PHP
+  registry: packagist
+  official: true
+  url: https://packagist.org/packages/docplanner/integrations-api-sdk-php
+  repository: https://github.com/DocPlanner/integrations-api-sdk-php
+  install: composer require docplanner/integrations-api-sdk-php
+  version: v1.14.0
+  published: '2026-08-26'
+  releases: 56
+  docs: https://integrations.docplanner.com/guide/tools-and-libraries/sdk-php.html
+  source: https://repo.packagist.org/p2/docplanner/integrations-api-sdk-php.json
+  note: >-
+    Version tracks the API version 1:1 — SDK v1.14.0 against OpenAPI 1.14.0. No abandonment signal.
+- name: Integrations.Api.Sdk
+  language: .NET / C#
+  registry: azure-devops
+  official: true
+  url: https://pkgs.dev.azure.com/docplanner/c4fa307b-7faf-45b9-a23f-faace862ad8f/_packaging/integrations%40Release/nuget/v3/index.json
+  install: >-
+    Add the Docplanner Azure Artifacts feed as a NuGet package source, then install Integrations.Api.Sdk
+  version: null
+  published: null
+  docs: https://integrations.docplanner.com/guide/tools-and-libraries/sdk-dotnet.html
+  note: >-
+    Checked and nothing to record: api.nuget.org/v3/registration5-semver1/integrations.api.sdk/index.json
+    returns 404 BlobNotFound, so this package is not on the public NuGet gallery. It is distributed
+    only from a Docplanner-hosted Azure DevOps Artifacts feed, which serves no unauthenticated
+    metadata endpoint, so neither the latest version nor its release date can be read by a consumer
+    without first adding the private feed.
+deprecated_packages:
+- name: docplanner/docplanner-sdk
+  language: PHP
+  registry: github
+  official: true
+  url: https://github.com/DocPlanner/DocPlannerSDK
+  status: deprecated
+  version: null
+  published: null
+  note: >-
+    The repository README states the SDK is deprecated and directs integrators to the current
+    Integrations API. Recorded for provenance, not counted as a live client library.
+collections:
+- name: Docplanner Integrations API Postman Collection
+  kind: postman
+  official: true
+  url: https://www.postman.com/run-collection/7fd8db9bb1fd14e0f0f7
+  download: https://integrations.docplanner.com/sdks/postman/docplanner_integrations_API.postman_collection.json
+  local: postman/znanylekarz-integrations-api.postman_collection.json
+  version: null
+  published: null
+  note: >-
+    Fetched 2026-09-05, HTTP 200, 298,977 bytes of application/json. Unversioned — the collection
+    carries a _postman_id but no published version or date, so a consumer cannot tell which API
+    version it was generated against. Requires setting the baseURL collection variable to the
+    locale domain (www.znanylekarz.pl for Poland).
+official_sdk_count: 2

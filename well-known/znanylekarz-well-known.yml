@@ -1,0 +1,113 @@
+generated: '2026-09-05'
+method: probed
+source: live GET of the named /.well-known/ path list on every host this record knows
+note: >-
+  Probed the registrable domain and www, the API host (www.znanylekarz.pl, which is where the
+  templated OpenAPI server https://www.{domain}/api/v3/integration resolves for the Polish locale),
+  the developer-portal host, and the two ZnanyLekarz subdomains named in the docs. Exactly one
+  document is served: an RFC 9116 security.txt, present on both znanylekarz.pl and www, carrying a
+  single Contact field. Every other path returns 404 — on znanylekarz.pl hosts as a localized HTML
+  404 page, which is a genuine 404 status and not a soft-200. No agent card, no OAuth discovery
+  document and no api-catalog is published; the OAuth 2.0 token endpoint is documented in the
+  OpenAPI securityScheme rather than advertised at /.well-known/oauth-authorization-server.
+hosts:
+- host: znanylekarz.pl
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: znanylekarz-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+- host: www.znanylekarz.pl
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: znanylekarz-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+- host: integrations.docplanner.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+- host: docplanner.znanylekarz.pl
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: plugins-manager.znanylekarz.pl
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+a2a:
+  agent_card_found: false
+  note: >-
+    /.well-known/agent-card.json and the pre-0.3 /.well-known/agent.json both 404 on every host.
+    No a2a/ artifact is written and no AgentCard pointer is emitted — an agent card asserts the
+    provider serves it, and this one does not exist.

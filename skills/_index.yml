@@ -1,0 +1,38 @@
+generated: '2026-09-05'
+method: generated
+source: openapi/znanylekarz-integrations-api.yml
+note: >-
+  Packaged Agent Skills for the Docplanner Integrations API as served on www.znanylekarz.pl. The
+  provider publishes no skills, no AGENTS.md and no llms.txt — searched and absent — so these are
+  generated. Every operationId referenced was grepped out of the provider's own OpenAPI 1.14.0;
+  none is invented. Each skill front-loads the two facts this API most needs an agent to know:
+  there is no idempotency mechanism and no dry-run, and two of the seventeen events are
+  synchronous gates whose response approves or denies a real patient's booking.
+api: Docplanner Integrations API v1.14.0
+base_url: https://www.znanylekarz.pl/api/v3/integration
+skills:
+- name: znanylekarz-publish-availability
+  file: znanylekarz-publish-availability.md
+  summary: >-
+    Enable a calendar, publish work periods as bookable slots, and hide time with calendar breaks.
+  operations: [getFacilities, getDoctors, getAddresses, getCalendar, enableCalendar, getSlots, replaceSlots, deleteSlots, getCalendarBreaks, addCalendarBreak, moveCalendarBreak, deleteCalendarBreak]
+  risk: write — changes live clinic availability
+- name: znanylekarz-manage-bookings
+  file: znanylekarz-manage-bookings.md
+  summary: >-
+    Read, create, confirm, move, cancel and mark attendance on real patient appointments, and
+    request a patient review.
+  operations: [getBookings, getBooking, bookSlot, confirmBooking, moveBooking, cancelBooking, markPatientPresence, markPatientAbsence, requestOpinion]
+  risk: write — acts on real patient appointments and returns GDPR special-category data
+- name: znanylekarz-consume-notifications
+  file: znanylekarz-consume-notifications.md
+  summary: >-
+    Pull or receive the 17 event types, and answer the two blocking events that approve or deny a
+    booking in real time.
+  operations: [Pull Notification, Pull Multiple Notification, Release Notifications]
+  risk: >-
+    read plus synchronous gate — a non-2xx on slot-booking or booking-moving denies a patient's
+    booking
+skill_count: 3
+provider_published_skills: false
+provider_published_agents_md: false

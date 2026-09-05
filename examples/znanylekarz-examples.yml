@@ -1,0 +1,759 @@
+generated: '2026-09-05'
+method: derived
+source: openapi/znanylekarz-integrations-api.yml
+note: Index of the request and response examples the provider ships INSIDE its own OpenAPI. 166 named entries live
+  under components.examples and are $ref'd from operations, callbacks and error responses, so an agent reading the
+  contract gets concrete bodies for success, validation failure, payment-enabled bookings, videocall bookings, doctor-initiated
+  bookings and every one of the 17 event notifications. Nothing here is authored — this artifact only indexes what
+  the spec already carries, so the examples themselves are read from the spec, not duplicated.
+named_examples_total: 166
+operations_total: 44
+operations_with_examples: 44
+operations_with_summary: 0
+operations_with_description: 44
+operations_tagged: 44
+unique_operation_ids: 44
+named_examples:
+- AddAddressInsuranceProvider
+- AddAddressInsuranceProviderWithPlans
+- AddAddressInsuranceValidationError
+- AddAddressService
+- Address
+- AddressAssignedNotification
+- AddressCommercialTypeChangedNotification
+- AddressDisabled
+- AddressDoesNotBelongToDoctor
+- AddressDoesNotBelongToFacility
+- AddressDoesNotExist
+- AddressInsuranceProviders
+- AddressNotAuthorized
+- AddressService
+- AddressServiceAlreadyExists
+- AddressServiceChangedNotification
+- AddressServiceCreatedNotification
+- AddressServiceDeletedNotification
+- AddressServiceDoesNotExist
+- AddressServiceMismatch
+- AddressServiceValidationError
+- AddressServiceWithAllowedPatients
+- AddressServiceWithCustomName
+- AddressServiceWithPublicInsuranceFlow
+- AddressServices
+- AddressServicesWithAllowedPatients
+- AddressServicesWithCustomName
+- AddressServicesWithPublicInsuranceFlow
+- AddressServicesWithStartDate
+- AddressUnassignedNotification
+- AddressWithCommercialType
+- AddressWithInsuranceSupport
+- AddressWithOnlineOnly
+- AddressWithVisitPayment
+- Addresses
+- AddressesWithCommercialType
+- AddressesWithInsuranceSupport
+- AddressesWithOnlineOnly
+- AddressesWithVisitPayment
+- BookSlot
+- Booking
+- BookingCanceledByDoctorNotification
+- BookingCanceledNotification
+- BookingCannotCrossPaymentAccounts
+- BookingConfirmedNotification
+- BookingDoesNotBelongToAddress
+- BookingMovedNotification
+- BookingMovingNotification
+- BookingPaymentStatusChangedNotification
+- BookingVideocallEnabled
+- BookingVisitPaymentsEnabled
+- BookingWithMovingMoved
+- BookingWithMovingNoDataAvailable
+- BookingWithMovingNotMoved
+- BookingWithPublicInsuranceFlow
+- Bookings
+- BookingsPaginated
+- BookingsVisitPaymentsEnabled
+- BookingsWithAddressService
+- BookingsWithConfirmation
+- BookingsWithPatient
+- BookingsWithPresence
+- BookingsWithPublicInsuranceFlow
+- BreakCreatedNotification
+- BreakMovedNotification
+- BreakNotFoundForGivenAddress
+- BreakRemovedNotification
+- CalendarAlreadyDisabled
+- CalendarAlreadyEnabled
+- CalendarBreak
+- CalendarBreakAlreadyExists
+- CalendarDisabled
+- CalendarEditionNotAuthorized
+- CalendarEnabled
+- CalendarNotFound
+- CalendarNotFoundForAddress
+- CancelBookingWithPatientNotificationAndReason
+- CannotSendRequestForOpinion
+- ConfirmBooking
+- ConfirmBookingAlreadyConfirmed
+- ConfirmBookingInvalidIntegration
+- ConfirmBookingPastVisit
+- ConfirmBookingValidationError
+- ConfirmBookingVisitCanceled
+- ConfirmBookingVisitDeleted
+- DateRangeExceedsMaximum
+- DeleteAddressInsuranceValidationError
+- DeleteBookingValidationError
+- DeletePresenceValidationError
+- DictionaryInsurancePlans
+- DictionaryInsuranceProviders
+- Doctor
+- DoctorDoesNotBelongToFacility
+- DoctorNotAuthorized
+- DoctorOrAddressNotCommercial
+- DoctorWithAddressBookingExtraFields
+- DoctorWithAddressCommercialType
+- DoctorWithAddresses
+- DoctorWithLicenseNumbers
+- DoctorWithOnlineOnlyAddresses
+- DoctorWithProfileUrl
+- DoctorWithVisitPaymentAddresses
+- Doctors
+- DoctorsWithLicenseNumbers
+- DoctorsWithProfileUrl
+- DoctorsWithSpecializations
+- Facilities
+- Facility
+- FacilityNotAuthorized
+- FacilityWithDoctors
+- FeatureNotAuthorized
+- InsuranceProviderDoesNotExist
+- InsuranceProviderNotFromDictionary
+- InsuranceProvidersMissing
+- InsuranceProvidersNotSupported
+- InvalidArgumentsError
+- InvalidDate
+- InvalidDateRange
+- MoveBooking
+- MoveBookingToOtherAddress
+- MoveBookingValidationError
+- NoSlotsOnAddress
+- NotificationNotFound
+- NotificationsReleaseForbiddenError
+- ObjectNotFound
+- OpinionAlreadyExist
+- OpinionRequest
+- OpinionRequestValidationError
+- ParameterRequiredSince
+- ParameterRequiredTill
+- PatchAddressService
+- PatchAddressServiceResponse
+- PostBookValidationError
+- PostPresenceValidationError
+- PresenceMarkedNotification
+- PullingAllOfRemainingNotifications
+- PullingMultipleNotifications
+- PutSlotsValidationError
+- ReplaceSlots
+- SameDateRange
+- ServiceDoesNotBelongToAddress
+- ServiceDoesNotExist
+- Services
+- Slot
+- SlotBookedByDoctorNotification
+- SlotBookedNotification
+- SlotBookedWhenVideocallNotification
+- SlotBookedWhenVisitPaymentNotification
+- SlotBookingNotification
+- SlotBookingWhenVisitPaymentNotification
+- SlotDurationIsLessThanOneMinute
+- SlotExceedsSingleDayBoundary
+- Slots
+- SlotsFromFurtherThen12Weeks
+- SlotsWithServices
+- TillEarlierThanSince
+- UnableToBookForAddress
+- UnableToCancelForAddress
+- UnableToPerformBookingWithService
+- UnableToPerformBookingWithSlot
+- UpdateAddress
+- UpdateOrCreateAddressInsuranceProvider
+- VisitAlreadyMovedOrDeleted
+- VisitDoesNotBelongToDoctor
+- VisitMarkedAsCanceled
+- VisitNotFound
+operations:
+- operationId: getFacilities
+  method: GET
+  path: /facilities
+  example_count: 1
+  examples:
+  - Facilities
+- operationId: getFacility
+  method: GET
+  path: /facilities/{facility_id}
+  example_count: 4
+  examples:
+  - Facility
+  - FacilityNotAuthorized
+  - FacilityWithDoctors
+  - ObjectNotFound
+- operationId: getDoctors
+  method: GET
+  path: /facilities/{facility_id}/doctors
+  example_count: 6
+  examples:
+  - Doctors
+  - DoctorsWithLicenseNumbers
+  - DoctorsWithProfileUrl
+  - DoctorsWithSpecializations
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: getDoctor
+  method: GET
+  path: /facilities/{facility_id}/doctors/{doctor_id}
+  example_count: 11
+  examples:
+  - Doctor
+  - DoctorNotAuthorized
+  - DoctorWithAddressBookingExtraFields
+  - DoctorWithAddressCommercialType
+  - DoctorWithAddresses
+  - DoctorWithLicenseNumbers
+  - DoctorWithOnlineOnlyAddresses
+  - DoctorWithProfileUrl
+  - DoctorWithVisitPaymentAddresses
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: getAddresses
+  method: GET
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses
+  example_count: 8
+  examples:
+  - Addresses
+  - AddressesWithCommercialType
+  - AddressesWithInsuranceSupport
+  - AddressesWithOnlineOnly
+  - AddressesWithVisitPayment
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: getAddress
+  method: GET
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}
+  example_count: 9
+  examples:
+  - Address
+  - AddressNotAuthorized
+  - AddressWithCommercialType
+  - AddressWithInsuranceSupport
+  - AddressWithOnlineOnly
+  - AddressWithVisitPayment
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: updateAddress
+  method: PATCH
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}
+  example_count: 10
+  examples:
+  - AddressDoesNotBelongToDoctor
+  - AddressDoesNotBelongToFacility
+  - AddressNotAuthorized
+  - AddressWithInsuranceSupport
+  - CalendarEditionNotAuthorized
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - InvalidArgumentsError
+  - ObjectNotFound
+  - UpdateAddress
+- operationId: removeAddressIntegration
+  method: DELETE
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/integration
+  example_count: 7
+  examples:
+  - AddressDoesNotBelongToDoctor
+  - AddressDoesNotBelongToFacility
+  - AddressNotAuthorized
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - FeatureNotAuthorized
+  - ObjectNotFound
+- operationId: getServices
+  method: GET
+  path: /services
+  example_count: 1
+  examples:
+  - Services
+- operationId: getAddressServices
+  method: GET
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/services
+  example_count: 9
+  examples:
+  - AddressNotAuthorized
+  - AddressServices
+  - AddressServicesWithAllowedPatients
+  - AddressServicesWithCustomName
+  - AddressServicesWithPublicInsuranceFlow
+  - AddressServicesWithStartDate
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: addAddressService
+  method: POST
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/services
+  example_count: 8
+  examples:
+  - AddAddressService
+  - AddressNotAuthorized
+  - AddressService
+  - AddressServiceAlreadyExists
+  - AddressServiceValidationError
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: getAddressService
+  method: GET
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/services/{address_service_id}
+  example_count: 9
+  examples:
+  - AddressNotAuthorized
+  - AddressService
+  - AddressServiceMismatch
+  - AddressServiceWithAllowedPatients
+  - AddressServiceWithCustomName
+  - AddressServiceWithPublicInsuranceFlow
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: updateAddressService
+  method: PATCH
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/services/{address_service_id}
+  example_count: 8
+  examples:
+  - AddressNotAuthorized
+  - AddressServiceMismatch
+  - AddressServiceValidationError
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+  - PatchAddressService
+  - PatchAddressServiceResponse
+- operationId: deleteAddressService
+  method: DELETE
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/services/{address_service_id}
+  example_count: 5
+  examples:
+  - AddressNotAuthorized
+  - AddressServiceMismatch
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: getInsuranceProviders
+  method: GET
+  path: /insurance-providers
+  example_count: 1
+  examples:
+  - DictionaryInsuranceProviders
+- operationId: getInsurancePlans
+  method: GET
+  path: /insurance-providers/{insurance_provider_id}/plans
+  example_count: 1
+  examples:
+  - DictionaryInsurancePlans
+- operationId: getAddressInsuranceProviders
+  method: GET
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/insurance-providers
+  example_count: 5
+  examples:
+  - AddressInsuranceProviders
+  - AddressNotAuthorized
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: addAddressInsuranceProvider
+  method: POST
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/insurance-providers
+  example_count: 8
+  examples:
+  - AddAddressInsuranceProvider
+  - AddAddressInsuranceProviderWithPlans
+  - AddAddressInsuranceValidationError
+  - AddressNotAuthorized
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - InsuranceProviderNotFromDictionary
+  - ObjectNotFound
+- operationId: updateOrCreateAddressInsuranceProvider
+  method: PUT
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/insurance-providers
+  example_count: 6
+  examples:
+  - AddressNotAuthorized
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - InsuranceProviderNotFromDictionary
+  - ObjectNotFound
+  - UpdateOrCreateAddressInsuranceProvider
+- operationId: deleteAddressInsuranceProvider
+  method: DELETE
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/insurance-providers/{insurance_provider_id}
+  example_count: 6
+  examples:
+  - AddressNotAuthorized
+  - DeleteAddressInsuranceValidationError
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - InsuranceProviderNotFromDictionary
+  - ObjectNotFound
+- operationId: getCalendar
+  method: GET
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/calendar
+  example_count: 9
+  examples:
+  - AddressDoesNotBelongToDoctor
+  - AddressDoesNotBelongToFacility
+  - AddressNotAuthorized
+  - CalendarDisabled
+  - CalendarEnabled
+  - CalendarNotFound
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: enableCalendar
+  method: POST
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/calendar/enable
+  example_count: 7
+  examples:
+  - AddressDisabled
+  - AddressNotAuthorized
+  - CalendarAlreadyEnabled
+  - CalendarEditionNotAuthorized
+  - DoctorNotAuthorized
+  - DoctorOrAddressNotCommercial
+  - FacilityNotAuthorized
+- operationId: disableCalendar
+  method: POST
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/calendar/disable
+  example_count: 5
+  examples:
+  - AddressNotAuthorized
+  - CalendarAlreadyDisabled
+  - CalendarEditionNotAuthorized
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+- operationId: getCalendarBreaks
+  method: GET
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/breaks
+  example_count: 7
+  examples:
+  - AddressNotAuthorized
+  - CalendarBreak
+  - CalendarNotFoundForAddress
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - InvalidDate
+  - ObjectNotFound
+- operationId: addCalendarBreak
+  method: POST
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/breaks
+  example_count: 11
+  examples:
+  - AddressNotAuthorized
+  - CalendarBreak
+  - CalendarBreakAlreadyExists
+  - CalendarEditionNotAuthorized
+  - DoctorNotAuthorized
+  - DoctorOrAddressNotCommercial
+  - FacilityNotAuthorized
+  - InvalidDateRange
+  - ObjectNotFound
+  - ParameterRequiredSince
+  - ParameterRequiredTill
+- operationId: getCalendarBreak
+  method: GET
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/breaks/{break_id}
+  example_count: 7
+  examples:
+  - AddressNotAuthorized
+  - BreakNotFoundForGivenAddress
+  - CalendarBreak
+  - CalendarNotFoundForAddress
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: moveCalendarBreak
+  method: PATCH
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/breaks/{break_id}
+  example_count: 11
+  examples:
+  - AddressNotAuthorized
+  - BreakNotFoundForGivenAddress
+  - CalendarEditionNotAuthorized
+  - CalendarNotFoundForAddress
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+  - ParameterRequiredSince
+  - ParameterRequiredTill
+  - SameDateRange
+  - TillEarlierThanSince
+- operationId: deleteCalendarBreak
+  method: DELETE
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/breaks/{break_id}
+  example_count: 7
+  examples:
+  - AddressNotAuthorized
+  - BreakNotFoundForGivenAddress
+  - CalendarEditionNotAuthorized
+  - CalendarNotFoundForAddress
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: getSlots
+  method: GET
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/slots
+  example_count: 9
+  examples:
+  - AddressNotAuthorized
+  - BreakNotFoundForGivenAddress
+  - DateRangeExceedsMaximum
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - NoSlotsOnAddress
+  - ObjectNotFound
+  - Slots
+  - SlotsWithServices
+- operationId: replaceSlots
+  method: PUT
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/slots
+  example_count: 15
+  examples:
+  - AddressNotAuthorized
+  - AddressServiceDoesNotExist
+  - CalendarEditionNotAuthorized
+  - DoctorNotAuthorized
+  - DoctorOrAddressNotCommercial
+  - FacilityNotAuthorized
+  - InsuranceProviderDoesNotExist
+  - InsuranceProvidersMissing
+  - InsuranceProvidersNotSupported
+  - ObjectNotFound
+  - PutSlotsValidationError
+  - ReplaceSlots
+  - SlotDurationIsLessThanOneMinute
+  - SlotExceedsSingleDayBoundary
+  - SlotsFromFurtherThen12Weeks
+- operationId: bookSlot
+  method: POST
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/slots/{start}/book
+  example_count: 12
+  examples:
+  - AddressNotAuthorized
+  - BookSlot
+  - DoctorNotAuthorized
+  - DoctorOrAddressNotCommercial
+  - FacilityNotAuthorized
+  - ObjectNotFound
+  - PostBookValidationError
+  - ServiceDoesNotExist
+  - Slot
+  - UnableToBookForAddress
+  - UnableToPerformBookingWithService
+  - UnableToPerformBookingWithSlot
+- operationId: deleteSlots
+  method: DELETE
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/slots/{date}
+  example_count: 5
+  examples:
+  - AddressNotAuthorized
+  - CalendarEditionNotAuthorized
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: getBookings
+  method: GET
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings
+  example_count: 12
+  examples:
+  - AddressNotAuthorized
+  - Bookings
+  - BookingsPaginated
+  - BookingsVisitPaymentsEnabled
+  - BookingsWithAddressService
+  - BookingsWithConfirmation
+  - BookingsWithPatient
+  - BookingsWithPresence
+  - BookingsWithPublicInsuranceFlow
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: getBooking
+  method: GET
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}
+  example_count: 11
+  examples:
+  - AddressNotAuthorized
+  - Booking
+  - BookingVideocallEnabled
+  - BookingVisitPaymentsEnabled
+  - BookingWithMovingMoved
+  - BookingWithMovingNoDataAvailable
+  - BookingWithMovingNotMoved
+  - BookingWithPublicInsuranceFlow
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: cancelBooking
+  method: DELETE
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}
+  example_count: 6
+  examples:
+  - CancelBookingWithPatientNotificationAndReason
+  - DeleteBookingValidationError
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+  - UnableToCancelForAddress
+- operationId: moveBooking
+  method: POST
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}/move
+  example_count: 17
+  examples:
+  - AddressDoesNotBelongToDoctor
+  - AddressDoesNotBelongToFacility
+  - AddressDoesNotExist
+  - AddressNotAuthorized
+  - Booking
+  - BookingCannotCrossPaymentAccounts
+  - BookingDoesNotBelongToAddress
+  - BookingWithPublicInsuranceFlow
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - MoveBooking
+  - MoveBookingToOtherAddress
+  - MoveBookingValidationError
+  - ObjectNotFound
+  - ServiceDoesNotBelongToAddress
+  - ServiceDoesNotExist
+  - VisitAlreadyMovedOrDeleted
+- operationId: confirmBooking
+  method: PUT
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}/confirm
+  example_count: 14
+  examples:
+  - AddressDoesNotBelongToDoctor
+  - AddressDoesNotBelongToFacility
+  - AddressNotAuthorized
+  - BookingDoesNotBelongToAddress
+  - ConfirmBooking
+  - ConfirmBookingAlreadyConfirmed
+  - ConfirmBookingInvalidIntegration
+  - ConfirmBookingPastVisit
+  - ConfirmBookingValidationError
+  - ConfirmBookingVisitCanceled
+  - ConfirmBookingVisitDeleted
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+- operationId: requestOpinion
+  method: PUT
+  path: /facilities/{facility_id}/doctors/{doctor_id}/opinion-request
+  example_count: 8
+  examples:
+  - CannotSendRequestForOpinion
+  - DoctorDoesNotBelongToFacility
+  - FacilityNotAuthorized
+  - ObjectNotFound
+  - OpinionAlreadyExist
+  - OpinionRequest
+  - OpinionRequestValidationError
+  - VisitNotFound
+- operationId: markPatientPresence
+  method: POST
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}/presence/patient
+  example_count: 7
+  examples:
+  - AddressNotAuthorized
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+  - PostPresenceValidationError
+  - VisitDoesNotBelongToDoctor
+  - VisitMarkedAsCanceled
+- operationId: markPatientAbsence
+  method: DELETE
+  path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}/presence/patient
+  example_count: 7
+  examples:
+  - AddressNotAuthorized
+  - DeletePresenceValidationError
+  - DoctorNotAuthorized
+  - FacilityNotAuthorized
+  - ObjectNotFound
+  - VisitDoesNotBelongToDoctor
+  - VisitMarkedAsCanceled
+- operationId: Push Notifications
+  method: POST
+  path: /{client-endpoint-url}
+  example_count: 22
+  examples:
+  - AddressAssignedNotification
+  - AddressCommercialTypeChangedNotification
+  - AddressServiceChangedNotification
+  - AddressServiceCreatedNotification
+  - AddressServiceDeletedNotification
+  - AddressUnassignedNotification
+  - BookingCanceledByDoctorNotification
+  - BookingCanceledNotification
+  - BookingConfirmedNotification
+  - BookingMovedNotification
+  - BookingMovingNotification
+  - BookingPaymentStatusChangedNotification
+  - BreakCreatedNotification
+  - BreakMovedNotification
+  - BreakRemovedNotification
+  - PresenceMarkedNotification
+  - SlotBookedByDoctorNotification
+  - SlotBookedNotification
+  - SlotBookedWhenVideocallNotification
+  - SlotBookedWhenVisitPaymentNotification
+  - SlotBookingNotification
+  - SlotBookingWhenVisitPaymentNotification
+- operationId: Pull Notification
+  method: GET
+  path: /notifications
+  example_count: 20
+  examples:
+  - AddressCommercialTypeChangedNotification
+  - AddressServiceChangedNotification
+  - AddressServiceCreatedNotification
+  - AddressServiceDeletedNotification
+  - BookingCanceledByDoctorNotification
+  - BookingCanceledNotification
+  - BookingMovedNotification
+  - BookingMovingNotification
+  - BookingPaymentStatusChangedNotification
+  - BreakCreatedNotification
+  - BreakMovedNotification
+  - BreakRemovedNotification
+  - NotificationNotFound
+  - PresenceMarkedNotification
+  - SlotBookedByDoctorNotification
+  - SlotBookedNotification
+  - SlotBookedWhenVideocallNotification
+  - SlotBookedWhenVisitPaymentNotification
+  - SlotBookingNotification
+  - SlotBookingWhenVisitPaymentNotification
+- operationId: Pull Multiple Notification
+  method: GET
+  path: /notifications/multiple
+  example_count: 3
+  examples:
+  - NotificationNotFound
+  - PullingAllOfRemainingNotifications
+  - PullingMultipleNotifications
+- operationId: Release Notifications
+  method: POST
+  path: /notifications/release
+  example_count: 1
+  examples:
+  - NotificationsReleaseForbiddenError

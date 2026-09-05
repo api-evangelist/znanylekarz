@@ -1,0 +1,78 @@
+generated: '2026-09-05'
+method: searched
+source: https://pro.znanylekarz.pl/cennik/znanylekarz-dla-lekarzy
+note: >-
+  ZnanyLekarz publishes list prices for the practitioner-facing product, in PLN, monthly, net of
+  VAT. There is NO priced plan for the Docplanner Integrations API itself: API access is not sold
+  as a tier, it is granted to medical-software vendors through a partner onboarding process
+  (sandbox request form, then kick-off with a Docplanner specialist, then production credentials).
+  The tiers below are therefore the price of the platform the API integrates with, not the price
+  of the API. External integrations are named as a VIP-tier capability, which is the closest the
+  published pricing comes to gating API-adjacent functionality.
+currency: PLN
+billing_period: monthly
+tax_note: All prices quoted "+ VAT" (net of Polish VAT).
+plan_count: 4
+plans:
+- name: Starter
+  price: 399
+  currency: PLN
+  period: month
+  price_verbatim: 399 zł miesięcznie + VAT
+  daily_equivalent: 13.30 zł
+  includes:
+  - Paid marketplace profile
+  - Online calendar
+  - Automatic appointment reminders
+  - Online payments
+  returning_customer_price: 499
+- name: Plus
+  price: 499
+  currency: PLN
+  period: month
+  price_verbatim: 499 zł miesięcznie + VAT
+  daily_equivalent: 16.63 zł
+  includes:
+  - Everything in Starter
+  - Electronic medical records
+  - SMS notifications
+  - E-prescriptions
+  - Video consultations
+  - Waiting list
+  returning_customer_price: 599
+- name: VIP
+  price: 699
+  currency: PLN
+  period: month
+  price_verbatim: 699 zł miesięcznie + VAT
+  daily_equivalent: 23.30 zł
+  includes:
+  - Everything in Plus
+  - Expanded profile
+  - Email and SMS campaigns
+  - Advanced analytics
+  - External integrations
+  returning_customer_price: 799
+  note: The tier that names external integrations as an included capability.
+- name: Noa Notes
+  kind: add-on
+  price: 199
+  currency: PLN
+  period: month
+  price_verbatim: 199 zł + VAT miesięcznie
+  includes:
+  - AI virtual assistant / consultation notes
+unpriced_offerings:
+- name: Highlighted Profile
+  note: Price available on inquiry only.
+- name: Media 360
+  note: Price available on inquiry only.
+api_access:
+  priced_tier: false
+  model: partner-onboarding
+  description: >-
+    Access to the Integrations API is requested through the form on the Docplanner homepage and
+    is described as "exclusively available to medical software providers"; sandbox credentials
+    come first, production credentials require client approval or a Customer Success specialist.
+  contact: integrations@docplanner.com
+  source: https://integrations.docplanner.com/guide/integration-process.html

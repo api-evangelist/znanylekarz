@@ -31,6 +31,19 @@ tags:
 - Scheduling
 - Poland
 - Practice Management
+- Telehealth
+tags_raw:
+- Company
+- Healthcare
+- Health Tech
+- Appointments
+- Booking
+- Medical
+- Marketplace
+- Doctors
+- Scheduling
+- Poland
+- Practice Management
 - Telemedicine
 apis:
 - aid: znanylekarz:znanylekarz-addresses-api
@@ -80,6 +93,8 @@ apis:
   humanURL: https://integrations.docplanner.com/docs/
   baseURL: https://www.znanylekarz.pl/api/v3/integration
   tags:
+  - Booking
+  tags_raw:
   - Bookings
   properties:
   - type: OpenAPI
@@ -113,6 +128,8 @@ apis:
   humanURL: https://integrations.docplanner.com/docs/
   baseURL: https://www.znanylekarz.pl/api/v3/integration
   tags:
+  - Calendar
+  tags_raw:
   - Calendars
   properties:
   - type: OpenAPI

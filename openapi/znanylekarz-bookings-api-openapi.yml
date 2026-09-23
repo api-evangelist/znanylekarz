@@ -1,0 +1,1838 @@
+openapi: 3.2.0
+info:
+  title: Docplanner Integrations Bookings API
+  description: 'Welcome to Docplanner Integrations REST API!
+
+
+    This API gives You the ability to build Your own application and integrate it with Docplanner services.'
+  version: 1.14.0
+  x-logo:
+    url: https://docplanner.tech/logo.svg
+    backgroundColor: '#012c6d'
+    altText: Docplanner Tech
+  x-changelog:
+    1.14.0: '* Introducing new optional **apply_on_coupled_addresses** field in **AddCalendarBreakRequest** for creating the same break on the doctor''s coupled addresses in the facility
+
+      * **moveCalendarBreak** and **deleteCalendarBreak** now move and remove those coupled breaks together with the break they follow
+
+      '
+    1.13.0: '* **moveBooking** may now move a booking to an **address_id** belonging to a different doctor within the same facility, reassigning the booking to that doctor. An address outside the facility named in the path is still rejected with **403**
+
+      * **moveBooking** returns **422 Unprocessable Entity** when the booking still holds money and the target address is billed through a different payment account. Cancel the booking and create a new one instead. A payment that was fully refunded or charged back holds no money, so it does not restrict the move
+
+      '
+    1.12.0: '* Documenting **price** in **AddAddressServiceRequest** and **UpdateAddressServiceRequest** as a number with up to 2 decimal places; invalid price formats now return a **400 Bad Request** error
+
+      '
+    1.11.0: '* Introducing new **removeAddressIntegration** endpoint for DocplannerPMS API clients
+
+      '
+    1.10.0: '* Introducing new optional **custom_name** field in **AddAddressServiceRequest** and **UpdateAddressServiceRequest** for creating and updating address services with custom display names
+
+      '
+    1.9.3: '* Adding maximum date range validation of 180 days to **getSlots** endpoint. Requests exceeding this range will return a **400 Bad Request** error
+
+      '
+    1.9.2: '* Introducing new optional **specialization_id** query parameter in **getServices** endpoint
+
+      '
+    1.9.1: '* Making **price** and **description** fields in **UpdateAddressServiceRequest** nullable as they are not required
+
+      '
+    1.9.0: '* Introducing new **confirmBooking** endpoint
+
+      '
+    1.8.1: '* Introducing new **insurance_number** field in **Patient** schema for booking related notifications and endpoints
+
+      '
+    1.8.0: '* Introducing new **address_service.public_insurance_flow** scope for **getBookings** endpoint
+
+      * Introducing new **address_service.public_insurance_flow** scope for **getBooking** endpoint
+
+      * Introducing new **address_service.public_insurance_flow** scope for **getAddressServices** endpoint
+
+      * Introducing new **address_service.public_insurance_flow** scope for **getAddressService** endpoint
+
+      '
+    1.7.1: '* Introducing new optional **insurance_plans** field in **addAddressInsuranceProvider** endpoint
+
+      '
+    1.6.1: '* Introducing new **address_service.custom_name** scope for **getAddressService** and **getAddressServices** endpoints.
+
+      '
+    1.5.0: '* Introducing new optional **allowed_patients** field with **minimum_age** and **maximum_age** properties in **AddAddressServiceRequest**, **UpdateAddressServiceRequest**, and **AddressService** schema for age restrictions
+
+      '
+    1.4.8: '* Improved error message clarity for calendar breaks endpoints.
+
+      '
+    1.4.7: '* Fixed **addAddressService** and **addCalendarBreak** response not having body
+
+      '
+    1.4.6: '* Documentation: Added IP whitelisting endpoints information for partners receiving webhooks
+
+      '
+    1.4.5: "* Marking **name**, **city_name** and **street** fields in **Address** schema as nullable  \n"
+    1.4.4: '* Fixed **license_number** field name in **DoctorsWithLicenseNumbers** example for **getDoctors** endpoint
+
+      '
+    1.4.3: '* Add **city_name** field information for **Addresses** endpoints.
+
+      '
+    1.4.2: '* Fixed issue with **getBooking** endpoint in PHP SDK
+
+      '
+    1.4.1: '* Introducing new **booking.confirmation** scope for **getBookings** endpoint
+
+      '
+    1.4.0: '* Introducing new **booking.moving** scope for **getBooking** endpoint
+
+      '
+    1.3.3: '* Fixing **insurance** schema in booking callback notifications
+
+      '
+    1.3.2: '* Introducing new optional **is_recurring** field in **bookSlot** endpoint
+
+      '
+    1.3.1: '* Making **price** in **AddAddressServiceRequest** field nullable as it''s not required
+
+      '
+    1.3.0: '* Introducing new optional **insurance_provider_id** and **insurance_plan_id** fields in **bookSlot** endpoint
+
+      '
+    1.2.0: '* Introducing new optional is_visible field in updateAddressService endpoint
+
+      '
+    1.0.40: '* Marking **address_service** and **insurance** fields in **getBooking** endpoint response as nullable             * Marking **address_service** field in **getSlots** endpoint response as nullable * Marking **address_service** and **insurance** fields in booking related callback notifications as nullable
+
+      '
+    1.0.39: '* Deprecated **videocall_url** field in **getBookings** endpoint
+
+      '
+    1.0.38: '* Deprecated **send_notifications** field in **BookSlot** and **CancelBookingRequest**
+
+      '
+    1.0.37: '* Adding 422 response status code in **bookSlot** endpoint
+
+      '
+    1.0.36: '* Adding **booking-payment-status-changed** callback
+
+      '
+    1.0.35: '* Introducing new optional **comment** field on **bookSlot** endpoint
+
+      '
+    1.0.34: '* PHP SDK without dependencies on GuzzleHttp building query method.
+
+      '
+    1.0.33: '* Fixed **Error** schema
+
+      '
+    1.0.32: '* Added **address-assigned** and **address-unassigned** callbacks
+
+      '
+    1.0.31: '* Added optional pagination to **getBookings** endpoint
+
+      '
+    1.0.30: '* Changed **errors* field type in the **Error** schema
+
+      '
+    1.0.29: '* Adding **address-commercial-type-changed** callback
+
+      '
+    1.0.28: '* Introducing new optional **marketing_consent** and **data_privacy_consent** fields on **bookSlot** endpoint
+
+      '
+    1.0.27: '* Introducing new optional **label** field on **bookSlot** endpoint
+
+      '
+    1.0.26: '* Introducing **address.insurance_support** scope for **getAddress** and **getAddresses** endpoints * Introducing **updateAddress** endpoint for changing insurance support type of an address
+
+      '
+    1.0.25: '* Introducing **getCalendar** endpoint for getting calendar status
+
+      '
+    1.0.24: '* Introducing **address.commercial_type** scope for **getAddress**, **getAddresses** and **getDoctor** endpoints
+
+      '
+    1.0.23: '* Added "address-service-created", "address-service-deleted", "address-service-changed" callbacks
+
+      '
+    1.0.22: '* Introducing **doctor.profile_url** scope for **getDoctor** and **getDoctors** endpoints
+
+      '
+    1.0.21: '* Added missing **insuranceProviderId** property to **getInsurancePlans** operation  * Renamed **insurance_provider** parameter to **insurance_provider_id** in **deleteAddressInsuranceProvider** operation * Renamed **OAuth 2.0** security scheme to **oauth2** * Fixed minor syntax error * Renamed invalid **docplanner.it** domain to **miodottore.it** in the description
+
+      '
+    1.0.20: '* New (optional) property **default_duration** for **AddAddressServiceRequest** and **UpdateAddressServiceRequest**
+
+      '
+    1.0.19: '* Added "booking-confirmed" callback
+
+      '
+    1.0.18: '* Added support for insurance plans
+
+      '
+    1.0.17.1: '* Added missing is_visible property to **AddAddressServiceRequest** example payload
+
+      '
+    1.0.17: '* Introduced **Pull Multiple Notifications** endpoint
+
+      '
+    1.0.16: '* New (optional) property **is_visible** for **AddAddressServiceRequest**
+
+      '
+    1.0.15: '* New (optional) property **reason** for **CancelBookingRequest** (it is now possible to set a reason why booking was canceled)
+
+      '
+    1.0.14.1: '* Added missing is_visible property to responses and examples
+
+      '
+    1.0.14: '* Added support for custom services and is_visible property of AddressService
+
+      '
+    1.0.13: '* Creating calendar in **addCalendarBreak** when it''s missing.
+
+      '
+    1.0.12: '* Returning whole Booking on moveBooking action.
+
+      '
+    1.0.11: '* Added **insurance_accepted** and **insurance_providers** fields to **ReplaceSlotsRequest** (support for insurances configuration)
+
+      '
+    1.0.10: '* Introducing **doctor.license_numbers** scope for **getDoctor** and **getDoctors** endpoints
+
+      '
+    1.0.9: '* Added Calendars API * Added methods to enable and disable calendar on the address
+
+      '
+    1.0.8: '* New (optional) property **send_notifications** for **CancelBookingRequest** (it is now possible to set if the patient should get notifications on canceling the visit)
+
+      '
+    1.0.7: '* Buried notifications can be released: added **releaseNotifications** method
+
+      '
+    1.0.6: '* Making **patient.surname** field optional in *BookSlotRequest*
+
+      '
+    1.0.5: '* Removing **slot-changed** notification callback.
+
+      '
+    1.0.4: '* New (optional) property **address_id** for **MoveBookingRequest** (it is now possible to move booking to another address) * Changed **address_service_id** and **start** properties of **MoveBookingRequest** so they are required (documentation was missing it, they were already required in the API)
+
+      '
+    1.0.3: '* New (optional) property **description** for **AddCalendarBreakRequest** * New property **description** for **CalendarBreak**
+
+      '
+    1.0.2: '* Calendar breaks can be moved: adding **moveCalendarBreak** method for **CalendarBreaksApi** * New notification callback **break-moved**
+
+      '
+    1.0.1: '* Notification callbacks * IDs are now strings instead of integers
+
+      '
+servers:
+- url: https://www.{domain}/api/v3/integration
+  description: \{domain} - locale of docplanner marketplace ex. znanylekarz.pl
+security:
+- oauth2:
+  - integration
+tags:
+- name: Bookings
+  description: 'More information on how we define what a Bookings is, its use cases and more can be found here.
+
+    ## addBooking
+
+    In order to add a new booking use **POST** `bookSlot` endpoint from `Slots` section.'
+paths:
+  /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings:
+    parameters:
+    - $ref: '#/components/parameters/facilityId'
+    - $ref: '#/components/parameters/doctorId'
+    - $ref: '#/components/parameters/addressId'
+    - $ref: '#/components/parameters/startRequired'
+    - $ref: '#/components/parameters/endRequired'
+    - $ref: '#/components/parameters/page'
+    - $ref: '#/components/parameters/limit'
+    get:
+      operationId: getBookings
+      description: 'Get bookings list of a doctor in the facility Passing the `page` parameter in the query string will enable pagination.
+
+        Extensions:
+
+        * `booking.patient` - with this parameter in url, query results will return patient data for every booking
+
+        * `booking.address_service` - with this parameter in url, query results will return address service for every booking
+
+        * `booking.presence` - with this parameter in url, query results will return additional information weather patient was present for every booking
+
+        * `booking.confirmation` - with this parameter in url, query results will return if visit was confirmed for every booking
+
+        * `address_service.public_insurance_flow` - with this parameter in url, query results will return information if public insurance flow is supported on bookings addresses'
+      tags:
+      - Bookings
+      parameters:
+      - $ref: '#/components/parameters/bookingsWith'
+      responses:
+        '200':
+          description: Successfully retrieved bookings list
+          content:
+            application/vnd.docplanner+json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/Bookings'
+              examples:
+                Bookings:
+                  $ref: '#/components/examples/Bookings'
+                Bookings when visit payments is enabled:
+                  $ref: '#/components/examples/BookingsVisitPaymentsEnabled'
+                Bookings with booking.patient:
+                  $ref: '#/components/examples/BookingsWithPatient'
+                Bookings with booking.address_service:
+                  $ref: '#/components/examples/BookingsWithAddressService'
+                Bookings with booking.presence:
+                  $ref: '#/components/examples/BookingsWithPresence'
+                Bookings with booking.confirmation:
+                  $ref: '#/components/examples/BookingsWithConfirmation'
+                Bookings with pagination enabled:
+                  $ref: '#/components/examples/BookingsPaginated'
+                Bookings with address_service.public_insurance_flow:
+                  $ref: '#/components/examples/BookingsWithPublicInsuranceFlow'
+        '403':
+          description: You are not authorized to see this resource
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Facility:
+                  $ref: '#/components/examples/FacilityNotAuthorized'
+                Doctor:
+                  $ref: '#/components/examples/DoctorNotAuthorized'
+                Address:
+                  $ref: '#/components/examples/AddressNotAuthorized'
+        '404':
+          description: Resource not found
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Object not found:
+                  $ref: '#/components/examples/ObjectNotFound'
+      summary: Get bookings
+      x-summary-source: derived
+  /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}:
+    parameters:
+    - $ref: '#/components/parameters/facilityId'
+    - $ref: '#/components/parameters/doctorId'
+    - $ref: '#/components/parameters/addressId'
+    - $ref: '#/components/parameters/bookingId'
+    get:
+      operationId: getBooking
+      description: 'View specific booking.
+
+
+        Extensions:
+
+        * `booking.moving` - with this parameter in url, query results will return moving data (origin and newest booking ids) as long as the booking was created after 2nd April 2025 (otherwise it will return null); for bookings that were not moved, origin and newest booking ids will be equal the id of a booking requested
+
+        * `address_service.public_insurance_flow` - with this parameter in url, query results will return information if public insurance flow is supported on booking address'
+      tags:
+      - Bookings
+      parameters:
+      - $ref: '#/components/parameters/bookingWith'
+      responses:
+        '200':
+          description: Successfully retrieved booking
+          content:
+            application/vnd.docplanner+json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/Booking'
+              examples:
+                Booking:
+                  $ref: '#/components/examples/Booking'
+                Booking when visit payments is enabled:
+                  $ref: '#/components/examples/BookingVisitPaymentsEnabled'
+                Booking when videocall is enabled:
+                  $ref: '#/components/examples/BookingVideocallEnabled'
+                Booking with booking.moving when booking was moved (for bookings created after 2nd April 2025):
+                  $ref: '#/components/examples/BookingWithMovingMoved'
+                Booking with booking.moving when booking was not moved (for bookings created after 2nd April 2025):
+                  $ref: '#/components/examples/BookingWithMovingNotMoved'
+                Booking with booking.moving (for bookings created before 2nd April 2025):
+                  $ref: '#/components/examples/BookingWithMovingNoDataAvailable'
+                Booking with address_service.public_insurance_flow:
+                  $ref: '#/components/examples/BookingWithPublicInsuranceFlow'
+        '403':
+          description: You are not authorized to see this resource
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Facility:
+                  $ref: '#/components/examples/FacilityNotAuthorized'
+                Doctor:
+                  $ref: '#/components/examples/DoctorNotAuthorized'
+                Address:
+                  $ref: '#/components/examples/AddressNotAuthorized'
+        '404':
+          description: Resource not found
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Object not found:
+                  $ref: '#/components/examples/ObjectNotFound'
+      summary: Get booking
+      x-summary-source: derived
+    delete:
+      operationId: cancelBooking
+      description: Cancel the booking
+      tags:
+      - Bookings
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelBookingRequest'
+            examples:
+              Cancel booking with notifying the patient and reason:
+                $ref: '#/components/examples/CancelBookingWithPatientNotificationAndReason'
+      responses:
+        '204':
+          description: Successfully canceled the booking
+        '400':
+          description: Validation of the submitted values wasn't successful
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Validation error:
+                  $ref: '#/components/examples/DeleteBookingValidationError'
+                Unable to cancel booking for given address:
+                  $ref: '#/components/examples/UnableToCancelForAddress'
+        '403':
+          description: You are not authorized to see this resource
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Facility:
+                  $ref: '#/components/examples/FacilityNotAuthorized'
+                Doctor:
+                  $ref: '#/components/examples/DoctorNotAuthorized'
+        '404':
+          description: Resource not found
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Object not found:
+                  $ref: '#/components/examples/ObjectNotFound'
+      summary: Cancel booking
+      x-summary-source: derived
+  /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}/move:
+    parameters:
+    - $ref: '#/components/parameters/facilityId'
+    - $ref: '#/components/parameters/doctorId'
+    - $ref: '#/components/parameters/addressId'
+    - $ref: '#/components/parameters/bookingId'
+    post:
+      operationId: moveBooking
+      description: 'Move a booking for a doctor
+
+
+        The optional **address_id** in the body may name an address of a **different doctor within the same facility**, which reassigns the booking to that doctor. The doctor is taken from the address, so no separate field is needed, and the `Location` header of the response names the doctor the booking now belongs to. An address outside the facility named in the path is still rejected with `403`. Omitting **address_id**, or naming another address of the same doctor, behaves as it always has.
+
+
+        A booking that still holds money can only be moved to an address billed through the same payment account. When it is not, the request is rejected with `422` and nothing changes — cancel the booking and create a new one instead. A booking whose payment was fully refunded or charged back holds no money, so this restriction does not apply to it.
+
+
+        Extensions:
+
+
+        * `address_service.public_insurance_flow` - with this parameter in url, query results will return information if public insurance flow is supported on booking address'
+      tags:
+      - Bookings
+      parameters:
+      - $ref: '#/components/parameters/moveBookingWith'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoveBookingRequest'
+            examples:
+              Move booking:
+                $ref: '#/components/examples/MoveBooking'
+              Move booking (to other address):
+                $ref: '#/components/examples/MoveBookingToOtherAddress'
+      responses:
+        '201':
+          description: Successfully moved the booking
+          headers:
+            Location:
+              schema:
+                type: string
+              description: Resource URL for the new booking
+          content:
+            application/vnd.docplanner+json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/Booking'
+              examples:
+                Booking:
+                  $ref: '#/components/examples/Booking'
+                Booking with address_service.public_insurance_flow:
+                  $ref: '#/components/examples/BookingWithPublicInsuranceFlow'
+        '400':
+          description: Validation of the submitted values wasn't successful
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Validation error:
+                  $ref: '#/components/examples/MoveBookingValidationError'
+                Service does not belong to the address:
+                  $ref: '#/components/examples/ServiceDoesNotBelongToAddress'
+                Service does not exist:
+                  $ref: '#/components/examples/ServiceDoesNotExist'
+                Address does not exist:
+                  $ref: '#/components/examples/AddressDoesNotExist'
+        '403':
+          description: You are not authorized to see this resource
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Facility:
+                  $ref: '#/components/examples/FacilityNotAuthorized'
+                Doctor:
+                  $ref: '#/components/examples/DoctorNotAuthorized'
+                Address:
+                  $ref: '#/components/examples/AddressNotAuthorized'
+                Address does not belong to facility:
+                  $ref: '#/components/examples/AddressDoesNotBelongToFacility'
+                Address does not belong to doctor:
+                  $ref: '#/components/examples/AddressDoesNotBelongToDoctor'
+                Booking does not belong to address:
+                  $ref: '#/components/examples/BookingDoesNotBelongToAddress'
+        '404':
+          description: Resource not found
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Object not found:
+                  $ref: '#/components/examples/ObjectNotFound'
+        '409':
+          description: Request would result in creating conflicted or duplicated resources
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Visit already moved or deleted:
+                  $ref: '#/components/examples/VisitAlreadyMovedOrDeleted'
+        '422':
+          description: The booking still holds money and the target address is billed through a different payment account
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Target address bills through another payment account:
+                  $ref: '#/components/examples/BookingCannotCrossPaymentAccounts'
+      summary: Move booking
+      x-summary-source: derived
+  /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}/confirm:
+    parameters:
+    - $ref: '#/components/parameters/facilityId'
+    - $ref: '#/components/parameters/doctorId'
+    - $ref: '#/components/parameters/addressId'
+    - $ref: '#/components/parameters/bookingId'
+    put:
+      operationId: confirmBooking
+      description: Confirm the booking
+      tags:
+      - Bookings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmBookingRequest'
+            examples:
+              Confirm booking:
+                $ref: '#/components/examples/ConfirmBooking'
+      responses:
+        '204':
+          description: Successfully confirmed the booking
+        '400':
+          description: Validation of the submitted values wasn't successful
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Validation error:
+                  $ref: '#/components/examples/ConfirmBookingValidationError'
+                Integration not authorized for address:
+                  $ref: '#/components/examples/ConfirmBookingInvalidIntegration'
+        '403':
+          description: You are not authorized to see this resource
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Facility:
+                  $ref: '#/components/examples/FacilityNotAuthorized'
+                Doctor:
+                  $ref: '#/components/examples/DoctorNotAuthorized'
+                Address:
+                  $ref: '#/components/examples/AddressNotAuthorized'
+                Address does not belong to facility:
+                  $ref: '#/components/examples/AddressDoesNotBelongToFacility'
+                Address does not belong to doctor:
+                  $ref: '#/components/examples/AddressDoesNotBelongToDoctor'
+                Booking does not belong to address:
+                  $ref: '#/components/examples/BookingDoesNotBelongToAddress'
+        '404':
+          description: Resource not found
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Object not found:
+                  $ref: '#/components/examples/ObjectNotFound'
+        '409':
+          description: Request would result in creating conflicted or duplicated resources
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Visit already confirmed:
+                  $ref: '#/components/examples/ConfirmBookingAlreadyConfirmed'
+                Visit has been canceled:
+                  $ref: '#/components/examples/ConfirmBookingVisitCanceled'
+                Visit has been deleted:
+                  $ref: '#/components/examples/ConfirmBookingVisitDeleted'
+                Visit is in the past:
+                  $ref: '#/components/examples/ConfirmBookingPastVisit'
+      summary: Confirm booking
+      x-summary-source: derived
+  /facilities/{facility_id}/doctors/{doctor_id}/opinion-request:
+    parameters:
+    - $ref: '#/components/parameters/facilityId'
+    - $ref: '#/components/parameters/doctorId'
+    put:
+      operationId: requestOpinion
+      description: After the visit was booked via clinics software, by calling this endpoint you can request SMS asking patient to leave an opinion. We do not store patient and visit information
+      tags:
+      - Bookings
+      requestBody:
+        description: Phone number of the patient
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpinionRequest'
+            examples:
+              OpinionRequest:
+                $ref: '#/components/examples/OpinionRequest'
+      responses:
+        '200':
+          description: Successfully put opinion request
+        '400':
+          description: Validation of the submitted values wasn't successful
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Validation error:
+                  $ref: '#/components/examples/OpinionRequestValidationError'
+        '403':
+          description: You are not authorized to see this resource
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Facility:
+                  $ref: '#/components/examples/FacilityNotAuthorized'
+                Doctor not from given facility:
+                  $ref: '#/components/examples/DoctorDoesNotBelongToFacility'
+                Requested visit not found:
+                  $ref: '#/components/examples/VisitNotFound'
+        '404':
+          description: Resource not found
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Object not found:
+                  $ref: '#/components/examples/ObjectNotFound'
+        '409':
+          description: Request would result in creating conflicted or duplicated resources
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Opinion already exists:
+                  $ref: '#/components/examples/OpinionAlreadyExist'
+        '422':
+          description: Request cannot be processed
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Cannot send request for opinion:
+                  $ref: '#/components/examples/CannotSendRequestForOpinion'
+      summary: Request opinion
+      x-summary-source: derived
+components:
+  parameters:
+    limit:
+      name: limit
+      in: query
+      description: Maximum number of items per page. If not provided the default value of 100 is applied if pagination is used.
+      required: false
+      schema:
+        type: integer
+        example: 100
+    facilityId:
+      name: facility_id
+      in: path
+      description: ID of the Facility
+      example: 1
+      required: true
+      schema:
+        type: string
+    page:
+      name: page
+      in: query
+      description: Page number to use for pagination. If not provided the pagination is not applied.
+      required: false
+      schema:
+        type: integer
+        example: 1
+    startRequired:
+      name: start
+      in: query
+      description: Slot start date (parameter must be urlencoded before sending request)
+      required: true
+      schema:
+        type: string
+        format: date-time
+        example: '2021-05-16T14:00:00+01:00'
+    doctorId:
+      name: doctor_id
+      in: path
+      description: ID of a doctor in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
+    addressId:
+      name: address_id
+      in: path
+      description: ID of a doctor`s address in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
+    bookingsWith:
+      name: with
+      in: query
+      required: false
+      style: simple
+      schema:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/BookingsScopes'
+    bookingWith:
+      name: with
+      in: query
+      required: false
+      style: simple
+      schema:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/BookingScopes'
+    moveBookingWith:
+      name: with
+      in: query
+      required: false
+      style: simple
+      schema:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/MoveBookingScopes'
+    bookingId:
+      name: booking_id
+      in: path
+      description: ID of the Booking
+      required: true
+      schema:
+        type: string
+        example: 123
+    endRequired:
+      name: end
+      in: query
+      description: Slot end date (parameter must be urlencoded before sending request)
+      required: true
+      schema:
+        type: string
+        format: date-time
+        example: '2021-05-16T15:00:00+01:00'
+  examples:
+    MoveBookingToOtherAddress:
+      value:
+        address_service_id: '113'
+        start: '2021-05-26T16:00:00+01:00'
+        duration: 30
+        address_id: '112233'
+    ConfirmBookingVisitDeleted:
+      value:
+        errors: []
+        message: Visit has been deleted
+    DoctorDoesNotBelongToFacility:
+      value:
+        errors: []
+        message: Doctor is not related with facility
+    BookingsWithAddressService:
+      value:
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          address_service:
+            id: '101'
+            name: USG
+            price: 100
+            is_price_from: false
+            is_default: true
+            service_id: '1'
+            description: Description of service
+            is_visible: true
+          comment: comment
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          address_service:
+            id: '101'
+            name: USG
+            price: 100
+            is_price_from: false
+            is_default: true
+            service_id: '1'
+            description: Description of service
+            is_visible: true
+          comment: null
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+    BookingVisitPaymentsEnabled:
+      value:
+        id: '2134124'
+        status: booked
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: ''
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: null
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          is_returning: false
+          insurance_number: CARD-7654321
+        address_service:
+          id: '101'
+          name: USG
+          price: 100
+          is_price_from: false
+          is_default: true
+          service_id: '1'
+          description: Description of service
+          is_visible: true
+        comment: comment
+        insurance:
+          id: '11'
+          name: Axa
+          plan: null
+          plan_id: null
+        visit_payment: true
+        visit_payment_status: successful
+    VisitNotFound:
+      value:
+        errors: []
+        message: Visit not found
+    AddressDoesNotBelongToFacility:
+      value:
+        errors: []
+        message: This address does not belong to this facility
+    AddressNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this address
+    BookingsWithPatient:
+      value:
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          patient:
+            name: Abraham
+            surname: Lincoln
+            email: example@example.com
+            phone: 48123123123
+            birth_date: '1985-01-01'
+            nin: 894237492
+            gender: m
+            is_returning: false
+            insurance_number: CARD-7654321
+          comment: comment
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          patient:
+            name: Abraham
+            surname: Lincoln
+            email: example@example.com
+            phone: 48123123123
+            birth_date: '1985-01-01'
+            nin: 894237492
+            gender: m
+            is_returning: false
+            insurance_number: CARD-7654321
+          comment: null
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+    ConfirmBookingVisitCanceled:
+      value:
+        errors: []
+        message: Visit has been canceled
+    ConfirmBookingPastVisit:
+      value:
+        errors: []
+        message: Visit is in the past
+    CannotSendRequestForOpinion:
+      value:
+        errors: []
+        message: Cannot send request
+    BookingsWithPresence:
+      value:
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          comment: comment
+          presence: null
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          comment: null
+          presence: present
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+    BookingsWithPublicInsuranceFlow:
+      value:
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          address_service:
+            id: '101'
+            name: USG
+            price: 100
+            is_price_from: false
+            is_default: true
+            service_id: '1'
+            description: Description of service
+            is_visible: true
+          comment: comment
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          address_service:
+            id: '101'
+            name: USG
+            price: 100
+            is_price_from: false
+            is_default: true
+            service_id: '1'
+            description: Description of service
+            is_visible: true
+            is_public_insurance_flow: false
+          comment: null
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+    BookingWithMovingNotMoved:
+      value:
+        id: '2134124'
+        status: canceled
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: '2021-05-13T15:12:00+01:00'
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: null
+        moving:
+          origin_booking_id: '2134124'
+          newest_booking_id: '2134124'
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          is_returning: false
+          insurance_number: CARD-7654321
+        address_service:
+          id: '101'
+          name: USG
+          price: 100
+          is_price_from: false
+          is_default: true
+          service_id: '1'
+          description: Description of service
+          is_visible: true
+        comment: comment
+        insurance:
+          id: '11'
+          name: Axa
+          plan: null
+          plan_id: null
+    OpinionAlreadyExist:
+      value:
+        errors: []
+        message: Opinion already exists
+    BookingsWithConfirmation:
+      value:
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          comment: comment
+          confirmed: false
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          comment: null
+          confirmed: true
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+    BookingWithMovingNoDataAvailable:
+      value:
+        id: '2134124'
+        status: canceled
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: '2021-05-13T15:12:00+01:00'
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: null
+        moving: null
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          is_returning: false
+          insurance_number: CARD-7654321
+        address_service:
+          id: '101'
+          name: USG
+          price: 100
+          is_price_from: false
+          is_default: true
+          service_id: '1'
+          description: Description of service
+          is_visible: true
+        comment: comment
+        insurance:
+          id: '11'
+          name: Axa
+          plan: null
+          plan_id: null
+    BookingsVisitPaymentsEnabled:
+      value:
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          comment: comment
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+          visit_payment: true
+          visit_payment_status: successful
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          comment: null
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+          visit_payment: true
+          visit_payment_status: paid
+    AddressDoesNotBelongToDoctor:
+      value:
+        errors: []
+        message: This address does not belong to this doctor
+    MoveBookingValidationError:
+      value:
+        errors: []
+        message: Invalid arguments
+    ServiceDoesNotBelongToAddress:
+      value:
+        errors: []
+        message: Service does not belong to the address
+    BookingDoesNotBelongToAddress:
+      value:
+        errors: []
+        message: This booking does not belong to this address
+    AddressDoesNotExist:
+      value:
+        errors: []
+        message: Address does not exist
+    OpinionRequestValidationError:
+      value:
+        errors: []
+        message: 'Validation error message, e.g.: Phone number is invalid.'
+    ConfirmBookingAlreadyConfirmed:
+      value:
+        errors: []
+        message: Visit has already been confirmed
+    VisitAlreadyMovedOrDeleted:
+      value:
+        errors: []
+        message: The visit has already been canceled or moved
+    BookingVideocallEnabled:
+      value:
+        id: '2134124'
+        status: booked
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: ''
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: null
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          is_returning: false
+          insurance_number: CARD-7654321
+        address_service:
+          id: '101'
+          name: USG
+          price: 100
+          is_price_from: false
+          is_default: true
+          service_id: '1'
+          description: Description of service
+          is_visible: true
+        comment: comment
+        insurance:
+          id: '11'
+          name: Axa
+          plan: null
+          plan_id: null
+        videocall_url: http://url-to-video-call
+    MoveBooking:
+      value:
+        address_service_id: '112'
+        start: '2021-05-26T16:00:00+01:00'
+        duration: 30
+    ObjectNotFound:
+      value:
+        errors: []
+        message: Object not found
+    BookingCannotCrossPaymentAccounts:
+      value:
+        errors: []
+        message: This booking has a payment on it and the target address bills through a different payment account. Cancel the booking and create a new one instead.
+    DoctorNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this doctor
+    OpinionRequest:
+      value:
+        phone: '123456789'
+    ConfirmBookingValidationError:
+      value:
+        errors: []
+        message: 'Validation error message, e.g.: confirmed_by value is invalid'
+    Bookings:
+      value:
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          comment: comment
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          comment: null
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+    UnableToCancelForAddress:
+      value:
+        errors: []
+        message: Unable to cancel a visit for this address
+    FacilityNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this facility
+    Booking:
+      value:
+        id: '2134124'
+        status: booked
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: ''
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: null
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          is_returning: false
+          insurance_number: null
+        address_service:
+          id: '101'
+          name: USG
+          price: 100
+          is_price_from: false
+          is_default: true
+          service_id: '1'
+          description: Description of service
+          is_visible: true
+        comment: comment
+        insurance:
+          id: '11'
+          name: Axa
+          plan: null
+          plan_id: null
+    ConfirmBooking:
+      value:
+        confirmed_by: user
+    BookingsPaginated:
+      value:
+        page: 1
+        limit: 2
+        pages: 11
+        total: 25
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          comment: comment
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          comment: null
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+    BookingWithPublicInsuranceFlow:
+      value:
+        id: '2134124'
+        status: booked
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: ''
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: null
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          is_returning: false
+          insurance_number: CARD-7654321
+        address_service:
+          id: '101'
+          name: USG
+          price: 100
+          is_price_from: false
+          is_default: true
+          service_id: '1'
+          description: Description of service
+          is_visible: true
+          is_public_insurance_flow: false
+        comment: comment
+        insurance:
+          id: '11'
+          name: Axa
+          plan: null
+          plan_id: null
+    ServiceDoesNotExist:
+      value:
+        errors: []
+        message: Service does not exist
+    BookingWithMovingMoved:
+      value:
+        id: '2134124'
+        status: canceled
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: '2021-05-13T15:12:00+01:00'
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: null
+        moving:
+          origin_booking_id: '2134101'
+          newest_booking_id: '2134135'
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          is_returning: false
+          insurance_number: CARD-7654321
+        address_service:
+          id: '101'
+          name: USG
+          price: 100
+          is_price_from: false
+          is_default: true
+          service_id: '1'
+          description: Description of service
+          is_visible: true
+        comment: comment
+        insurance:
+          id: '11'
+          name: Axa
+          plan: null
+          plan_id: null
+    CancelBookingWithPatientNotificationAndReason:
+      value:
+        reason: Doctor will not be present on that day in the clinic
+    DeleteBookingValidationError:
+      value:
+        errors: []
+        message: 'Validation error message, e.g.: Visit 12345 cannot be canceled because it is not booked'
+    ConfirmBookingInvalidIntegration:
+      value:
+        errors: []
+        message: Integration is not authorized for this address
+  schemas:
+    Bookings:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Booking'
+        page:
+          type:
+          - integer
+          - 'null'
+          example: 1
+        limit:
+          type:
+          - integer
+          - 'null'
+          example: 100
+        pages:
+          type:
+          - integer
+          - 'null'
+          example: 11
+        total:
+          type:
+          - integer
+          - 'null'
+          example: 106
+    ConfirmBookingRequest:
+      type: object
+      properties:
+        confirmed_by:
+          type: string
+          enum:
+          - user
+          - admin
+          example: user
+          description: Who confirmed the booking
+      required:
+      - confirmed_by
+    AddressService:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 468628
+        name:
+          type: string
+          example: EEG
+        price:
+          type:
+          - integer
+          - 'null'
+          example: 500
+          description: Integer part of the price (decimals truncated)
+        is_price_from:
+          type: boolean
+          example: true
+          description: If true, the price is the minimum price of the service
+        is_default:
+          type: boolean
+          example: false
+        service_id:
+          type:
+          - string
+          - 'null'
+          example: null
+        description:
+          type:
+          - string
+          - 'null'
+          example: null
+        duration:
+          type: integer
+          example: 30
+        is_visible:
+          type: boolean
+          example: true
+        allowed_patients:
+          allOf:
+          - $ref: '#/components/schemas/AllowedPatientsData'
+        custom_name:
+          type:
+          - string
+          - 'null'
+          example: Custom Service Name
+    Insurance:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        plan:
+          type:
+          - string
+          - 'null'
+        plan_id:
+          type:
+          - string
+          - 'null'
+    BookingsScopes:
+      type: string
+      enum:
+      - booking.patient
+      - booking.address_service
+      - booking.presence
+      - address_service.public_insurance_flow
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
+    CancelBookingRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          example: Doctor will not be present on that day
+          description: Reason why visit was canceled
+    OpinionRequest:
+      type: object
+      properties:
+        phone:
+          type: string
+          example: '123456789'
+      required:
+      - phone
+    MoveBookingRequest:
+      type: object
+      properties:
+        address_service_id:
+          type: string
+          example: 112
+        start:
+          type: string
+          format: date-time
+          example: '2021-05-26T16:00:00+01:00'
+        duration:
+          type: integer
+          example: 30
+        address_id:
+          type: string
+          example: 12345789
+      required:
+      - address_service_id
+    BookingPatient:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Abraham
+        surname:
+          type: string
+          example: Lincoln
+        email:
+          type:
+          - string
+          - 'null'
+          example: example@example.com
+        phone:
+          type:
+          - string
+          - 'null'
+          example: '+48123123123'
+        birth_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          example: '1985-01-01'
+        nin:
+          type:
+          - string
+          - 'null'
+          example: '894237492'
+        gender:
+          type:
+          - string
+          - 'null'
+          enum:
+          - m
+          - f
+        is_returning:
+          type: boolean
+          example: false
+        insurance_number:
+          type:
+          - string
+          - 'null'
+          example: CARD-7654321
+    Booking:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '2134124'
+        status:
+          type: string
+          example: booked
+        start_at:
+          type: string
+          format: date-time
+          example: '2021-05-16T14:00:00+01:00'
+        end_at:
+          type: string
+          format: date-time
+          example: '2021-05-16T14:30:00+01:00'
+        duration:
+          type: integer
+          example: 30
+        booked_by:
+          type: string
+          enum:
+          - user
+          - doctor
+          - integration
+        canceled_by:
+          type: string
+          enum:
+          - ''
+          - user
+          - doctor
+          - integration
+        booked_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T12:00:00+01:00'
+        canceled_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: '2021-05-16T14:30:00+01:00'
+        moving:
+          allOf:
+          - $ref: '#/components/schemas/BookingMoving'
+        patient:
+          $ref: '#/components/schemas/BookingPatient'
+        address_service:
+          allOf:
+          - $ref: '#/components/schemas/AddressService'
+        comment:
+          type:
+          - string
+          - 'null'
+        presence:
+          type:
+          - string
+          - 'null'
+          enum:
+          - present
+          - absent
+        insurance:
+          allOf:
+          - $ref: '#/components/schemas/Insurance'
+        visit_payment:
+          type:
+          - boolean
+          - 'null'
+        visit_payment_status:
+          type:
+          - string
+          - 'null'
+        videocall_url:
+          type:
+          - string
+          - 'null'
+    BookingScopes:
+      type: string
+      enum:
+      - booking.moving
+      - address_service.public_insurance_flow
+    MoveBookingScopes:
+      type: string
+      enum:
+      - address_service.public_insurance_flow
+    BookingMoving:
+      type: object
+      properties:
+        origin_booking_id:
+          type: string
+          example: '2134124'
+        newest_booking_id:
+          type: string
+          example: '2134125'
+    AllowedPatientsData:
+      type: object
+      properties:
+        minimum_age:
+          type:
+          - integer
+          - 'null'
+          example: 18
+          description: Minimum age of patients allowed for this service
+        maximum_age:
+          type:
+          - integer
+          - 'null'
+          example: 65
+          description: Maximum age of patients allowed for this service
+  securitySchemes:
+    oauth2:
+      name: OAuth 2.0
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://www.{domain}/oauth/v2/token
+          scopes:
+            integration: API integration
+      description: "The API utilizes the industry-standard [OAuth 2.0](https://tools.ietf.org/html/rfc6749) protocol.\n\nAll requests to our API must be authenticated and must include a valid access token.\n\n`NOTE! Our SSO Api version is v2 while our Integration Api version is v3`\n\nYou can get a token for testing purposes with cURL\n\n```\ncurl -u {client_id}:{client_secret} https://www.{domain}/oauth/v2/token -d 'grant_type=client_credentials&scope=integration'\n```\n\nA response example you can expect\n\n```\n{\n    \"access_token\": \"03807cb390319329bdf6c777d4dfae9c0d3b3c35\",\n    \"expires_in\": 3600,\n    \"token_type\": \"bearer\",\n    \"scope\": null\n}\n```\n\nAnd then with every request in the `request header` you should add your bearer token like so:\n\n```\nAuthorization: Bearer {access_token}\n```\n"

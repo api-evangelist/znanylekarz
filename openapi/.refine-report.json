@@ -1,0 +1,42 @@
+{
+  "provider": "znanylekarz",
+  "sources": [
+    "_original/znanylekarz-integrations-api-openapi.json"
+  ],
+  "outputs": [
+    "znanylekarz-api-notification-callbacks-api-openapi.yml",
+    "znanylekarz-addresses-api-openapi.yml",
+    "znanylekarz-bookings-api-openapi.yml",
+    "znanylekarz-calendar-breaks-api-openapi.yml",
+    "znanylekarz-calendars-api-openapi.yml",
+    "znanylekarz-doctors-api-openapi.yml",
+    "znanylekarz-facilities-api-openapi.yml",
+    "znanylekarz-insurances-api-openapi.yml",
+    "znanylekarz-patient-presence-api-openapi.yml",
+    "znanylekarz-services-api-openapi.yml",
+    "znanylekarz-slots-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "znanylekarz-integrations-api-openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/znanylekarz-integrations-api.yml: archived document superseded by a larger archived document",
+    "znanylekarz-addresses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "znanylekarz-api-notification-callbacks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "znanylekarz-bookings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "znanylekarz-calendar-breaks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "znanylekarz-calendars-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "znanylekarz-doctors-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "znanylekarz-facilities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "znanylekarz-insurances-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "znanylekarz-patient-presence-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "znanylekarz-services-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "znanylekarz-slots-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

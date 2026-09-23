@@ -1,0 +1,1174 @@
+openapi: 3.2.0
+info:
+  title: Docplanner Integrations Slots API
+  description: 'Welcome to Docplanner Integrations REST API!
+
+
+    This API gives You the ability to build Your own application and integrate it with Docplanner services.'
+  version: 1.14.0
+  x-logo:
+    url: https://docplanner.tech/logo.svg
+    backgroundColor: '#012c6d'
+    altText: Docplanner Tech
+  x-changelog:
+    1.14.0: '* Introducing new optional **apply_on_coupled_addresses** field in **AddCalendarBreakRequest** for creating the same break on the doctor''s coupled addresses in the facility
+
+      * **moveCalendarBreak** and **deleteCalendarBreak** now move and remove those coupled breaks together with the break they follow
+
+      '
+    1.13.0: '* **moveBooking** may now move a booking to an **address_id** belonging to a different doctor within the same facility, reassigning the booking to that doctor. An address outside the facility named in the path is still rejected with **403**
+
+      * **moveBooking** returns **422 Unprocessable Entity** when the booking still holds money and the target address is billed through a different payment account. Cancel the booking and create a new one instead. A payment that was fully refunded or charged back holds no money, so it does not restrict the move
+
+      '
+    1.12.0: '* Documenting **price** in **AddAddressServiceRequest** and **UpdateAddressServiceRequest** as a number with up to 2 decimal places; invalid price formats now return a **400 Bad Request** error
+
+      '
+    1.11.0: '* Introducing new **removeAddressIntegration** endpoint for DocplannerPMS API clients
+
+      '
+    1.10.0: '* Introducing new optional **custom_name** field in **AddAddressServiceRequest** and **UpdateAddressServiceRequest** for creating and updating address services with custom display names
+
+      '
+    1.9.3: '* Adding maximum date range validation of 180 days to **getSlots** endpoint. Requests exceeding this range will return a **400 Bad Request** error
+
+      '
+    1.9.2: '* Introducing new optional **specialization_id** query parameter in **getServices** endpoint
+
+      '
+    1.9.1: '* Making **price** and **description** fields in **UpdateAddressServiceRequest** nullable as they are not required
+
+      '
+    1.9.0: '* Introducing new **confirmBooking** endpoint
+
+      '
+    1.8.1: '* Introducing new **insurance_number** field in **Patient** schema for booking related notifications and endpoints
+
+      '
+    1.8.0: '* Introducing new **address_service.public_insurance_flow** scope for **getBookings** endpoint
+
+      * Introducing new **address_service.public_insurance_flow** scope for **getBooking** endpoint
+
+      * Introducing new **address_service.public_insurance_flow** scope for **getAddressServices** endpoint
+
+      * Introducing new **address_service.public_insurance_flow** scope for **getAddressService** endpoint
+
+      '
+    1.7.1: '* Introducing new optional **insurance_plans** field in **addAddressInsuranceProvider** endpoint
+
+      '
+    1.6.1: '* Introducing new **address_service.custom_name** scope for **getAddressService** and **getAddressServices** endpoints.
+
+      '
+    1.5.0: '* Introducing new optional **allowed_patients** field with **minimum_age** and **maximum_age** properties in **AddAddressServiceRequest**, **UpdateAddressServiceRequest**, and **AddressService** schema for age restrictions
+
+      '
+    1.4.8: '* Improved error message clarity for calendar breaks endpoints.
+
+      '
+    1.4.7: '* Fixed **addAddressService** and **addCalendarBreak** response not having body
+
+      '
+    1.4.6: '* Documentation: Added IP whitelisting endpoints information for partners receiving webhooks
+
+      '
+    1.4.5: "* Marking **name**, **city_name** and **street** fields in **Address** schema as nullable  \n"
+    1.4.4: '* Fixed **license_number** field name in **DoctorsWithLicenseNumbers** example for **getDoctors** endpoint
+
+      '
+    1.4.3: '* Add **city_name** field information for **Addresses** endpoints.
+
+      '
+    1.4.2: '* Fixed issue with **getBooking** endpoint in PHP SDK
+
+      '
+    1.4.1: '* Introducing new **booking.confirmation** scope for **getBookings** endpoint
+
+      '
+    1.4.0: '* Introducing new **booking.moving** scope for **getBooking** endpoint
+
+      '
+    1.3.3: '* Fixing **insurance** schema in booking callback notifications
+
+      '
+    1.3.2: '* Introducing new optional **is_recurring** field in **bookSlot** endpoint
+
+      '
+    1.3.1: '* Making **price** in **AddAddressServiceRequest** field nullable as it''s not required
+
+      '
+    1.3.0: '* Introducing new optional **insurance_provider_id** and **insurance_plan_id** fields in **bookSlot** endpoint
+
+      '
+    1.2.0: '* Introducing new optional is_visible field in updateAddressService endpoint
+
+      '
+    1.0.40: '* Marking **address_service** and **insurance** fields in **getBooking** endpoint response as nullable             * Marking **address_service** field in **getSlots** endpoint response as nullable * Marking **address_service** and **insurance** fields in booking related callback notifications as nullable
+
+      '
+    1.0.39: '* Deprecated **videocall_url** field in **getBookings** endpoint
+
+      '
+    1.0.38: '* Deprecated **send_notifications** field in **BookSlot** and **CancelBookingRequest**
+
+      '
+    1.0.37: '* Adding 422 response status code in **bookSlot** endpoint
+
+      '
+    1.0.36: '* Adding **booking-payment-status-changed** callback
+
+      '
+    1.0.35: '* Introducing new optional **comment** field on **bookSlot** endpoint
+
+      '
+    1.0.34: '* PHP SDK without dependencies on GuzzleHttp building query method.
+
+      '
+    1.0.33: '* Fixed **Error** schema
+
+      '
+    1.0.32: '* Added **address-assigned** and **address-unassigned** callbacks
+
+      '
+    1.0.31: '* Added optional pagination to **getBookings** endpoint
+
+      '
+    1.0.30: '* Changed **errors* field type in the **Error** schema
+
+      '
+    1.0.29: '* Adding **address-commercial-type-changed** callback
+
+      '
+    1.0.28: '* Introducing new optional **marketing_consent** and **data_privacy_consent** fields on **bookSlot** endpoint
+
+      '
+    1.0.27: '* Introducing new optional **label** field on **bookSlot** endpoint
+
+      '
+    1.0.26: '* Introducing **address.insurance_support** scope for **getAddress** and **getAddresses** endpoints * Introducing **updateAddress** endpoint for changing insurance support type of an address
+
+      '
+    1.0.25: '* Introducing **getCalendar** endpoint for getting calendar status
+
+      '
+    1.0.24: '* Introducing **address.commercial_type** scope for **getAddress**, **getAddresses** and **getDoctor** endpoints
+
+      '
+    1.0.23: '* Added "address-service-created", "address-service-deleted", "address-service-changed" callbacks
+
+      '
+    1.0.22: '* Introducing **doctor.profile_url** scope for **getDoctor** and **getDoctors** endpoints
+
+      '
+    1.0.21: '* Added missing **insuranceProviderId** property to **getInsurancePlans** operation  * Renamed **insurance_provider** parameter to **insurance_provider_id** in **deleteAddressInsuranceProvider** operation * Renamed **OAuth 2.0** security scheme to **oauth2** * Fixed minor syntax error * Renamed invalid **docplanner.it** domain to **miodottore.it** in the description
+
+      '
+    1.0.20: '* New (optional) property **default_duration** for **AddAddressServiceRequest** and **UpdateAddressServiceRequest**
+
+      '
+    1.0.19: '* Added "booking-confirmed" callback
+
+      '
+    1.0.18: '* Added support for insurance plans
+
+      '
+    1.0.17.1: '* Added missing is_visible property to **AddAddressServiceRequest** example payload
+
+      '
+    1.0.17: '* Introduced **Pull Multiple Notifications** endpoint
+
+      '
+    1.0.16: '* New (optional) property **is_visible** for **AddAddressServiceRequest**
+
+      '
+    1.0.15: '* New (optional) property **reason** for **CancelBookingRequest** (it is now possible to set a reason why booking was canceled)
+
+      '
+    1.0.14.1: '* Added missing is_visible property to responses and examples
+
+      '
+    1.0.14: '* Added support for custom services and is_visible property of AddressService
+
+      '
+    1.0.13: '* Creating calendar in **addCalendarBreak** when it''s missing.
+
+      '
+    1.0.12: '* Returning whole Booking on moveBooking action.
+
+      '
+    1.0.11: '* Added **insurance_accepted** and **insurance_providers** fields to **ReplaceSlotsRequest** (support for insurances configuration)
+
+      '
+    1.0.10: '* Introducing **doctor.license_numbers** scope for **getDoctor** and **getDoctors** endpoints
+
+      '
+    1.0.9: '* Added Calendars API * Added methods to enable and disable calendar on the address
+
+      '
+    1.0.8: '* New (optional) property **send_notifications** for **CancelBookingRequest** (it is now possible to set if the patient should get notifications on canceling the visit)
+
+      '
+    1.0.7: '* Buried notifications can be released: added **releaseNotifications** method
+
+      '
+    1.0.6: '* Making **patient.surname** field optional in *BookSlotRequest*
+
+      '
+    1.0.5: '* Removing **slot-changed** notification callback.
+
+      '
+    1.0.4: '* New (optional) property **address_id** for **MoveBookingRequest** (it is now possible to move booking to another address) * Changed **address_service_id** and **start** properties of **MoveBookingRequest** so they are required (documentation was missing it, they were already required in the API)
+
+      '
+    1.0.3: '* New (optional) property **description** for **AddCalendarBreakRequest** * New property **description** for **CalendarBreak**
+
+      '
+    1.0.2: '* Calendar breaks can be moved: adding **moveCalendarBreak** method for **CalendarBreaksApi** * New notification callback **break-moved**
+
+      '
+    1.0.1: '* Notification callbacks * IDs are now strings instead of integers
+
+      '
+servers:
+- url: https://www.{domain}/api/v3/integration
+  description: \{domain} - locale of docplanner marketplace ex. znanylekarz.pl
+security:
+- oauth2:
+  - integration
+tags:
+- name: Slots
+  description: More information on how we define what a Slots is, its use cases and more can be found here.
+paths:
+  /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/slots:
+    parameters:
+    - $ref: '#/components/parameters/facilityId'
+    - $ref: '#/components/parameters/doctorId'
+    - $ref: '#/components/parameters/addressId'
+    get:
+      parameters:
+      - $ref: '#/components/parameters/startRequired'
+      - $ref: '#/components/parameters/endRequired'
+      - $ref: '#/components/parameters/slotsWith'
+      operationId: getSlots
+      description: 'List of free slots for the address within specified date range. The date range between start and end must not exceed 180 days; requests exceeding this limit will return a 400 error.
+
+
+        Extensions:
+
+        * `slot.services` - with this parameter in url, query results will return address services attached to given slots'
+      tags:
+      - Slots
+      responses:
+        '200':
+          description: List of slots
+          content:
+            application/vnd.docplanner+json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/Slots'
+              examples:
+                Slots:
+                  $ref: '#/components/examples/Slots'
+                Slots with slot.services:
+                  $ref: '#/components/examples/SlotsWithServices'
+        '400':
+          description: Validation of the submitted values wasn't successful
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Date range exceeds maximum:
+                  $ref: '#/components/examples/DateRangeExceedsMaximum'
+        '403':
+          description: You are not authorized to see this resource
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Facility:
+                  $ref: '#/components/examples/FacilityNotAuthorized'
+                Doctor:
+                  $ref: '#/components/examples/DoctorNotAuthorized'
+                Address:
+                  $ref: '#/components/examples/AddressNotAuthorized'
+        '404':
+          description: Resource not found
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                There are no slots on given address:
+                  $ref: '#/components/examples/NoSlotsOnAddress'
+                Break not found:
+                  $ref: '#/components/examples/BreakNotFoundForGivenAddress'
+                Object not found:
+                  $ref: '#/components/examples/ObjectNotFound'
+      summary: Get slots
+      x-summary-source: derived
+    put:
+      operationId: replaceSlots
+      description: 'Overrides all existing slots for given date ranges. Can be used for adding, replacing or even removing the slots (check description for address_services in a request body).
+
+
+        If a duplicate request (with the same address and payload) is received:
+
+        * it will be rejected with a 429 "Too Many Requests" status code if the original request was not fully processed yet
+
+        * it will be ignored with a 201 status code for 3 minutes after the original request finished processing'
+      tags:
+      - Slots
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplaceSlotsRequest'
+            examples:
+              New slots:
+                $ref: '#/components/examples/ReplaceSlots'
+      responses:
+        '201':
+          description: Successfully replaced slots
+        '400':
+          description: Validation of the submitted values wasn't successful
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Validation error:
+                  $ref: '#/components/examples/PutSlotsValidationError'
+                Address service does not exist:
+                  $ref: '#/components/examples/AddressServiceDoesNotExist'
+                Slots from further than 12 weeks:
+                  $ref: '#/components/examples/SlotsFromFurtherThen12Weeks'
+                Insurance provider does not exist:
+                  $ref: '#/components/examples/InsuranceProviderDoesNotExist'
+                Insurance providers missing when with-insurance-only:
+                  $ref: '#/components/examples/InsuranceProvidersMissing'
+                Insurance providers not supported when without-insurance-only:
+                  $ref: '#/components/examples/InsuranceProvidersNotSupported'
+                Slot exceeds a single day boundary:
+                  $ref: '#/components/examples/SlotExceedsSingleDayBoundary'
+                Slot duration is less than 1 minute:
+                  $ref: '#/components/examples/SlotDurationIsLessThanOneMinute'
+        '403':
+          description: You are not authorized to see this resource
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Facility:
+                  $ref: '#/components/examples/FacilityNotAuthorized'
+                Doctor:
+                  $ref: '#/components/examples/DoctorNotAuthorized'
+                Address:
+                  $ref: '#/components/examples/AddressNotAuthorized'
+                Calendar edition:
+                  $ref: '#/components/examples/CalendarEditionNotAuthorized'
+        '404':
+          description: Resource not found
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Object not found:
+                  $ref: '#/components/examples/ObjectNotFound'
+        '422':
+          description: Request cannot be processed
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Doctor/address is not commercial:
+                  $ref: '#/components/examples/DoctorOrAddressNotCommercial'
+        '429':
+          description: Too many requests
+      summary: Replace slots
+      x-summary-source: derived
+  /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/slots/{start}/book:
+    parameters:
+    - $ref: '#/components/parameters/facilityId'
+    - $ref: '#/components/parameters/doctorId'
+    - $ref: '#/components/parameters/addressId'
+    - $ref: '#/components/parameters/startRequiredPath'
+    post:
+      operationId: bookSlot
+      description: Book a slot
+      tags:
+      - Slots
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookSlotRequest'
+            examples:
+              Slot booked:
+                $ref: '#/components/examples/BookSlot'
+      responses:
+        '200':
+          description: Booking
+          content:
+            application/vnd.docplanner+json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/Booking'
+              examples:
+                Booked slot:
+                  $ref: '#/components/examples/Slot'
+        '400':
+          description: Validation of the submitted values wasn't successful
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Validation error:
+                  $ref: '#/components/examples/PostBookValidationError'
+        '403':
+          description: You are not authorized to see this resource
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Facility:
+                  $ref: '#/components/examples/FacilityNotAuthorized'
+                Doctor:
+                  $ref: '#/components/examples/DoctorNotAuthorized'
+                Address:
+                  $ref: '#/components/examples/AddressNotAuthorized'
+        '404':
+          description: Resource not found
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Unable to book for this address:
+                  $ref: '#/components/examples/UnableToBookForAddress'
+                Service does not exist:
+                  $ref: '#/components/examples/ServiceDoesNotExist'
+                Unable to book with requested slot:
+                  $ref: '#/components/examples/UnableToPerformBookingWithSlot'
+                Unable to book with requested service:
+                  $ref: '#/components/examples/UnableToPerformBookingWithService'
+                Object not found:
+                  $ref: '#/components/examples/ObjectNotFound'
+        '422':
+          description: Request cannot be processed
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Doctor/address is not commercial:
+                  $ref: '#/components/examples/DoctorOrAddressNotCommercial'
+      summary: Book slot
+      x-summary-source: derived
+  /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/slots/{date}:
+    parameters:
+    - $ref: '#/components/parameters/facilityId'
+    - $ref: '#/components/parameters/doctorId'
+    - $ref: '#/components/parameters/addressId'
+    - name: date
+      in: path
+      required: true
+      schema:
+        type: string
+        format: date
+        example: '2021-05-16'
+    delete:
+      operationId: deleteSlots
+      description: Delete slots for the given date
+      tags:
+      - Slots
+      responses:
+        '204':
+          description: Successfully deleted slots for the given date
+        '403':
+          description: You are not authorized to see this resource
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Facility:
+                  $ref: '#/components/examples/FacilityNotAuthorized'
+                Doctor:
+                  $ref: '#/components/examples/DoctorNotAuthorized'
+                Address:
+                  $ref: '#/components/examples/AddressNotAuthorized'
+                Calendar edition:
+                  $ref: '#/components/examples/CalendarEditionNotAuthorized'
+        '404':
+          description: Resource not found
+          content:
+            application/vnd.error+docplanner+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Object not found:
+                  $ref: '#/components/examples/ObjectNotFound'
+      summary: Delete slots
+      x-summary-source: derived
+components:
+  examples:
+    NoSlotsOnAddress:
+      value:
+        errors: []
+        message: No slots found on given address
+    UnableToPerformBookingWithService:
+      value:
+        errors: []
+        message: Unable to perform booking. Slot (2021-05-16T14:00:00+02:00) does not support service 113
+    InsuranceProviderDoesNotExist:
+      value:
+        errors: []
+        message: Insurance provider(s) with id (%s) not found for address id (%d)'
+    ReplaceSlots:
+      value:
+        slots:
+        - address_services:
+          - address_service_id: '111'
+            duration: 30
+          - address_service_id: '112'
+            duration: 15
+          start: '2021-05-16T14:00:00+01:00'
+          end: '2021-05-16T15:00:00+01:00'
+          insurance_accepted: with-insurance-only
+          insurance_providers:
+          - 52
+          - 67
+        - address_services:
+          - address_service_id: '112'
+            duration: 15
+          start: '2021-05-16T15:00:00+01:00'
+          end: '2021-05-16T16:00:00+01:00'
+    InsuranceProvidersNotSupported:
+      value:
+        errors: []
+        message: Insurance providers are not supported. Slot does not allow insurances (without-insurance-only)
+    AddressNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this address
+    SlotExceedsSingleDayBoundary:
+      value:
+        errors: []
+        message: Slot for date range %s - %s exceeds a single day boundary
+    CalendarEditionNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to make changes on this calendar
+    DoctorOrAddressNotCommercial:
+      value:
+        errors: []
+        message: Cannot activate calendar on address 123, profile/address is not commercial
+    SlotsWithServices:
+      value:
+        _items:
+        - start: '2020-12-16T14:00:00+01:00'
+          address_services:
+            _items:
+            - id: '111'
+              name: USG
+              price: 150
+              is_price_from: false
+              is_default: true
+              description: Address service description 1
+              service_id: '1'
+              is_visible: true
+            - id: '112'
+              name: EEG
+              price: 100
+              is_price_from: false
+              is_default: true
+              description: Address service description 2
+              service_id: '2'
+              is_visible: true
+        - start: '2020-12-16T14:30:00+01:00'
+          address_services:
+            _items:
+            - id: '111'
+              name: USG
+              price: 150
+              is_price_from: false
+              is_default: true
+              description: Address service description 1
+              service_id: '1'
+              is_visible: true
+    Slots:
+      value:
+        _items:
+        - start: '2020-12-16T14:00:00+01:00'
+        - start: '2020-12-16T14:30:00+01:00'
+    BreakNotFoundForGivenAddress:
+      value:
+        errors: []
+        message: Invalid break ID
+    PutSlotsValidationError:
+      value:
+        errors: []
+        message: 'Validation error message, e.g.: Slots comes from different days'
+    InsuranceProvidersMissing:
+      value:
+        errors: []
+        message: Slot requires insurance (with-insurance-only), but insurance providers are missing
+    BookSlot:
+      value:
+        address_service_id: '113'
+        is_returning: false
+        duration: 30
+        label: label
+        comment: comment
+        insurance_provider_if: '14'
+        insurance_plan_id: 'null'
+        is_recurring: false
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          marketing_consent: true
+          data_privacy_consent: true
+    SlotsFromFurtherThen12Weeks:
+      value:
+        errors:
+          slots[1].end:
+          - End date should be less than or equal to 15.05.2021, 11:45.
+        message: Invalid arguments
+    UnableToBookForAddress:
+      value:
+        errors: []
+        message: Unable to book a visit for this address
+    DateRangeExceedsMaximum:
+      value:
+        errors: []
+        message: Date range must not exceed 180 days
+    Slot:
+      value:
+        id: '2134124'
+        status: booked
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: ''
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: '2021-05-16T14:30:00+01:00'
+        comment: comment
+    PostBookValidationError:
+      value:
+        errors: []
+        message: Validation error message
+    AddressServiceDoesNotExist:
+      value:
+        errors: []
+        message: Address service does not exist
+    UnableToPerformBookingWithSlot:
+      value:
+        errors: []
+        message: Unable to perform booking. Requested target slot (2021-05-16T14:00:00+02:00) not found
+    ObjectNotFound:
+      value:
+        errors: []
+        message: Object not found
+    DoctorNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this doctor
+    FacilityNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this facility
+    ServiceDoesNotExist:
+      value:
+        errors: []
+        message: Service does not exist
+    SlotDurationIsLessThanOneMinute:
+      value:
+        errors:
+          slots[1].minimumDifferenceBetweenDates:
+          - The end date must be at least 1 minute after the start date
+        message: Invalid arguments
+  schemas:
+    AddressServices:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressService'
+    Slot:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+          example: '2021-05-16T14:00:00+01:00'
+        address_services:
+          allOf:
+          - $ref: '#/components/schemas/AddressServices'
+    Patient:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Abraham
+        surname:
+          type: string
+          example: Lincoln
+        email:
+          type:
+          - string
+          - 'null'
+          example: example@example.com
+        phone:
+          type:
+          - string
+          - 'null'
+          example: '+48123123123'
+        birth_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          example: '1985-01-01'
+        nin:
+          type:
+          - string
+          - 'null'
+          example: '894237492'
+        gender:
+          type:
+          - string
+          - 'null'
+          enum:
+          - m
+          - f
+        marketing_consent:
+          type:
+          - boolean
+          - 'null'
+          example: true
+          default: null
+        data_privacy_consent:
+          type:
+          - boolean
+          - 'null'
+          example: true
+          default: null
+      required:
+      - name
+      - phone
+    AddressService:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 468628
+        name:
+          type: string
+          example: EEG
+        price:
+          type:
+          - integer
+          - 'null'
+          example: 500
+          description: Integer part of the price (decimals truncated)
+        is_price_from:
+          type: boolean
+          example: true
+          description: If true, the price is the minimum price of the service
+        is_default:
+          type: boolean
+          example: false
+        service_id:
+          type:
+          - string
+          - 'null'
+          example: null
+        description:
+          type:
+          - string
+          - 'null'
+          example: null
+        duration:
+          type: integer
+          example: 30
+        is_visible:
+          type: boolean
+          example: true
+        allowed_patients:
+          allOf:
+          - $ref: '#/components/schemas/AllowedPatientsData'
+        custom_name:
+          type:
+          - string
+          - 'null'
+          example: Custom Service Name
+    Insurance:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        plan:
+          type:
+          - string
+          - 'null'
+        plan_id:
+          type:
+          - string
+          - 'null'
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
+    Slots:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Slot'
+    BookingPatient:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Abraham
+        surname:
+          type: string
+          example: Lincoln
+        email:
+          type:
+          - string
+          - 'null'
+          example: example@example.com
+        phone:
+          type:
+          - string
+          - 'null'
+          example: '+48123123123'
+        birth_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          example: '1985-01-01'
+        nin:
+          type:
+          - string
+          - 'null'
+          example: '894237492'
+        gender:
+          type:
+          - string
+          - 'null'
+          enum:
+          - m
+          - f
+        is_returning:
+          type: boolean
+          example: false
+        insurance_number:
+          type:
+          - string
+          - 'null'
+          example: CARD-7654321
+    ReplaceSlotsRequest:
+      type: object
+      properties:
+        slots:
+          type: array
+          items:
+            type: object
+            properties:
+              address_services:
+                description: If set to null or empty collection, it will **remove** all the slots from a given time range
+                type:
+                - array
+                - 'null'
+                items:
+                  type: object
+                  properties:
+                    address_service_id:
+                      type: string
+                      example: 305686
+                    duration:
+                      type: integer
+                      example: 30
+                  required:
+                  - address_service_id
+                  - duration
+              start:
+                type: string
+                format: date-time
+                example: '2021-05-16T14:00:00+01:00'
+              end:
+                type: string
+                format: date-time
+                example: '2021-05-16T16:00:00+01:00'
+              insurance_accepted:
+                type:
+                - string
+                - 'null'
+                enum:
+                - with-and-without-insurance
+                - without-insurance-only
+                - with-insurance-only
+                default: with-and-without-insurance
+                example: with-and-without-insurance
+                description: Accepted insurance configuration. If **with-insurance-only** is passed, **insurance_providers** field MUST NOT be empty. If **without-insurance-only** is passed, **insurance_providers** MUST be empty
+              insurance_providers:
+                type:
+                - array
+                - 'null'
+                items:
+                  type: integer
+                  example: 52
+            required:
+            - start
+            - end
+      required:
+      - slots
+    Booking:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '2134124'
+        status:
+          type: string
+          example: booked
+        start_at:
+          type: string
+          format: date-time
+          example: '2021-05-16T14:00:00+01:00'
+        end_at:
+          type: string
+          format: date-time
+          example: '2021-05-16T14:30:00+01:00'
+        duration:
+          type: integer
+          example: 30
+        booked_by:
+          type: string
+          enum:
+          - user
+          - doctor
+          - integration
+        canceled_by:
+          type: string
+          enum:
+          - ''
+          - user
+          - doctor
+          - integration
+        booked_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T12:00:00+01:00'
+        canceled_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: '2021-05-16T14:30:00+01:00'
+        moving:
+          allOf:
+          - $ref: '#/components/schemas/BookingMoving'
+        patient:
+          $ref: '#/components/schemas/BookingPatient'
+        address_service:
+          allOf:
+          - $ref: '#/components/schemas/AddressService'
+        comment:
+          type:
+          - string
+          - 'null'
+        presence:
+          type:
+          - string
+          - 'null'
+          enum:
+          - present
+          - absent
+        insurance:
+          allOf:
+          - $ref: '#/components/schemas/Insurance'
+        visit_payment:
+          type:
+          - boolean
+          - 'null'
+        visit_payment_status:
+          type:
+          - string
+          - 'null'
+        videocall_url:
+          type:
+          - string
+          - 'null'
+    SlotsScopes:
+      type: string
+      enum:
+      - slot.services
+    BookingMoving:
+      type: object
+      properties:
+        origin_booking_id:
+          type: string
+          example: '2134124'
+        newest_booking_id:
+          type: string
+          example: '2134125'
+    AllowedPatientsData:
+      type: object
+      properties:
+        minimum_age:
+          type:
+          - integer
+          - 'null'
+          example: 18
+          description: Minimum age of patients allowed for this service
+        maximum_age:
+          type:
+          - integer
+          - 'null'
+          example: 65
+          description: Maximum age of patients allowed for this service
+    BookSlotRequest:
+      type: object
+      properties:
+        address_service_id:
+          type: string
+          example: 123
+        is_returning:
+          type: boolean
+          example: false
+        patient:
+          $ref: '#/components/schemas/Patient'
+        duration:
+          type: integer
+          example: 20
+        label:
+          type:
+          - string
+          - 'null'
+          example: label
+          default: null
+        comment:
+          type:
+          - string
+          - 'null'
+          example: comment
+          default: null
+        insurance_provider_id:
+          type:
+          - string
+          - 'null'
+          example: 14
+          default: null
+        insurance_plan_id:
+          type:
+          - string
+          - 'null'
+          example: 2
+          default: null
+        is_recurring:
+          type: boolean
+          example: true
+          default: false
+          description: Whether the visit should be marked as recurrent (there will be no confirmation notification sent to the patient)
+      required:
+      - address_service_id
+      - patient
+      - duration
+  parameters:
+    facilityId:
+      name: facility_id
+      in: path
+      description: ID of the Facility
+      example: 1
+      required: true
+      schema:
+        type: string
+    startRequired:
+      name: start
+      in: query
+      description: Slot start date (parameter must be urlencoded before sending request)
+      required: true
+      schema:
+        type: string
+        format: date-time
+        example: '2021-05-16T14:00:00+01:00'
+    startRequiredPath:
+      name: start
+      in: path
+      description: Slot start date (parameter must be urlencoded before sending request)
+      required: true
+      schema:
+        type: string
+        format: date-time
+        example: '2021-05-16T14:00:00+01:00'
+    doctorId:
+      name: doctor_id
+      in: path
+      description: ID of a doctor in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
+    addressId:
+      name: address_id
+      in: path
+      description: ID of a doctor`s address in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
+    slotsWith:
+      name: with
+      in: query
+      required: false
+      style: simple
+      schema:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/SlotsScopes'
+    endRequired:
+      name: end
+      in: query
+      description: Slot end date (parameter must be urlencoded before sending request)
+      required: true
+      schema:
+        type: string
+        format: date-time
+        example: '2021-05-16T15:00:00+01:00'
+  securitySchemes:
+    oauth2:
+      name: OAuth 2.0
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://www.{domain}/oauth/v2/token
+          scopes:
+            integration: API integration
+      description: "The API utilizes the industry-standard [OAuth 2.0](https://tools.ietf.org/html/rfc6749) protocol.\n\nAll requests to our API must be authenticated and must include a valid access token.\n\n`NOTE! Our SSO Api version is v2 while our Integration Api version is v3`\n\nYou can get a token for testing purposes with cURL\n\n```\ncurl -u {client_id}:{client_secret} https://www.{domain}/oauth/v2/token -d 'grant_type=client_credentials&scope=integration'\n```\n\nA response example you can expect\n\n```\n{\n    \"access_token\": \"03807cb390319329bdf6c777d4dfae9c0d3b3c35\",\n    \"expires_in\": 3600,\n    \"token_type\": \"bearer\",\n    \"scope\": null\n}\n```\n\nAnd then with every request in the `request header` you should add your bearer token like so:\n\n```\nAuthorization: Bearer {access_token}\n```\n"

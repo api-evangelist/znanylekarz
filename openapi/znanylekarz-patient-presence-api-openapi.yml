@@ -350,11 +350,60 @@ paths:
       summary: Mark patient absence
       x-summary-source: derived
 components:
+  examples:
+    FacilityNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this facility
+    PostPresenceValidationError:
+      value:
+        errors: []
+        message: 'Validation error message, e.g.: Visit is in the future'
+    DeletePresenceValidationError:
+      value:
+        errors: []
+        message: 'Validation error message, e.g.: Visit is in the future'
+    ObjectNotFound:
+      value:
+        errors: []
+        message: Object not found
+    AddressNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this address
+    VisitMarkedAsCanceled:
+      value:
+        errors: []
+        message: Visit is marked as canceled
+    VisitDoesNotBelongToDoctor:
+      value:
+        errors: []
+        message: This visit does not belong to this doctor
+    DoctorNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this doctor
   parameters:
+    bookingId:
+      name: booking_id
+      in: path
+      description: ID of the Booking
+      required: true
+      schema:
+        type: string
+        example: 123
     doctorId:
       name: doctor_id
       in: path
       description: ID of a doctor in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
+    addressId:
+      name: address_id
+      in: path
+      description: ID of a doctor`s address in a facility
       example: 123
       required: true
       schema:
@@ -367,22 +416,6 @@ components:
       required: true
       schema:
         type: string
-    addressId:
-      name: address_id
-      in: path
-      description: ID of a doctor`s address in a facility
-      example: 123
-      required: true
-      schema:
-        type: string
-    bookingId:
-      name: booking_id
-      in: path
-      description: ID of the Booking
-      required: true
-      schema:
-        type: string
-        example: 123
   schemas:
     Error:
       type: object
@@ -393,39 +426,6 @@ components:
             type: string
         message:
           type: string
-  examples:
-    DeletePresenceValidationError:
-      value:
-        errors: []
-        message: 'Validation error message, e.g.: Visit is in the future'
-    AddressNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this address
-    PostPresenceValidationError:
-      value:
-        errors: []
-        message: 'Validation error message, e.g.: Visit is in the future'
-    VisitMarkedAsCanceled:
-      value:
-        errors: []
-        message: Visit is marked as canceled
-    ObjectNotFound:
-      value:
-        errors: []
-        message: Object not found
-    VisitDoesNotBelongToDoctor:
-      value:
-        errors: []
-        message: This visit does not belong to this doctor
-    DoctorNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this doctor
-    FacilityNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this facility
   securitySchemes:
     oauth2:
       name: OAuth 2.0

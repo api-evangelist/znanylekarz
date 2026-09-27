@@ -546,89 +546,73 @@ paths:
       x-summary-source: derived
 components:
   examples:
-    InvalidDateRange:
-      value:
-        errors: []
-        message: Invalid date range
-    CalendarNotFoundForAddress:
-      value:
-        errors: []
-        message: Calendar not found for this address
     AddressNotAuthorized:
       value:
         errors: []
         message: You are not authorized to see this address
-    CalendarBreakAlreadyExists:
-      value:
-        errors: []
-        message: Break for given address, date range and description exists
-    CalendarEditionNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to make changes on this calendar
-    DoctorOrAddressNotCommercial:
-      value:
-        errors: []
-        message: Cannot activate calendar on address 123, profile/address is not commercial
     BreakNotFoundForGivenAddress:
       value:
         errors: []
         message: Invalid break ID
+    SameDateRange:
+      value:
+        errors: []
+        message: Same Date Range
+    DoctorNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this doctor
+    ObjectNotFound:
+      value:
+        errors: []
+        message: Object not found
+    CalendarBreakAlreadyExists:
+      value:
+        errors: []
+        message: Break for given address, date range and description exists
+    TillEarlierThanSince:
+      value:
+        errors: []
+        message: Till (%s) cannot be set before since (%s)
+    FacilityNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this facility
+    InvalidDate:
+      value:
+        errors: []
+        message: Invalid date given.
     CalendarBreak:
       value:
         id: '567'
         since: '2020-12-16T14:00:00+01:00'
         till: '2020-12-16T14:30:00+01:00'
         description: Optional description
-    ParameterRequiredSince:
+    CalendarEditionNotAuthorized:
       value:
         errors: []
-        message: Param "since" is required!
+        message: You are not authorized to make changes on this calendar
     ParameterRequiredTill:
       value:
         errors: []
         message: Param "till" is required!
-    TillEarlierThanSince:
+    InvalidDateRange:
       value:
         errors: []
-        message: Till (%s) cannot be set before since (%s)
-    InvalidDate:
+        message: Invalid date range
+    DoctorOrAddressNotCommercial:
       value:
         errors: []
-        message: Invalid date given.
-    SameDateRange:
+        message: Cannot activate calendar on address 123, profile/address is not commercial
+    CalendarNotFoundForAddress:
       value:
         errors: []
-        message: Same Date Range
-    ObjectNotFound:
+        message: Calendar not found for this address
+    ParameterRequiredSince:
       value:
         errors: []
-        message: Object not found
-    DoctorNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this doctor
-    FacilityNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this facility
+        message: Param "since" is required!
   parameters:
-    facilityId:
-      name: facility_id
-      in: path
-      description: ID of the Facility
-      example: 1
-      required: true
-      schema:
-        type: string
-    doctorId:
-      name: doctor_id
-      in: path
-      description: ID of a doctor in a facility
-      example: 123
-      required: true
-      schema:
-        type: string
     addressId:
       name: address_id
       in: path
@@ -645,37 +629,23 @@ components:
       schema:
         type: string
         example: 123
+    facilityId:
+      name: facility_id
+      in: path
+      description: ID of the Facility
+      example: 1
+      required: true
+      schema:
+        type: string
+    doctorId:
+      name: doctor_id
+      in: path
+      description: ID of a doctor in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
   schemas:
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        message:
-          type: string
-    CalendarBreaks:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CalendarBreak'
-    MoveCalendarBreakRequest:
-      type: object
-      properties:
-        since:
-          type: string
-          format: date-time
-          example: '2021-05-16T14:00:00+01:00'
-        till:
-          type: string
-          format: date-time
-          example: '2021-05-16T15:00:00+01:00'
-      required:
-      - since
-      - till
     CalendarBreak:
       type: object
       properties:
@@ -695,6 +665,29 @@ components:
           - string
           - 'null'
           example: Optional description
+    MoveCalendarBreakRequest:
+      type: object
+      properties:
+        since:
+          type: string
+          format: date-time
+          example: '2021-05-16T14:00:00+01:00'
+        till:
+          type: string
+          format: date-time
+          example: '2021-05-16T15:00:00+01:00'
+      required:
+      - since
+      - till
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
     AddCalendarBreakRequest:
       type: object
       properties:
@@ -719,6 +712,13 @@ components:
       required:
       - since
       - till
+    CalendarBreaks:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CalendarBreak'
   securitySchemes:
     oauth2:
       name: OAuth 2.0

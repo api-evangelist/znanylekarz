@@ -703,864 +703,7 @@ paths:
       summary: Request opinion
       x-summary-source: derived
 components:
-  parameters:
-    limit:
-      name: limit
-      in: query
-      description: Maximum number of items per page. If not provided the default value of 100 is applied if pagination is used.
-      required: false
-      schema:
-        type: integer
-        example: 100
-    facilityId:
-      name: facility_id
-      in: path
-      description: ID of the Facility
-      example: 1
-      required: true
-      schema:
-        type: string
-    page:
-      name: page
-      in: query
-      description: Page number to use for pagination. If not provided the pagination is not applied.
-      required: false
-      schema:
-        type: integer
-        example: 1
-    startRequired:
-      name: start
-      in: query
-      description: Slot start date (parameter must be urlencoded before sending request)
-      required: true
-      schema:
-        type: string
-        format: date-time
-        example: '2021-05-16T14:00:00+01:00'
-    doctorId:
-      name: doctor_id
-      in: path
-      description: ID of a doctor in a facility
-      example: 123
-      required: true
-      schema:
-        type: string
-    addressId:
-      name: address_id
-      in: path
-      description: ID of a doctor`s address in a facility
-      example: 123
-      required: true
-      schema:
-        type: string
-    bookingsWith:
-      name: with
-      in: query
-      required: false
-      style: simple
-      schema:
-        type: array
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/BookingsScopes'
-    bookingWith:
-      name: with
-      in: query
-      required: false
-      style: simple
-      schema:
-        type: array
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/BookingScopes'
-    moveBookingWith:
-      name: with
-      in: query
-      required: false
-      style: simple
-      schema:
-        type: array
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/MoveBookingScopes'
-    bookingId:
-      name: booking_id
-      in: path
-      description: ID of the Booking
-      required: true
-      schema:
-        type: string
-        example: 123
-    endRequired:
-      name: end
-      in: query
-      description: Slot end date (parameter must be urlencoded before sending request)
-      required: true
-      schema:
-        type: string
-        format: date-time
-        example: '2021-05-16T15:00:00+01:00'
-  examples:
-    MoveBookingToOtherAddress:
-      value:
-        address_service_id: '113'
-        start: '2021-05-26T16:00:00+01:00'
-        duration: 30
-        address_id: '112233'
-    ConfirmBookingVisitDeleted:
-      value:
-        errors: []
-        message: Visit has been deleted
-    DoctorDoesNotBelongToFacility:
-      value:
-        errors: []
-        message: Doctor is not related with facility
-    BookingsWithAddressService:
-      value:
-        _items:
-        - id: '2134124'
-          status: booked
-          start_at: '2021-05-16T14:00:00+01:00'
-          end_at: '2021-05-16T14:30:00+01:00'
-          duration: 30
-          booked_by: user
-          canceled_by: ''
-          booked_at: '2021-05-12T12:00:00+01:00'
-          canceled_at: null
-          address_service:
-            id: '101'
-            name: USG
-            price: 100
-            is_price_from: false
-            is_default: true
-            service_id: '1'
-            description: Description of service
-            is_visible: true
-          comment: comment
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-        - id: '2134125'
-          status: booked
-          start_at: '2021-05-16T17:00:00+01:00'
-          end_at: '2021-05-16T17:30:00+01:00'
-          duration: 15
-          booked_by: doctor
-          canceled_by: doctor
-          booked_at: '2021-05-12T13:00:00+01:00'
-          canceled_at: '2021-05-16T14:30:00+01:00'
-          address_service:
-            id: '101'
-            name: USG
-            price: 100
-            is_price_from: false
-            is_default: true
-            service_id: '1'
-            description: Description of service
-            is_visible: true
-          comment: null
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-    BookingVisitPaymentsEnabled:
-      value:
-        id: '2134124'
-        status: booked
-        start_at: '2021-05-16T14:00:00+01:00'
-        end_at: '2021-05-16T14:30:00+01:00'
-        duration: 30
-        booked_by: user
-        canceled_by: ''
-        booked_at: '2021-05-12T12:00:00+01:00'
-        canceled_at: null
-        patient:
-          name: Abraham
-          surname: Lincoln
-          email: example@example.com
-          phone: 48123123123
-          birth_date: '1985-01-01'
-          nin: 894237492
-          gender: m
-          is_returning: false
-          insurance_number: CARD-7654321
-        address_service:
-          id: '101'
-          name: USG
-          price: 100
-          is_price_from: false
-          is_default: true
-          service_id: '1'
-          description: Description of service
-          is_visible: true
-        comment: comment
-        insurance:
-          id: '11'
-          name: Axa
-          plan: null
-          plan_id: null
-        visit_payment: true
-        visit_payment_status: successful
-    VisitNotFound:
-      value:
-        errors: []
-        message: Visit not found
-    AddressDoesNotBelongToFacility:
-      value:
-        errors: []
-        message: This address does not belong to this facility
-    AddressNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this address
-    BookingsWithPatient:
-      value:
-        _items:
-        - id: '2134124'
-          status: booked
-          start_at: '2021-05-16T14:00:00+01:00'
-          end_at: '2021-05-16T14:30:00+01:00'
-          duration: 30
-          booked_by: user
-          canceled_by: ''
-          booked_at: '2021-05-12T12:00:00+01:00'
-          canceled_at: null
-          patient:
-            name: Abraham
-            surname: Lincoln
-            email: example@example.com
-            phone: 48123123123
-            birth_date: '1985-01-01'
-            nin: 894237492
-            gender: m
-            is_returning: false
-            insurance_number: CARD-7654321
-          comment: comment
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-        - id: '2134125'
-          status: booked
-          start_at: '2021-05-16T17:00:00+01:00'
-          end_at: '2021-05-16T17:30:00+01:00'
-          duration: 15
-          booked_by: doctor
-          canceled_by: doctor
-          booked_at: '2021-05-12T13:00:00+01:00'
-          canceled_at: '2021-05-16T14:30:00+01:00'
-          patient:
-            name: Abraham
-            surname: Lincoln
-            email: example@example.com
-            phone: 48123123123
-            birth_date: '1985-01-01'
-            nin: 894237492
-            gender: m
-            is_returning: false
-            insurance_number: CARD-7654321
-          comment: null
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-    ConfirmBookingVisitCanceled:
-      value:
-        errors: []
-        message: Visit has been canceled
-    ConfirmBookingPastVisit:
-      value:
-        errors: []
-        message: Visit is in the past
-    CannotSendRequestForOpinion:
-      value:
-        errors: []
-        message: Cannot send request
-    BookingsWithPresence:
-      value:
-        _items:
-        - id: '2134124'
-          status: booked
-          start_at: '2021-05-16T14:00:00+01:00'
-          end_at: '2021-05-16T14:30:00+01:00'
-          duration: 30
-          booked_by: user
-          canceled_by: ''
-          booked_at: '2021-05-12T12:00:00+01:00'
-          canceled_at: null
-          comment: comment
-          presence: null
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-        - id: '2134125'
-          status: booked
-          start_at: '2021-05-16T17:00:00+01:00'
-          end_at: '2021-05-16T17:30:00+01:00'
-          duration: 15
-          booked_by: doctor
-          canceled_by: doctor
-          booked_at: '2021-05-12T13:00:00+01:00'
-          canceled_at: '2021-05-16T14:30:00+01:00'
-          comment: null
-          presence: present
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-    BookingsWithPublicInsuranceFlow:
-      value:
-        _items:
-        - id: '2134124'
-          status: booked
-          start_at: '2021-05-16T14:00:00+01:00'
-          end_at: '2021-05-16T14:30:00+01:00'
-          duration: 30
-          booked_by: user
-          canceled_by: ''
-          booked_at: '2021-05-12T12:00:00+01:00'
-          canceled_at: null
-          address_service:
-            id: '101'
-            name: USG
-            price: 100
-            is_price_from: false
-            is_default: true
-            service_id: '1'
-            description: Description of service
-            is_visible: true
-          comment: comment
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-        - id: '2134125'
-          status: booked
-          start_at: '2021-05-16T17:00:00+01:00'
-          end_at: '2021-05-16T17:30:00+01:00'
-          duration: 15
-          booked_by: doctor
-          canceled_by: doctor
-          booked_at: '2021-05-12T13:00:00+01:00'
-          canceled_at: '2021-05-16T14:30:00+01:00'
-          address_service:
-            id: '101'
-            name: USG
-            price: 100
-            is_price_from: false
-            is_default: true
-            service_id: '1'
-            description: Description of service
-            is_visible: true
-            is_public_insurance_flow: false
-          comment: null
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-    BookingWithMovingNotMoved:
-      value:
-        id: '2134124'
-        status: canceled
-        start_at: '2021-05-16T14:00:00+01:00'
-        end_at: '2021-05-16T14:30:00+01:00'
-        duration: 30
-        booked_by: user
-        canceled_by: '2021-05-13T15:12:00+01:00'
-        booked_at: '2021-05-12T12:00:00+01:00'
-        canceled_at: null
-        moving:
-          origin_booking_id: '2134124'
-          newest_booking_id: '2134124'
-        patient:
-          name: Abraham
-          surname: Lincoln
-          email: example@example.com
-          phone: 48123123123
-          birth_date: '1985-01-01'
-          nin: 894237492
-          gender: m
-          is_returning: false
-          insurance_number: CARD-7654321
-        address_service:
-          id: '101'
-          name: USG
-          price: 100
-          is_price_from: false
-          is_default: true
-          service_id: '1'
-          description: Description of service
-          is_visible: true
-        comment: comment
-        insurance:
-          id: '11'
-          name: Axa
-          plan: null
-          plan_id: null
-    OpinionAlreadyExist:
-      value:
-        errors: []
-        message: Opinion already exists
-    BookingsWithConfirmation:
-      value:
-        _items:
-        - id: '2134124'
-          status: booked
-          start_at: '2021-05-16T14:00:00+01:00'
-          end_at: '2021-05-16T14:30:00+01:00'
-          duration: 30
-          booked_by: user
-          canceled_by: ''
-          booked_at: '2021-05-12T12:00:00+01:00'
-          canceled_at: null
-          comment: comment
-          confirmed: false
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-        - id: '2134125'
-          status: booked
-          start_at: '2021-05-16T17:00:00+01:00'
-          end_at: '2021-05-16T17:30:00+01:00'
-          duration: 15
-          booked_by: doctor
-          canceled_by: doctor
-          booked_at: '2021-05-12T13:00:00+01:00'
-          canceled_at: '2021-05-16T14:30:00+01:00'
-          comment: null
-          confirmed: true
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-    BookingWithMovingNoDataAvailable:
-      value:
-        id: '2134124'
-        status: canceled
-        start_at: '2021-05-16T14:00:00+01:00'
-        end_at: '2021-05-16T14:30:00+01:00'
-        duration: 30
-        booked_by: user
-        canceled_by: '2021-05-13T15:12:00+01:00'
-        booked_at: '2021-05-12T12:00:00+01:00'
-        canceled_at: null
-        moving: null
-        patient:
-          name: Abraham
-          surname: Lincoln
-          email: example@example.com
-          phone: 48123123123
-          birth_date: '1985-01-01'
-          nin: 894237492
-          gender: m
-          is_returning: false
-          insurance_number: CARD-7654321
-        address_service:
-          id: '101'
-          name: USG
-          price: 100
-          is_price_from: false
-          is_default: true
-          service_id: '1'
-          description: Description of service
-          is_visible: true
-        comment: comment
-        insurance:
-          id: '11'
-          name: Axa
-          plan: null
-          plan_id: null
-    BookingsVisitPaymentsEnabled:
-      value:
-        _items:
-        - id: '2134124'
-          status: booked
-          start_at: '2021-05-16T14:00:00+01:00'
-          end_at: '2021-05-16T14:30:00+01:00'
-          duration: 30
-          booked_by: user
-          canceled_by: ''
-          booked_at: '2021-05-12T12:00:00+01:00'
-          canceled_at: null
-          comment: comment
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-          visit_payment: true
-          visit_payment_status: successful
-        - id: '2134125'
-          status: booked
-          start_at: '2021-05-16T17:00:00+01:00'
-          end_at: '2021-05-16T17:30:00+01:00'
-          duration: 15
-          booked_by: doctor
-          canceled_by: doctor
-          booked_at: '2021-05-12T13:00:00+01:00'
-          canceled_at: '2021-05-16T14:30:00+01:00'
-          comment: null
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-          visit_payment: true
-          visit_payment_status: paid
-    AddressDoesNotBelongToDoctor:
-      value:
-        errors: []
-        message: This address does not belong to this doctor
-    MoveBookingValidationError:
-      value:
-        errors: []
-        message: Invalid arguments
-    ServiceDoesNotBelongToAddress:
-      value:
-        errors: []
-        message: Service does not belong to the address
-    BookingDoesNotBelongToAddress:
-      value:
-        errors: []
-        message: This booking does not belong to this address
-    AddressDoesNotExist:
-      value:
-        errors: []
-        message: Address does not exist
-    OpinionRequestValidationError:
-      value:
-        errors: []
-        message: 'Validation error message, e.g.: Phone number is invalid.'
-    ConfirmBookingAlreadyConfirmed:
-      value:
-        errors: []
-        message: Visit has already been confirmed
-    VisitAlreadyMovedOrDeleted:
-      value:
-        errors: []
-        message: The visit has already been canceled or moved
-    BookingVideocallEnabled:
-      value:
-        id: '2134124'
-        status: booked
-        start_at: '2021-05-16T14:00:00+01:00'
-        end_at: '2021-05-16T14:30:00+01:00'
-        duration: 30
-        booked_by: user
-        canceled_by: ''
-        booked_at: '2021-05-12T12:00:00+01:00'
-        canceled_at: null
-        patient:
-          name: Abraham
-          surname: Lincoln
-          email: example@example.com
-          phone: 48123123123
-          birth_date: '1985-01-01'
-          nin: 894237492
-          gender: m
-          is_returning: false
-          insurance_number: CARD-7654321
-        address_service:
-          id: '101'
-          name: USG
-          price: 100
-          is_price_from: false
-          is_default: true
-          service_id: '1'
-          description: Description of service
-          is_visible: true
-        comment: comment
-        insurance:
-          id: '11'
-          name: Axa
-          plan: null
-          plan_id: null
-        videocall_url: http://url-to-video-call
-    MoveBooking:
-      value:
-        address_service_id: '112'
-        start: '2021-05-26T16:00:00+01:00'
-        duration: 30
-    ObjectNotFound:
-      value:
-        errors: []
-        message: Object not found
-    BookingCannotCrossPaymentAccounts:
-      value:
-        errors: []
-        message: This booking has a payment on it and the target address bills through a different payment account. Cancel the booking and create a new one instead.
-    DoctorNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this doctor
-    OpinionRequest:
-      value:
-        phone: '123456789'
-    ConfirmBookingValidationError:
-      value:
-        errors: []
-        message: 'Validation error message, e.g.: confirmed_by value is invalid'
-    Bookings:
-      value:
-        _items:
-        - id: '2134124'
-          status: booked
-          start_at: '2021-05-16T14:00:00+01:00'
-          end_at: '2021-05-16T14:30:00+01:00'
-          duration: 30
-          booked_by: user
-          canceled_by: ''
-          booked_at: '2021-05-12T12:00:00+01:00'
-          canceled_at: null
-          comment: comment
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-        - id: '2134125'
-          status: booked
-          start_at: '2021-05-16T17:00:00+01:00'
-          end_at: '2021-05-16T17:30:00+01:00'
-          duration: 15
-          booked_by: doctor
-          canceled_by: doctor
-          booked_at: '2021-05-12T13:00:00+01:00'
-          canceled_at: '2021-05-16T14:30:00+01:00'
-          comment: null
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-    UnableToCancelForAddress:
-      value:
-        errors: []
-        message: Unable to cancel a visit for this address
-    FacilityNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this facility
-    Booking:
-      value:
-        id: '2134124'
-        status: booked
-        start_at: '2021-05-16T14:00:00+01:00'
-        end_at: '2021-05-16T14:30:00+01:00'
-        duration: 30
-        booked_by: user
-        canceled_by: ''
-        booked_at: '2021-05-12T12:00:00+01:00'
-        canceled_at: null
-        patient:
-          name: Abraham
-          surname: Lincoln
-          email: example@example.com
-          phone: 48123123123
-          birth_date: '1985-01-01'
-          nin: 894237492
-          gender: m
-          is_returning: false
-          insurance_number: null
-        address_service:
-          id: '101'
-          name: USG
-          price: 100
-          is_price_from: false
-          is_default: true
-          service_id: '1'
-          description: Description of service
-          is_visible: true
-        comment: comment
-        insurance:
-          id: '11'
-          name: Axa
-          plan: null
-          plan_id: null
-    ConfirmBooking:
-      value:
-        confirmed_by: user
-    BookingsPaginated:
-      value:
-        page: 1
-        limit: 2
-        pages: 11
-        total: 25
-        _items:
-        - id: '2134124'
-          status: booked
-          start_at: '2021-05-16T14:00:00+01:00'
-          end_at: '2021-05-16T14:30:00+01:00'
-          duration: 30
-          booked_by: user
-          canceled_by: ''
-          booked_at: '2021-05-12T12:00:00+01:00'
-          canceled_at: null
-          comment: comment
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-        - id: '2134125'
-          status: booked
-          start_at: '2021-05-16T17:00:00+01:00'
-          end_at: '2021-05-16T17:30:00+01:00'
-          duration: 15
-          booked_by: doctor
-          canceled_by: doctor
-          booked_at: '2021-05-12T13:00:00+01:00'
-          canceled_at: '2021-05-16T14:30:00+01:00'
-          comment: null
-          insurance:
-            id: '11'
-            name: Axa
-            plan: null
-            plan_id: null
-    BookingWithPublicInsuranceFlow:
-      value:
-        id: '2134124'
-        status: booked
-        start_at: '2021-05-16T14:00:00+01:00'
-        end_at: '2021-05-16T14:30:00+01:00'
-        duration: 30
-        booked_by: user
-        canceled_by: ''
-        booked_at: '2021-05-12T12:00:00+01:00'
-        canceled_at: null
-        patient:
-          name: Abraham
-          surname: Lincoln
-          email: example@example.com
-          phone: 48123123123
-          birth_date: '1985-01-01'
-          nin: 894237492
-          gender: m
-          is_returning: false
-          insurance_number: CARD-7654321
-        address_service:
-          id: '101'
-          name: USG
-          price: 100
-          is_price_from: false
-          is_default: true
-          service_id: '1'
-          description: Description of service
-          is_visible: true
-          is_public_insurance_flow: false
-        comment: comment
-        insurance:
-          id: '11'
-          name: Axa
-          plan: null
-          plan_id: null
-    ServiceDoesNotExist:
-      value:
-        errors: []
-        message: Service does not exist
-    BookingWithMovingMoved:
-      value:
-        id: '2134124'
-        status: canceled
-        start_at: '2021-05-16T14:00:00+01:00'
-        end_at: '2021-05-16T14:30:00+01:00'
-        duration: 30
-        booked_by: user
-        canceled_by: '2021-05-13T15:12:00+01:00'
-        booked_at: '2021-05-12T12:00:00+01:00'
-        canceled_at: null
-        moving:
-          origin_booking_id: '2134101'
-          newest_booking_id: '2134135'
-        patient:
-          name: Abraham
-          surname: Lincoln
-          email: example@example.com
-          phone: 48123123123
-          birth_date: '1985-01-01'
-          nin: 894237492
-          gender: m
-          is_returning: false
-          insurance_number: CARD-7654321
-        address_service:
-          id: '101'
-          name: USG
-          price: 100
-          is_price_from: false
-          is_default: true
-          service_id: '1'
-          description: Description of service
-          is_visible: true
-        comment: comment
-        insurance:
-          id: '11'
-          name: Axa
-          plan: null
-          plan_id: null
-    CancelBookingWithPatientNotificationAndReason:
-      value:
-        reason: Doctor will not be present on that day in the clinic
-    DeleteBookingValidationError:
-      value:
-        errors: []
-        message: 'Validation error message, e.g.: Visit 12345 cannot be canceled because it is not booked'
-    ConfirmBookingInvalidIntegration:
-      value:
-        errors: []
-        message: Integration is not authorized for this address
   schemas:
-    Bookings:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Booking'
-        page:
-          type:
-          - integer
-          - 'null'
-          example: 1
-        limit:
-          type:
-          - integer
-          - 'null'
-          example: 100
-        pages:
-          type:
-          - integer
-          - 'null'
-          example: 11
-        total:
-          type:
-          - integer
-          - 'null'
-          example: 106
-    ConfirmBookingRequest:
-      type: object
-      properties:
-        confirmed_by:
-          type: string
-          enum:
-          - user
-          - admin
-          example: user
-          description: Who confirmed the booking
-      required:
-      - confirmed_by
     AddressService:
       type: object
       properties:
@@ -1607,37 +750,10 @@ components:
           - string
           - 'null'
           example: Custom Service Name
-    Insurance:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        plan:
-          type:
-          - string
-          - 'null'
-        plan_id:
-          type:
-          - string
-          - 'null'
-    BookingsScopes:
+    MoveBookingScopes:
       type: string
       enum:
-      - booking.patient
-      - booking.address_service
-      - booking.presence
       - address_service.public_insurance_flow
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        message:
-          type: string
     CancelBookingRequest:
       type: object
       properties:
@@ -1645,32 +761,6 @@ components:
           type: string
           example: Doctor will not be present on that day
           description: Reason why visit was canceled
-    OpinionRequest:
-      type: object
-      properties:
-        phone:
-          type: string
-          example: '123456789'
-      required:
-      - phone
-    MoveBookingRequest:
-      type: object
-      properties:
-        address_service_id:
-          type: string
-          example: 112
-        start:
-          type: string
-          format: date-time
-          example: '2021-05-26T16:00:00+01:00'
-        duration:
-          type: integer
-          example: 30
-        address_id:
-          type: string
-          example: 12345789
-      required:
-      - address_service_id
     BookingPatient:
       type: object
       properties:
@@ -1716,6 +806,32 @@ components:
           - string
           - 'null'
           example: CARD-7654321
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
+    ConfirmBookingRequest:
+      type: object
+      properties:
+        confirmed_by:
+          type: string
+          enum:
+          - user
+          - admin
+          example: user
+          description: Who confirmed the booking
+      required:
+      - confirmed_by
+    BookingScopes:
+      type: string
+      enum:
+      - booking.moving
+      - address_service.public_insurance_flow
     Booking:
       type: object
       properties:
@@ -1793,14 +909,12 @@ components:
           type:
           - string
           - 'null'
-    BookingScopes:
+    BookingsScopes:
       type: string
       enum:
-      - booking.moving
-      - address_service.public_insurance_flow
-    MoveBookingScopes:
-      type: string
-      enum:
+      - booking.patient
+      - booking.address_service
+      - booking.presence
       - address_service.public_insurance_flow
     BookingMoving:
       type: object
@@ -1811,6 +925,29 @@ components:
         newest_booking_id:
           type: string
           example: '2134125'
+    OpinionRequest:
+      type: object
+      properties:
+        phone:
+          type: string
+          example: '123456789'
+      required:
+      - phone
+    Insurance:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        plan:
+          type:
+          - string
+          - 'null'
+        plan_id:
+          type:
+          - string
+          - 'null'
     AllowedPatientsData:
       type: object
       properties:
@@ -1826,6 +963,869 @@ components:
           - 'null'
           example: 65
           description: Maximum age of patients allowed for this service
+    MoveBookingRequest:
+      type: object
+      properties:
+        address_service_id:
+          type: string
+          example: 112
+        start:
+          type: string
+          format: date-time
+          example: '2021-05-26T16:00:00+01:00'
+        duration:
+          type: integer
+          example: 30
+        address_id:
+          type: string
+          example: 12345789
+      required:
+      - address_service_id
+    Bookings:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Booking'
+        page:
+          type:
+          - integer
+          - 'null'
+          example: 1
+        limit:
+          type:
+          - integer
+          - 'null'
+          example: 100
+        pages:
+          type:
+          - integer
+          - 'null'
+          example: 11
+        total:
+          type:
+          - integer
+          - 'null'
+          example: 106
+  examples:
+    VisitNotFound:
+      value:
+        errors: []
+        message: Visit not found
+    AddressNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this address
+    ServiceDoesNotExist:
+      value:
+        errors: []
+        message: Service does not exist
+    BookingVideocallEnabled:
+      value:
+        id: '2134124'
+        status: booked
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: ''
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: null
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          is_returning: false
+          insurance_number: CARD-7654321
+        address_service:
+          id: '101'
+          name: USG
+          price: 100
+          is_price_from: false
+          is_default: true
+          service_id: '1'
+          description: Description of service
+          is_visible: true
+        comment: comment
+        insurance:
+          id: '11'
+          name: Axa
+          plan: null
+          plan_id: null
+        videocall_url: http://url-to-video-call
+    MoveBookingValidationError:
+      value:
+        errors: []
+        message: Invalid arguments
+    BookingWithMovingMoved:
+      value:
+        id: '2134124'
+        status: canceled
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: '2021-05-13T15:12:00+01:00'
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: null
+        moving:
+          origin_booking_id: '2134101'
+          newest_booking_id: '2134135'
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          is_returning: false
+          insurance_number: CARD-7654321
+        address_service:
+          id: '101'
+          name: USG
+          price: 100
+          is_price_from: false
+          is_default: true
+          service_id: '1'
+          description: Description of service
+          is_visible: true
+        comment: comment
+        insurance:
+          id: '11'
+          name: Axa
+          plan: null
+          plan_id: null
+    MoveBookingToOtherAddress:
+      value:
+        address_service_id: '113'
+        start: '2021-05-26T16:00:00+01:00'
+        duration: 30
+        address_id: '112233'
+    DoctorNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this doctor
+    BookingsWithConfirmation:
+      value:
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          comment: comment
+          confirmed: false
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          comment: null
+          confirmed: true
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+    ServiceDoesNotBelongToAddress:
+      value:
+        errors: []
+        message: Service does not belong to the address
+    ConfirmBookingVisitDeleted:
+      value:
+        errors: []
+        message: Visit has been deleted
+    BookingsVisitPaymentsEnabled:
+      value:
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          comment: comment
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+          visit_payment: true
+          visit_payment_status: successful
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          comment: null
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+          visit_payment: true
+          visit_payment_status: paid
+    ObjectNotFound:
+      value:
+        errors: []
+        message: Object not found
+    CannotSendRequestForOpinion:
+      value:
+        errors: []
+        message: Cannot send request
+    BookingWithMovingNotMoved:
+      value:
+        id: '2134124'
+        status: canceled
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: '2021-05-13T15:12:00+01:00'
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: null
+        moving:
+          origin_booking_id: '2134124'
+          newest_booking_id: '2134124'
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          is_returning: false
+          insurance_number: CARD-7654321
+        address_service:
+          id: '101'
+          name: USG
+          price: 100
+          is_price_from: false
+          is_default: true
+          service_id: '1'
+          description: Description of service
+          is_visible: true
+        comment: comment
+        insurance:
+          id: '11'
+          name: Axa
+          plan: null
+          plan_id: null
+    DoctorDoesNotBelongToFacility:
+      value:
+        errors: []
+        message: Doctor is not related with facility
+    ConfirmBooking:
+      value:
+        confirmed_by: user
+    BookingsPaginated:
+      value:
+        page: 1
+        limit: 2
+        pages: 11
+        total: 25
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          comment: comment
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          comment: null
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+    AddressDoesNotExist:
+      value:
+        errors: []
+        message: Address does not exist
+    ConfirmBookingPastVisit:
+      value:
+        errors: []
+        message: Visit is in the past
+    DeleteBookingValidationError:
+      value:
+        errors: []
+        message: 'Validation error message, e.g.: Visit 12345 cannot be canceled because it is not booked'
+    ConfirmBookingAlreadyConfirmed:
+      value:
+        errors: []
+        message: Visit has already been confirmed
+    BookingDoesNotBelongToAddress:
+      value:
+        errors: []
+        message: This booking does not belong to this address
+    BookingVisitPaymentsEnabled:
+      value:
+        id: '2134124'
+        status: booked
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: ''
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: null
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          is_returning: false
+          insurance_number: CARD-7654321
+        address_service:
+          id: '101'
+          name: USG
+          price: 100
+          is_price_from: false
+          is_default: true
+          service_id: '1'
+          description: Description of service
+          is_visible: true
+        comment: comment
+        insurance:
+          id: '11'
+          name: Axa
+          plan: null
+          plan_id: null
+        visit_payment: true
+        visit_payment_status: successful
+    OpinionAlreadyExist:
+      value:
+        errors: []
+        message: Opinion already exists
+    ConfirmBookingValidationError:
+      value:
+        errors: []
+        message: 'Validation error message, e.g.: confirmed_by value is invalid'
+    ConfirmBookingInvalidIntegration:
+      value:
+        errors: []
+        message: Integration is not authorized for this address
+    FacilityNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this facility
+    Booking:
+      value:
+        id: '2134124'
+        status: booked
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: ''
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: null
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          is_returning: false
+          insurance_number: null
+        address_service:
+          id: '101'
+          name: USG
+          price: 100
+          is_price_from: false
+          is_default: true
+          service_id: '1'
+          description: Description of service
+          is_visible: true
+        comment: comment
+        insurance:
+          id: '11'
+          name: Axa
+          plan: null
+          plan_id: null
+    VisitAlreadyMovedOrDeleted:
+      value:
+        errors: []
+        message: The visit has already been canceled or moved
+    BookingsWithAddressService:
+      value:
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          address_service:
+            id: '101'
+            name: USG
+            price: 100
+            is_price_from: false
+            is_default: true
+            service_id: '1'
+            description: Description of service
+            is_visible: true
+          comment: comment
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          address_service:
+            id: '101'
+            name: USG
+            price: 100
+            is_price_from: false
+            is_default: true
+            service_id: '1'
+            description: Description of service
+            is_visible: true
+          comment: null
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+    OpinionRequestValidationError:
+      value:
+        errors: []
+        message: 'Validation error message, e.g.: Phone number is invalid.'
+    BookingsWithPresence:
+      value:
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          comment: comment
+          presence: null
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          comment: null
+          presence: present
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+    AddressDoesNotBelongToFacility:
+      value:
+        errors: []
+        message: This address does not belong to this facility
+    Bookings:
+      value:
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          comment: comment
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          comment: null
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+    AddressDoesNotBelongToDoctor:
+      value:
+        errors: []
+        message: This address does not belong to this doctor
+    BookingCannotCrossPaymentAccounts:
+      value:
+        errors: []
+        message: This booking has a payment on it and the target address bills through a different payment account. Cancel the booking and create a new one instead.
+    BookingWithPublicInsuranceFlow:
+      value:
+        id: '2134124'
+        status: booked
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: ''
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: null
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          is_returning: false
+          insurance_number: CARD-7654321
+        address_service:
+          id: '101'
+          name: USG
+          price: 100
+          is_price_from: false
+          is_default: true
+          service_id: '1'
+          description: Description of service
+          is_visible: true
+          is_public_insurance_flow: false
+        comment: comment
+        insurance:
+          id: '11'
+          name: Axa
+          plan: null
+          plan_id: null
+    BookingsWithPatient:
+      value:
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          patient:
+            name: Abraham
+            surname: Lincoln
+            email: example@example.com
+            phone: 48123123123
+            birth_date: '1985-01-01'
+            nin: 894237492
+            gender: m
+            is_returning: false
+            insurance_number: CARD-7654321
+          comment: comment
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          patient:
+            name: Abraham
+            surname: Lincoln
+            email: example@example.com
+            phone: 48123123123
+            birth_date: '1985-01-01'
+            nin: 894237492
+            gender: m
+            is_returning: false
+            insurance_number: CARD-7654321
+          comment: null
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+    MoveBooking:
+      value:
+        address_service_id: '112'
+        start: '2021-05-26T16:00:00+01:00'
+        duration: 30
+    BookingWithMovingNoDataAvailable:
+      value:
+        id: '2134124'
+        status: canceled
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: '2021-05-13T15:12:00+01:00'
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: null
+        moving: null
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          is_returning: false
+          insurance_number: CARD-7654321
+        address_service:
+          id: '101'
+          name: USG
+          price: 100
+          is_price_from: false
+          is_default: true
+          service_id: '1'
+          description: Description of service
+          is_visible: true
+        comment: comment
+        insurance:
+          id: '11'
+          name: Axa
+          plan: null
+          plan_id: null
+    OpinionRequest:
+      value:
+        phone: '123456789'
+    ConfirmBookingVisitCanceled:
+      value:
+        errors: []
+        message: Visit has been canceled
+    CancelBookingWithPatientNotificationAndReason:
+      value:
+        reason: Doctor will not be present on that day in the clinic
+    BookingsWithPublicInsuranceFlow:
+      value:
+        _items:
+        - id: '2134124'
+          status: booked
+          start_at: '2021-05-16T14:00:00+01:00'
+          end_at: '2021-05-16T14:30:00+01:00'
+          duration: 30
+          booked_by: user
+          canceled_by: ''
+          booked_at: '2021-05-12T12:00:00+01:00'
+          canceled_at: null
+          address_service:
+            id: '101'
+            name: USG
+            price: 100
+            is_price_from: false
+            is_default: true
+            service_id: '1'
+            description: Description of service
+            is_visible: true
+          comment: comment
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+        - id: '2134125'
+          status: booked
+          start_at: '2021-05-16T17:00:00+01:00'
+          end_at: '2021-05-16T17:30:00+01:00'
+          duration: 15
+          booked_by: doctor
+          canceled_by: doctor
+          booked_at: '2021-05-12T13:00:00+01:00'
+          canceled_at: '2021-05-16T14:30:00+01:00'
+          address_service:
+            id: '101'
+            name: USG
+            price: 100
+            is_price_from: false
+            is_default: true
+            service_id: '1'
+            description: Description of service
+            is_visible: true
+            is_public_insurance_flow: false
+          comment: null
+          insurance:
+            id: '11'
+            name: Axa
+            plan: null
+            plan_id: null
+    UnableToCancelForAddress:
+      value:
+        errors: []
+        message: Unable to cancel a visit for this address
+  parameters:
+    addressId:
+      name: address_id
+      in: path
+      description: ID of a doctor`s address in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
+    page:
+      name: page
+      in: query
+      description: Page number to use for pagination. If not provided the pagination is not applied.
+      required: false
+      schema:
+        type: integer
+        example: 1
+    endRequired:
+      name: end
+      in: query
+      description: Slot end date (parameter must be urlencoded before sending request)
+      required: true
+      schema:
+        type: string
+        format: date-time
+        example: '2021-05-16T15:00:00+01:00'
+    facilityId:
+      name: facility_id
+      in: path
+      description: ID of the Facility
+      example: 1
+      required: true
+      schema:
+        type: string
+    bookingWith:
+      name: with
+      in: query
+      required: false
+      style: simple
+      schema:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/BookingScopes'
+    limit:
+      name: limit
+      in: query
+      description: Maximum number of items per page. If not provided the default value of 100 is applied if pagination is used.
+      required: false
+      schema:
+        type: integer
+        example: 100
+    moveBookingWith:
+      name: with
+      in: query
+      required: false
+      style: simple
+      schema:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/MoveBookingScopes'
+    bookingId:
+      name: booking_id
+      in: path
+      description: ID of the Booking
+      required: true
+      schema:
+        type: string
+        example: 123
+    doctorId:
+      name: doctor_id
+      in: path
+      description: ID of a doctor in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
+    bookingsWith:
+      name: with
+      in: query
+      required: false
+      style: simple
+      schema:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/BookingsScopes'
+    startRequired:
+      name: start
+      in: query
+      description: Slot start date (parameter must be urlencoded before sending request)
+      required: true
+      schema:
+        type: string
+        format: date-time
+        example: '2021-05-16T14:00:00+01:00'
   securitySchemes:
     oauth2:
       name: OAuth 2.0

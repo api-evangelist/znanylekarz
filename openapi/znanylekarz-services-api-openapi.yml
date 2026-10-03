@@ -571,11 +571,334 @@ paths:
       summary: Delete address service
       x-summary-source: derived
 components:
+  examples:
+    PatchAddressService:
+      value:
+        price: 200
+        is_price_from: true
+        description: Address service description
+        default_duration: 20
+        is_visible: true
+        allowed_patients:
+          minimum_age: 21
+          maximum_age: 60
+        custom_name: Custom USG Name
+    AddressServiceWithAllowedPatients:
+      value:
+        id: '101'
+        name: USG
+        is_default: true
+        is_price_from: false
+        price: 100
+        description: Description of service
+        service_id: '1'
+        is_visible: true
+        allowed_patients:
+          minimum_age: 18
+          maximum_age: 65
+    PatchAddressServiceResponse:
+      value:
+        id: '101'
+        name: USG
+        is_default: true
+        is_price_from: true
+        price: 200
+        description: Address service description
+        service_id: '1'
+        is_visible: true
+    AddressServiceWithPublicInsuranceFlow:
+      value:
+        id: '101'
+        name: USG
+        is_default: true
+        is_price_from: false
+        price: 100
+        description: Description of service
+        service_id: '1'
+        is_visible: true
+        is_public_insurance_flow: false
+    AddressServiceWithCustomName:
+      value:
+        id: '101'
+        name: USG
+        is_default: true
+        is_price_from: false
+        price: 100
+        description: Description of service
+        service_id: '1'
+        is_visible: true
+        custom_name: Custom USG Name
+    DoctorNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this doctor
+    AddressServicesWithPublicInsuranceFlow:
+      value:
+        _items:
+        - id: '101'
+          name: USG
+          is_default: true
+          is_price_from: false
+          price: 100
+          description: Description of service
+          service_id: '1'
+          is_visible: true
+          allowed_patients:
+            minimum_age: 18
+            maximum_age: 65
+          is_public_insurance_flow: true
+        - id: '103'
+          name: EEG
+          is_default: true
+          is_price_from: false
+          price: null
+          description: Description of service
+          service_id: '3'
+          is_visible: false
+          allowed_patients: null
+          is_public_insurance_flow: true
+    AddressServiceValidationError:
+      value:
+        errors: []
+        message: 'Validation error message, e.g.: Invalid price value for service. Price should be either null or integer greater or equal 0.'
+    AddressServiceAlreadyExists:
+      value:
+        errors: []
+        message: The address service you are trying to add already exists in the system
+    FacilityNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this facility
+    AddressNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this address
+    AddAddressService:
+      value:
+        service_id: '2'
+        is_price_from: true
+        price: 200
+        description: Address service description
+        is_visible: true
+        default_duration: 20
+        allowed_patients:
+          minimum_age: 18
+          maximum_age: 65
+        custom_name: Custom USG Name
+    AddressServices:
+      value:
+        _items:
+        - id: '101'
+          name: USG
+          is_default: true
+          is_price_from: false
+          price: 100
+          description: Description of service
+          service_id: '1'
+          is_visible: true
+          allowed_patients:
+            minimum_age: 18
+            maximum_age: 65
+        - id: '103'
+          name: EEG
+          is_default: true
+          is_price_from: false
+          price: null
+          description: Description of service
+          service_id: '3'
+          is_visible: false
+          allowed_patients: null
+    ObjectNotFound:
+      value:
+        errors: []
+        message: Object not found
+    AddressServicesWithStartDate:
+      value:
+        _items:
+        - id: '101'
+          name: USG
+          is_default: true
+          is_price_from: false
+          price: 100
+          description: Description of service
+          service_id: '1'
+          duration: 15
+          is_visible: true
+        - id: '103'
+          name: EEG
+          is_default: true
+          is_price_from: false
+          price: null
+          description: Description of service
+          service_id: '3'
+          duration: 30
+          is_visible: false
+    Services:
+      value:
+        _items:
+        - id: '1'
+          name: USG
+        - id: '2'
+          name: EKG
+        - id: '3'
+          name: EEG
+    AddressServiceMismatch:
+      value:
+        errors: []
+        message: This service does not belong to this address
+    AddressServicesWithCustomName:
+      value:
+        _items:
+        - id: '101'
+          name: USG
+          is_default: true
+          is_price_from: false
+          price: 100
+          description: Description of service
+          service_id: '1'
+          duration: 15
+          is_visible: true
+          custom_name: Custom USG Name
+        - id: '103'
+          name: EEG
+          is_default: true
+          is_price_from: false
+          price: null
+          description: Description of service
+          service_id: '3'
+          duration: 30
+          is_visible: false
+          custom_name: EEG
+    AddressServicesWithAllowedPatients:
+      value:
+        _items:
+        - id: '101'
+          name: USG
+          is_default: true
+          is_price_from: false
+          price: 100
+          description: Description of service
+          service_id: '1'
+          duration: 15
+          is_visible: true
+          allowed_patients:
+            minimum_age: 18
+            maximum_age: 65
+        - id: '103'
+          name: EEG
+          is_default: true
+          is_price_from: false
+          price: null
+          description: Description of service
+          service_id: '3'
+          duration: 30
+          is_visible: false
+          allowed_patients:
+            minimum_age: null
+            maximum_age: 65
+        - id: '104'
+          name: Service name
+          is_default: true
+          is_price_from: false
+          price: null
+          description: Description of service
+          service_id: '14'
+          duration: 30
+          is_visible: false
+          allowed_patients:
+            minimum_age: 5
+            maximum_age: null
+    AddressService:
+      value:
+        id: '101'
+        name: USG
+        is_default: true
+        is_price_from: false
+        price: 100
+        description: Description of service
+        service_id: '1'
+        is_visible: true
+  parameters:
+    servicesSpecializationId:
+      name: specialization_id
+      in: query
+      description: Filters services by specialization. When provided, only services associated with the given specialization are returned.
+      example: 12
+      required: false
+      schema:
+        type: integer
+    addressServiceId:
+      name: address_service_id
+      in: path
+      description: ID of an address service
+      example: 123
+      required: true
+      schema:
+        type: string
+    doctorId:
+      name: doctor_id
+      in: path
+      description: ID of a doctor in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
+    startForAddressServices:
+      name: start
+      in: query
+      description: Slot start date (parameter must be urlencoded before sending request). Limits results to only those linked to slots that start on that date.
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: '2021-05-16T14:00:00+01:00'
+    addressServiceWith:
+      name: with
+      in: query
+      required: false
+      style: simple
+      schema:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/AddressServiceScopes'
+    servicesWith:
+      name: with
+      in: query
+      required: false
+      style: simple
+      schema:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/ServicesScopes'
+    addressServicesWith:
+      name: with
+      in: query
+      required: false
+      style: simple
+      schema:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/AddressServicesScopes'
+    facilityId:
+      name: facility_id
+      in: path
+      description: ID of the Facility
+      example: 1
+      required: true
+      schema:
+        type: string
+    addressId:
+      name: address_id
+      in: path
+      description: ID of a doctor`s address in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
   schemas:
-    ServicesScopes:
-      type: string
-      enum:
-      - services.only_diagnostics
     AddressService:
       type: object
       properties:
@@ -622,28 +945,6 @@ components:
           - string
           - 'null'
           example: Custom Service Name
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        message:
-          type: string
-    AddressServiceScopes:
-      type: string
-      enum:
-      - address_service.allowed_patients
-      - address_service.custom_name
-      - address_service.public_insurance_flow
-    AddressServices:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AddressService'
     Service:
       type: object
       properties:
@@ -653,28 +954,13 @@ components:
         name:
           type: string
           example: Regular visit
-    Services:
+    AddressServices:
       type: object
       properties:
         _items:
           type: array
           items:
-            $ref: '#/components/schemas/Service'
-    AllowedPatientsData:
-      type: object
-      properties:
-        minimum_age:
-          type:
-          - integer
-          - 'null'
-          example: 18
-          description: Minimum age of patients allowed for this service
-        maximum_age:
-          type:
-          - integer
-          - 'null'
-          example: 65
-          description: Maximum age of patients allowed for this service
+            $ref: '#/components/schemas/AddressService'
     AddressServicesScopes:
       type: string
       enum:
@@ -757,333 +1043,47 @@ components:
           description: A custom display name for the service. Cannot be an empty string.
       required:
       - service_id
-  examples:
-    AddressServiceValidationError:
-      value:
-        errors: []
-        message: 'Validation error message, e.g.: Invalid price value for service. Price should be either null or integer greater or equal 0.'
-    PatchAddressServiceResponse:
-      value:
-        id: '101'
-        name: USG
-        is_default: true
-        is_price_from: true
-        price: 200
-        description: Address service description
-        service_id: '1'
-        is_visible: true
-    AddressServiceWithPublicInsuranceFlow:
-      value:
-        id: '101'
-        name: USG
-        is_default: true
-        is_price_from: false
-        price: 100
-        description: Description of service
-        service_id: '1'
-        is_visible: true
-        is_public_insurance_flow: false
-    AddressNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this address
-    AddressServicesWithCustomName:
-      value:
-        _items:
-        - id: '101'
-          name: USG
-          is_default: true
-          is_price_from: false
-          price: 100
-          description: Description of service
-          service_id: '1'
-          duration: 15
-          is_visible: true
-          custom_name: Custom USG Name
-        - id: '103'
-          name: EEG
-          is_default: true
-          is_price_from: false
-          price: null
-          description: Description of service
-          service_id: '3'
-          duration: 30
-          is_visible: false
-          custom_name: EEG
-    AddressServiceWithCustomName:
-      value:
-        id: '101'
-        name: USG
-        is_default: true
-        is_price_from: false
-        price: 100
-        description: Description of service
-        service_id: '1'
-        is_visible: true
-        custom_name: Custom USG Name
-    DoctorNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this doctor
+    AllowedPatientsData:
+      type: object
+      properties:
+        minimum_age:
+          type:
+          - integer
+          - 'null'
+          example: 18
+          description: Minimum age of patients allowed for this service
+        maximum_age:
+          type:
+          - integer
+          - 'null'
+          example: 65
+          description: Maximum age of patients allowed for this service
+    ServicesScopes:
+      type: string
+      enum:
+      - services.only_diagnostics
+    AddressServiceScopes:
+      type: string
+      enum:
+      - address_service.allowed_patients
+      - address_service.custom_name
+      - address_service.public_insurance_flow
     Services:
-      value:
+      type: object
+      properties:
         _items:
-        - id: '1'
-          name: USG
-        - id: '2'
-          name: EKG
-        - id: '3'
-          name: EEG
-    ObjectNotFound:
-      value:
-        errors: []
-        message: Object not found
-    AddressServicesWithPublicInsuranceFlow:
-      value:
-        _items:
-        - id: '101'
-          name: USG
-          is_default: true
-          is_price_from: false
-          price: 100
-          description: Description of service
-          service_id: '1'
-          is_visible: true
-          allowed_patients:
-            minimum_age: 18
-            maximum_age: 65
-          is_public_insurance_flow: true
-        - id: '103'
-          name: EEG
-          is_default: true
-          is_price_from: false
-          price: null
-          description: Description of service
-          service_id: '3'
-          is_visible: false
-          allowed_patients: null
-          is_public_insurance_flow: true
-    AddAddressService:
-      value:
-        service_id: '2'
-        is_price_from: true
-        price: 200
-        description: Address service description
-        is_visible: true
-        default_duration: 20
-        allowed_patients:
-          minimum_age: 18
-          maximum_age: 65
-        custom_name: Custom USG Name
-    AddressServiceMismatch:
-      value:
-        errors: []
-        message: This service does not belong to this address
-    PatchAddressService:
-      value:
-        price: 200
-        is_price_from: true
-        description: Address service description
-        default_duration: 20
-        is_visible: true
-        allowed_patients:
-          minimum_age: 21
-          maximum_age: 60
-        custom_name: Custom USG Name
-    AddressServiceWithAllowedPatients:
-      value:
-        id: '101'
-        name: USG
-        is_default: true
-        is_price_from: false
-        price: 100
-        description: Description of service
-        service_id: '1'
-        is_visible: true
-        allowed_patients:
-          minimum_age: 18
-          maximum_age: 65
-    AddressServiceAlreadyExists:
-      value:
-        errors: []
-        message: The address service you are trying to add already exists in the system
-    FacilityNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this facility
-    AddressService:
-      value:
-        id: '101'
-        name: USG
-        is_default: true
-        is_price_from: false
-        price: 100
-        description: Description of service
-        service_id: '1'
-        is_visible: true
-    AddressServices:
-      value:
-        _items:
-        - id: '101'
-          name: USG
-          is_default: true
-          is_price_from: false
-          price: 100
-          description: Description of service
-          service_id: '1'
-          is_visible: true
-          allowed_patients:
-            minimum_age: 18
-            maximum_age: 65
-        - id: '103'
-          name: EEG
-          is_default: true
-          is_price_from: false
-          price: null
-          description: Description of service
-          service_id: '3'
-          is_visible: false
-          allowed_patients: null
-    AddressServicesWithAllowedPatients:
-      value:
-        _items:
-        - id: '101'
-          name: USG
-          is_default: true
-          is_price_from: false
-          price: 100
-          description: Description of service
-          service_id: '1'
-          duration: 15
-          is_visible: true
-          allowed_patients:
-            minimum_age: 18
-            maximum_age: 65
-        - id: '103'
-          name: EEG
-          is_default: true
-          is_price_from: false
-          price: null
-          description: Description of service
-          service_id: '3'
-          duration: 30
-          is_visible: false
-          allowed_patients:
-            minimum_age: null
-            maximum_age: 65
-        - id: '104'
-          name: Service name
-          is_default: true
-          is_price_from: false
-          price: null
-          description: Description of service
-          service_id: '14'
-          duration: 30
-          is_visible: false
-          allowed_patients:
-            minimum_age: 5
-            maximum_age: null
-    AddressServicesWithStartDate:
-      value:
-        _items:
-        - id: '101'
-          name: USG
-          is_default: true
-          is_price_from: false
-          price: 100
-          description: Description of service
-          service_id: '1'
-          duration: 15
-          is_visible: true
-        - id: '103'
-          name: EEG
-          is_default: true
-          is_price_from: false
-          price: null
-          description: Description of service
-          service_id: '3'
-          duration: 30
-          is_visible: false
-  parameters:
-    addressId:
-      name: address_id
-      in: path
-      description: ID of a doctor`s address in a facility
-      example: 123
-      required: true
-      schema:
-        type: string
-    servicesSpecializationId:
-      name: specialization_id
-      in: query
-      description: Filters services by specialization. When provided, only services associated with the given specialization are returned.
-      example: 12
-      required: false
-      schema:
-        type: integer
-    addressServiceWith:
-      name: with
-      in: query
-      required: false
-      style: simple
-      schema:
-        type: array
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/AddressServiceScopes'
-    addressServiceId:
-      name: address_service_id
-      in: path
-      description: ID of an address service
-      example: 123
-      required: true
-      schema:
-        type: string
-    servicesWith:
-      name: with
-      in: query
-      required: false
-      style: simple
-      schema:
-        type: array
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/ServicesScopes'
-    addressServicesWith:
-      name: with
-      in: query
-      required: false
-      style: simple
-      schema:
-        type: array
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/AddressServicesScopes'
-    facilityId:
-      name: facility_id
-      in: path
-      description: ID of the Facility
-      example: 1
-      required: true
-      schema:
-        type: string
-    doctorId:
-      name: doctor_id
-      in: path
-      description: ID of a doctor in a facility
-      example: 123
-      required: true
-      schema:
-        type: string
-    startForAddressServices:
-      name: start
-      in: query
-      description: Slot start date (parameter must be urlencoded before sending request). Limits results to only those linked to slots that start on that date.
-      required: false
-      schema:
-        type: string
-        format: date-time
-        example: '2021-05-16T14:00:00+01:00'
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
   securitySchemes:
     oauth2:
       name: OAuth 2.0

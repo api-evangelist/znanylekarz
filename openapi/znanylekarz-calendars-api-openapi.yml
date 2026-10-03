@@ -388,6 +388,86 @@ paths:
       summary: Disable calendar
       x-summary-source: derived
 components:
+  examples:
+    AddressDoesNotBelongToFacility:
+      value:
+        errors: []
+        message: This address does not belong to this facility
+    DoctorNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this doctor
+    CalendarEditionNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to make changes on this calendar
+    FacilityNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this facility
+    AddressNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this address
+    AddressDisabled:
+      value:
+        errors: []
+        message: Could not enable calendar on disabled address
+    CalendarDisabled:
+      value:
+        status: disabled
+    CalendarAlreadyDisabled:
+      value:
+        errors: []
+        message: Calendar already disabled
+    CalendarEnabled:
+      value:
+        status: enabled
+    DoctorOrAddressNotCommercial:
+      value:
+        errors: []
+        message: Cannot activate calendar on address 123, profile/address is not commercial
+    CalendarAlreadyEnabled:
+      value:
+        errors: []
+        message: Calendar already enabled
+    AddressDoesNotBelongToDoctor:
+      value:
+        errors: []
+        message: This address does not belong to this doctor
+    ObjectNotFound:
+      value:
+        errors: []
+        message: Object not found
+    CalendarNotFound:
+      value:
+        errors: []
+        message: Calendar does not exist
+  parameters:
+    doctorId:
+      name: doctor_id
+      in: path
+      description: ID of a doctor in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
+    facilityId:
+      name: facility_id
+      in: path
+      description: ID of the Facility
+      example: 1
+      required: true
+      schema:
+        type: string
+    addressId:
+      name: address_id
+      in: path
+      description: ID of a doctor`s address in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
   schemas:
     Calendar:
       type: object
@@ -407,86 +487,6 @@ components:
             type: string
         message:
           type: string
-  examples:
-    AddressNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this address
-    CalendarEnabled:
-      value:
-        status: enabled
-    CalendarDisabled:
-      value:
-        status: disabled
-    CalendarAlreadyEnabled:
-      value:
-        errors: []
-        message: Calendar already enabled
-    DoctorNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this doctor
-    CalendarAlreadyDisabled:
-      value:
-        errors: []
-        message: Calendar already disabled
-    ObjectNotFound:
-      value:
-        errors: []
-        message: Object not found
-    AddressDisabled:
-      value:
-        errors: []
-        message: Could not enable calendar on disabled address
-    FacilityNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this facility
-    CalendarNotFound:
-      value:
-        errors: []
-        message: Calendar does not exist
-    CalendarEditionNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to make changes on this calendar
-    AddressDoesNotBelongToFacility:
-      value:
-        errors: []
-        message: This address does not belong to this facility
-    DoctorOrAddressNotCommercial:
-      value:
-        errors: []
-        message: Cannot activate calendar on address 123, profile/address is not commercial
-    AddressDoesNotBelongToDoctor:
-      value:
-        errors: []
-        message: This address does not belong to this doctor
-  parameters:
-    addressId:
-      name: address_id
-      in: path
-      description: ID of a doctor`s address in a facility
-      example: 123
-      required: true
-      schema:
-        type: string
-    facilityId:
-      name: facility_id
-      in: path
-      description: ID of the Facility
-      example: 1
-      required: true
-      schema:
-        type: string
-    doctorId:
-      name: doctor_id
-      in: path
-      description: ID of a doctor in a facility
-      example: 123
-      required: true
-      schema:
-        type: string
   securitySchemes:
     oauth2:
       name: OAuth 2.0

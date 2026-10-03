@@ -306,58 +306,13 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    Specialization:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 12
-        name:
-          type: string
-          example: Specialization example
-    LicenseNumber:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 12
-        license_number:
-          type: string
-          example: License number
-    LicenseNumbers:
+    Addresses:
       type: object
       properties:
         _items:
           type: array
           items:
-            $ref: '#/components/schemas/LicenseNumber'
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        message:
-          type: string
-    Specializations:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Specialization'
-    Facility:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 1
-        name:
-          type: string
-          example: Sample Clinic 1
-        doctors:
-          $ref: '#/components/schemas/Doctors'
+            $ref: '#/components/schemas/Address'
     Address:
       type: object
       properties:
@@ -423,10 +378,56 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Facility'
-    FacilityScopes:
-      type: string
-      enum:
-      - facility.doctors
+    LicenseNumber:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 12
+        license_number:
+          type: string
+          example: License number
+    Doctors:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Doctor'
+    LicenseNumbers:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseNumber'
+    Specializations:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Specialization'
+    Facility:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1
+        name:
+          type: string
+          example: Sample Clinic 1
+        doctors:
+          $ref: '#/components/schemas/Doctors'
+    Specialization:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 12
+        name:
+          type: string
+          example: Specialization example
     Doctor:
       type: object
       properties:
@@ -445,21 +446,31 @@ components:
           $ref: '#/components/schemas/Specializations'
         license_numbers:
           $ref: '#/components/schemas/LicenseNumbers'
-    Doctors:
+    FacilityScopes:
+      type: string
+      enum:
+      - facility.doctors
+    Error:
       type: object
       properties:
-        _items:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/Doctor'
-    Addresses:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Address'
+            type: string
+        message:
+          type: string
   examples:
+    Facilities:
+      value:
+        _items:
+        - id: '1'
+          name: Sample hospital
+        - id: '2'
+          name: Another sample hospital
+    Facility:
+      value:
+        id: '1'
+        name: Sample hospital
     FacilityWithDoctors:
       value:
         id: '1'
@@ -472,25 +483,14 @@ components:
           - id: '234'
             name: Sample
             surname: Doctor 234
-    ObjectNotFound:
-      value:
-        errors: []
-        message: Object not found
-    Facilities:
-      value:
-        _items:
-        - id: '1'
-          name: Sample hospital
-        - id: '2'
-          name: Another sample hospital
     FacilityNotAuthorized:
       value:
         errors: []
         message: You are not authorized to see this facility
-    Facility:
+    ObjectNotFound:
       value:
-        id: '1'
-        name: Sample hospital
+        errors: []
+        message: Object not found
   parameters:
     facilityWith:
       name: with

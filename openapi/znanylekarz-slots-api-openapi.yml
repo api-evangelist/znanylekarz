@@ -519,97 +519,31 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AddressService:
+    Slot:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+          example: '2021-05-16T14:00:00+01:00'
+        address_services:
+          allOf:
+          - $ref: '#/components/schemas/AddressServices'
+    Insurance:
       type: object
       properties:
         id:
           type: string
-          example: 468628
         name:
           type: string
-          example: EEG
-        price:
-          type:
-          - integer
-          - 'null'
-          example: 500
-          description: Integer part of the price (decimals truncated)
-        is_price_from:
-          type: boolean
-          example: true
-          description: If true, the price is the minimum price of the service
-        is_default:
-          type: boolean
-          example: false
-        service_id:
+        plan:
           type:
           - string
           - 'null'
-          example: null
-        description:
+        plan_id:
           type:
           - string
           - 'null'
-          example: null
-        duration:
-          type: integer
-          example: 30
-        is_visible:
-          type: boolean
-          example: true
-        allowed_patients:
-          allOf:
-          - $ref: '#/components/schemas/AllowedPatientsData'
-        custom_name:
-          type:
-          - string
-          - 'null'
-          example: Custom Service Name
-    BookingPatient:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Abraham
-        surname:
-          type: string
-          example: Lincoln
-        email:
-          type:
-          - string
-          - 'null'
-          example: example@example.com
-        phone:
-          type:
-          - string
-          - 'null'
-          example: '+48123123123'
-        birth_date:
-          type:
-          - string
-          - 'null'
-          format: date
-          example: '1985-01-01'
-        nin:
-          type:
-          - string
-          - 'null'
-          example: '894237492'
-        gender:
-          type:
-          - string
-          - 'null'
-          enum:
-          - m
-          - f
-        is_returning:
-          type: boolean
-          example: false
-        insurance_number:
-          type:
-          - string
-          - 'null'
-          example: CARD-7654321
     Error:
       type: object
       properties:
@@ -619,67 +553,6 @@ components:
             type: string
         message:
           type: string
-    BookSlotRequest:
-      type: object
-      properties:
-        address_service_id:
-          type: string
-          example: 123
-        is_returning:
-          type: boolean
-          example: false
-        patient:
-          $ref: '#/components/schemas/Patient'
-        duration:
-          type: integer
-          example: 20
-        label:
-          type:
-          - string
-          - 'null'
-          example: label
-          default: null
-        comment:
-          type:
-          - string
-          - 'null'
-          example: comment
-          default: null
-        insurance_provider_id:
-          type:
-          - string
-          - 'null'
-          example: 14
-          default: null
-        insurance_plan_id:
-          type:
-          - string
-          - 'null'
-          example: 2
-          default: null
-        is_recurring:
-          type: boolean
-          example: true
-          default: false
-          description: Whether the visit should be marked as recurrent (there will be no confirmation notification sent to the patient)
-      required:
-      - address_service_id
-      - patient
-      - duration
-    AddressServices:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AddressService'
-    Slots:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Slot'
     Booking:
       type: object
       properties:
@@ -757,34 +630,63 @@ components:
           type:
           - string
           - 'null'
-    BookingMoving:
-      type: object
-      properties:
-        origin_booking_id:
-          type: string
-          example: '2134124'
-        newest_booking_id:
-          type: string
-          example: '2134125'
-    Insurance:
+    AddressService:
       type: object
       properties:
         id:
           type: string
+          example: 468628
         name:
           type: string
-        plan:
+          example: EEG
+        price:
+          type:
+          - integer
+          - 'null'
+          example: 500
+          description: Integer part of the price (decimals truncated)
+        is_price_from:
+          type: boolean
+          example: true
+          description: If true, the price is the minimum price of the service
+        is_default:
+          type: boolean
+          example: false
+        service_id:
           type:
           - string
           - 'null'
-        plan_id:
+          example: null
+        description:
           type:
           - string
           - 'null'
+          example: null
+        duration:
+          type: integer
+          example: 30
+        is_visible:
+          type: boolean
+          example: true
+        allowed_patients:
+          allOf:
+          - $ref: '#/components/schemas/AllowedPatientsData'
+        custom_name:
+          type:
+          - string
+          - 'null'
+          example: Custom Service Name
     SlotsScopes:
       type: string
       enum:
       - slot.services
+    AddressServices:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressService'
     ReplaceSlotsRequest:
       type: object
       properties:
@@ -841,16 +743,58 @@ components:
             - end
       required:
       - slots
-    Slot:
+    Slots:
       type: object
       properties:
-        start:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Slot'
+    BookingPatient:
+      type: object
+      properties:
+        name:
           type: string
-          format: date-time
-          example: '2021-05-16T14:00:00+01:00'
-        address_services:
-          allOf:
-          - $ref: '#/components/schemas/AddressServices'
+          example: Abraham
+        surname:
+          type: string
+          example: Lincoln
+        email:
+          type:
+          - string
+          - 'null'
+          example: example@example.com
+        phone:
+          type:
+          - string
+          - 'null'
+          example: '+48123123123'
+        birth_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          example: '1985-01-01'
+        nin:
+          type:
+          - string
+          - 'null'
+          example: '894237492'
+        gender:
+          type:
+          - string
+          - 'null'
+          enum:
+          - m
+          - f
+        is_returning:
+          type: boolean
+          example: false
+        insurance_number:
+          type:
+          - string
+          - 'null'
+          example: CARD-7654321
     AllowedPatientsData:
       type: object
       properties:
@@ -866,6 +810,62 @@ components:
           - 'null'
           example: 65
           description: Maximum age of patients allowed for this service
+    BookingMoving:
+      type: object
+      properties:
+        origin_booking_id:
+          type: string
+          example: '2134124'
+        newest_booking_id:
+          type: string
+          example: '2134125'
+    BookSlotRequest:
+      type: object
+      properties:
+        address_service_id:
+          type: string
+          example: 123
+        is_returning:
+          type: boolean
+          example: false
+        patient:
+          $ref: '#/components/schemas/Patient'
+        duration:
+          type: integer
+          example: 20
+        label:
+          type:
+          - string
+          - 'null'
+          example: label
+          default: null
+        comment:
+          type:
+          - string
+          - 'null'
+          example: comment
+          default: null
+        insurance_provider_id:
+          type:
+          - string
+          - 'null'
+          example: 14
+          default: null
+        insurance_plan_id:
+          type:
+          - string
+          - 'null'
+          example: 2
+          default: null
+        is_recurring:
+          type: boolean
+          example: true
+          default: false
+          description: Whether the visit should be marked as recurrent (there will be no confirmation notification sent to the patient)
+      required:
+      - address_service_id
+      - patient
+      - duration
     Patient:
       type: object
       properties:
@@ -919,37 +919,10 @@ components:
       - name
       - phone
   examples:
-    AddressNotAuthorized:
+    InsuranceProvidersNotSupported:
       value:
         errors: []
-        message: You are not authorized to see this address
-    ServiceDoesNotExist:
-      value:
-        errors: []
-        message: Service does not exist
-    Slots:
-      value:
-        _items:
-        - start: '2020-12-16T14:00:00+01:00'
-        - start: '2020-12-16T14:30:00+01:00'
-    UnableToPerformBookingWithService:
-      value:
-        errors: []
-        message: Unable to perform booking. Slot (2021-05-16T14:00:00+02:00) does not support service 113
-    SlotsFromFurtherThen12Weeks:
-      value:
-        errors:
-          slots[1].end:
-          - End date should be less than or equal to 15.05.2021, 11:45.
-        message: Invalid arguments
-    InsuranceProviderDoesNotExist:
-      value:
-        errors: []
-        message: Insurance provider(s) with id (%s) not found for address id (%d)'
-    BreakNotFoundForGivenAddress:
-      value:
-        errors: []
-        message: Invalid break ID
+        message: Insurance providers are not supported. Slot does not allow insurances (without-insurance-only)
     AddressServiceDoesNotExist:
       value:
         errors: []
@@ -958,6 +931,80 @@ components:
       value:
         errors: []
         message: You are not authorized to see this doctor
+    CalendarEditionNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to make changes on this calendar
+    UnableToPerformBookingWithService:
+      value:
+        errors: []
+        message: Unable to perform booking. Slot (2021-05-16T14:00:00+02:00) does not support service 113
+    Slot:
+      value:
+        id: '2134124'
+        status: booked
+        start_at: '2021-05-16T14:00:00+01:00'
+        end_at: '2021-05-16T14:30:00+01:00'
+        duration: 30
+        booked_by: user
+        canceled_by: ''
+        booked_at: '2021-05-12T12:00:00+01:00'
+        canceled_at: '2021-05-16T14:30:00+01:00'
+        comment: comment
+    FacilityNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this facility
+    SlotsFromFurtherThen12Weeks:
+      value:
+        errors:
+          slots[1].end:
+          - End date should be less than or equal to 15.05.2021, 11:45.
+        message: Invalid arguments
+    AddressNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this address
+    InsuranceProviderDoesNotExist:
+      value:
+        errors: []
+        message: Insurance provider(s) with id (%s) not found for address id (%d)'
+    InsuranceProvidersMissing:
+      value:
+        errors: []
+        message: Slot requires insurance (with-insurance-only), but insurance providers are missing
+    SlotExceedsSingleDayBoundary:
+      value:
+        errors: []
+        message: Slot for date range %s - %s exceeds a single day boundary
+    BookSlot:
+      value:
+        address_service_id: '113'
+        is_returning: false
+        duration: 30
+        label: label
+        comment: comment
+        insurance_provider_if: '14'
+        insurance_plan_id: 'null'
+        is_recurring: false
+        patient:
+          name: Abraham
+          surname: Lincoln
+          email: example@example.com
+          phone: 48123123123
+          birth_date: '1985-01-01'
+          nin: 894237492
+          gender: m
+          marketing_consent: true
+          data_privacy_consent: true
+    UnableToBookForAddress:
+      value:
+        errors: []
+        message: Unable to book a visit for this address
+    PostBookValidationError:
+      value:
+        errors: []
+        message: Validation error message
     SlotsWithServices:
       value:
         _items:
@@ -991,50 +1038,6 @@ components:
               description: Address service description 1
               service_id: '1'
               is_visible: true
-    SlotExceedsSingleDayBoundary:
-      value:
-        errors: []
-        message: Slot for date range %s - %s exceeds a single day boundary
-    ObjectNotFound:
-      value:
-        errors: []
-        message: Object not found
-    InsuranceProvidersNotSupported:
-      value:
-        errors: []
-        message: Insurance providers are not supported. Slot does not allow insurances (without-insurance-only)
-    PutSlotsValidationError:
-      value:
-        errors: []
-        message: 'Validation error message, e.g.: Slots comes from different days'
-    BookSlot:
-      value:
-        address_service_id: '113'
-        is_returning: false
-        duration: 30
-        label: label
-        comment: comment
-        insurance_provider_if: '14'
-        insurance_plan_id: 'null'
-        is_recurring: false
-        patient:
-          name: Abraham
-          surname: Lincoln
-          email: example@example.com
-          phone: 48123123123
-          birth_date: '1985-01-01'
-          nin: 894237492
-          gender: m
-          marketing_consent: true
-          data_privacy_consent: true
-    InsuranceProvidersMissing:
-      value:
-        errors: []
-        message: Slot requires insurance (with-insurance-only), but insurance providers are missing
-    FacilityNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this facility
     ReplaceSlots:
       value:
         slots:
@@ -1054,46 +1057,43 @@ components:
             duration: 15
           start: '2021-05-16T15:00:00+01:00'
           end: '2021-05-16T16:00:00+01:00'
-    CalendarEditionNotAuthorized:
+    ServiceDoesNotExist:
       value:
         errors: []
-        message: You are not authorized to make changes on this calendar
-    PostBookValidationError:
-      value:
-        errors: []
-        message: Validation error message
-    UnableToBookForAddress:
-      value:
-        errors: []
-        message: Unable to book a visit for this address
-    NoSlotsOnAddress:
-      value:
-        errors: []
-        message: No slots found on given address
+        message: Service does not exist
     DateRangeExceedsMaximum:
       value:
         errors: []
         message: Date range must not exceed 180 days
-    DoctorOrAddressNotCommercial:
+    Slots:
       value:
-        errors: []
-        message: Cannot activate calendar on address 123, profile/address is not commercial
+        _items:
+        - start: '2020-12-16T14:00:00+01:00'
+        - start: '2020-12-16T14:30:00+01:00'
     UnableToPerformBookingWithSlot:
       value:
         errors: []
         message: Unable to perform booking. Requested target slot (2021-05-16T14:00:00+02:00) not found
-    Slot:
+    DoctorOrAddressNotCommercial:
       value:
-        id: '2134124'
-        status: booked
-        start_at: '2021-05-16T14:00:00+01:00'
-        end_at: '2021-05-16T14:30:00+01:00'
-        duration: 30
-        booked_by: user
-        canceled_by: ''
-        booked_at: '2021-05-12T12:00:00+01:00'
-        canceled_at: '2021-05-16T14:30:00+01:00'
-        comment: comment
+        errors: []
+        message: Cannot activate calendar on address 123, profile/address is not commercial
+    NoSlotsOnAddress:
+      value:
+        errors: []
+        message: No slots found on given address
+    PutSlotsValidationError:
+      value:
+        errors: []
+        message: 'Validation error message, e.g.: Slots comes from different days'
+    ObjectNotFound:
+      value:
+        errors: []
+        message: Object not found
+    BreakNotFoundForGivenAddress:
+      value:
+        errors: []
+        message: Invalid break ID
     SlotDurationIsLessThanOneMinute:
       value:
         errors:
@@ -1101,23 +1101,14 @@ components:
           - The end date must be at least 1 minute after the start date
         message: Invalid arguments
   parameters:
-    addressId:
-      name: address_id
+    doctorId:
+      name: doctor_id
       in: path
-      description: ID of a doctor`s address in a facility
+      description: ID of a doctor in a facility
       example: 123
       required: true
       schema:
         type: string
-    endRequired:
-      name: end
-      in: query
-      description: Slot end date (parameter must be urlencoded before sending request)
-      required: true
-      schema:
-        type: string
-        format: date-time
-        example: '2021-05-16T15:00:00+01:00'
     startRequiredPath:
       name: start
       in: path
@@ -1127,6 +1118,15 @@ components:
         type: string
         format: date-time
         example: '2021-05-16T14:00:00+01:00'
+    endRequired:
+      name: end
+      in: query
+      description: Slot end date (parameter must be urlencoded before sending request)
+      required: true
+      schema:
+        type: string
+        format: date-time
+        example: '2021-05-16T15:00:00+01:00'
     startRequired:
       name: start
       in: query
@@ -1154,10 +1154,10 @@ components:
         uniqueItems: true
         items:
           $ref: '#/components/schemas/SlotsScopes'
-    doctorId:
-      name: doctor_id
+    addressId:
+      name: address_id
       in: path
-      description: ID of a doctor in a facility
+      description: ID of a doctor`s address in a facility
       example: 123
       required: true
       schema:

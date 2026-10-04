@@ -572,17 +572,6 @@ paths:
       x-summary-source: derived
 components:
   examples:
-    PatchAddressService:
-      value:
-        price: 200
-        is_price_from: true
-        description: Address service description
-        default_duration: 20
-        is_visible: true
-        allowed_patients:
-          minimum_age: 21
-          maximum_age: 60
-        custom_name: Custom USG Name
     AddressServiceWithAllowedPatients:
       value:
         id: '101'
@@ -596,6 +585,20 @@ components:
         allowed_patients:
           minimum_age: 18
           maximum_age: 65
+    ObjectNotFound:
+      value:
+        errors: []
+        message: Object not found
+    AddressService:
+      value:
+        id: '101'
+        name: USG
+        is_default: true
+        is_price_from: false
+        price: 100
+        description: Description of service
+        service_id: '1'
+        is_visible: true
     PatchAddressServiceResponse:
       value:
         id: '101'
@@ -606,32 +609,93 @@ components:
         description: Address service description
         service_id: '1'
         is_visible: true
-    AddressServiceWithPublicInsuranceFlow:
-      value:
-        id: '101'
-        name: USG
-        is_default: true
-        is_price_from: false
-        price: 100
-        description: Description of service
-        service_id: '1'
-        is_visible: true
-        is_public_insurance_flow: false
-    AddressServiceWithCustomName:
-      value:
-        id: '101'
-        name: USG
-        is_default: true
-        is_price_from: false
-        price: 100
-        description: Description of service
-        service_id: '1'
-        is_visible: true
-        custom_name: Custom USG Name
-    DoctorNotAuthorized:
+    AddressServiceMismatch:
       value:
         errors: []
-        message: You are not authorized to see this doctor
+        message: This service does not belong to this address
+    AddressServiceAlreadyExists:
+      value:
+        errors: []
+        message: The address service you are trying to add already exists in the system
+    AddressNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this address
+    AddressServicesWithStartDate:
+      value:
+        _items:
+        - id: '101'
+          name: USG
+          is_default: true
+          is_price_from: false
+          price: 100
+          description: Description of service
+          service_id: '1'
+          duration: 15
+          is_visible: true
+        - id: '103'
+          name: EEG
+          is_default: true
+          is_price_from: false
+          price: null
+          description: Description of service
+          service_id: '3'
+          duration: 30
+          is_visible: false
+    FacilityNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this facility
+    AddressServicesWithCustomName:
+      value:
+        _items:
+        - id: '101'
+          name: USG
+          is_default: true
+          is_price_from: false
+          price: 100
+          description: Description of service
+          service_id: '1'
+          duration: 15
+          is_visible: true
+          custom_name: Custom USG Name
+        - id: '103'
+          name: EEG
+          is_default: true
+          is_price_from: false
+          price: null
+          description: Description of service
+          service_id: '3'
+          duration: 30
+          is_visible: false
+          custom_name: EEG
+    AddressServices:
+      value:
+        _items:
+        - id: '101'
+          name: USG
+          is_default: true
+          is_price_from: false
+          price: 100
+          description: Description of service
+          service_id: '1'
+          is_visible: true
+          allowed_patients:
+            minimum_age: 18
+            maximum_age: 65
+        - id: '103'
+          name: EEG
+          is_default: true
+          is_price_from: false
+          price: null
+          description: Description of service
+          service_id: '3'
+          is_visible: false
+          allowed_patients: null
+    AddressServiceValidationError:
+      value:
+        errors: []
+        message: 'Validation error message, e.g.: Invalid price value for service. Price should be either null or integer greater or equal 0.'
     AddressServicesWithPublicInsuranceFlow:
       value:
         _items:
@@ -657,22 +721,6 @@ components:
           is_visible: false
           allowed_patients: null
           is_public_insurance_flow: true
-    AddressServiceValidationError:
-      value:
-        errors: []
-        message: 'Validation error message, e.g.: Invalid price value for service. Price should be either null or integer greater or equal 0.'
-    AddressServiceAlreadyExists:
-      value:
-        errors: []
-        message: The address service you are trying to add already exists in the system
-    FacilityNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this facility
-    AddressNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this address
     AddAddressService:
       value:
         service_id: '2'
@@ -685,54 +733,28 @@ components:
           minimum_age: 18
           maximum_age: 65
         custom_name: Custom USG Name
-    AddressServices:
+    AddressServiceWithCustomName:
       value:
-        _items:
-        - id: '101'
-          name: USG
-          is_default: true
-          is_price_from: false
-          price: 100
-          description: Description of service
-          service_id: '1'
-          is_visible: true
-          allowed_patients:
-            minimum_age: 18
-            maximum_age: 65
-        - id: '103'
-          name: EEG
-          is_default: true
-          is_price_from: false
-          price: null
-          description: Description of service
-          service_id: '3'
-          is_visible: false
-          allowed_patients: null
-    ObjectNotFound:
+        id: '101'
+        name: USG
+        is_default: true
+        is_price_from: false
+        price: 100
+        description: Description of service
+        service_id: '1'
+        is_visible: true
+        custom_name: Custom USG Name
+    PatchAddressService:
       value:
-        errors: []
-        message: Object not found
-    AddressServicesWithStartDate:
-      value:
-        _items:
-        - id: '101'
-          name: USG
-          is_default: true
-          is_price_from: false
-          price: 100
-          description: Description of service
-          service_id: '1'
-          duration: 15
-          is_visible: true
-        - id: '103'
-          name: EEG
-          is_default: true
-          is_price_from: false
-          price: null
-          description: Description of service
-          service_id: '3'
-          duration: 30
-          is_visible: false
+        price: 200
+        is_price_from: true
+        description: Address service description
+        default_duration: 20
+        is_visible: true
+        allowed_patients:
+          minimum_age: 21
+          maximum_age: 60
+        custom_name: Custom USG Name
     Services:
       value:
         _items:
@@ -742,33 +764,17 @@ components:
           name: EKG
         - id: '3'
           name: EEG
-    AddressServiceMismatch:
+    AddressServiceWithPublicInsuranceFlow:
       value:
-        errors: []
-        message: This service does not belong to this address
-    AddressServicesWithCustomName:
-      value:
-        _items:
-        - id: '101'
-          name: USG
-          is_default: true
-          is_price_from: false
-          price: 100
-          description: Description of service
-          service_id: '1'
-          duration: 15
-          is_visible: true
-          custom_name: Custom USG Name
-        - id: '103'
-          name: EEG
-          is_default: true
-          is_price_from: false
-          price: null
-          description: Description of service
-          service_id: '3'
-          duration: 30
-          is_visible: false
-          custom_name: EEG
+        id: '101'
+        name: USG
+        is_default: true
+        is_price_from: false
+        price: 100
+        description: Description of service
+        service_id: '1'
+        is_visible: true
+        is_public_insurance_flow: false
     AddressServicesWithAllowedPatients:
       value:
         _items:
@@ -808,16 +814,10 @@ components:
           allowed_patients:
             minimum_age: 5
             maximum_age: null
-    AddressService:
+    DoctorNotAuthorized:
       value:
-        id: '101'
-        name: USG
-        is_default: true
-        is_price_from: false
-        price: 100
-        description: Description of service
-        service_id: '1'
-        is_visible: true
+        errors: []
+        message: You are not authorized to see this doctor
   parameters:
     servicesSpecializationId:
       name: specialization_id
@@ -827,22 +827,6 @@ components:
       required: false
       schema:
         type: integer
-    addressServiceId:
-      name: address_service_id
-      in: path
-      description: ID of an address service
-      example: 123
-      required: true
-      schema:
-        type: string
-    doctorId:
-      name: doctor_id
-      in: path
-      description: ID of a doctor in a facility
-      example: 123
-      required: true
-      schema:
-        type: string
     startForAddressServices:
       name: start
       in: query
@@ -852,26 +836,6 @@ components:
         type: string
         format: date-time
         example: '2021-05-16T14:00:00+01:00'
-    addressServiceWith:
-      name: with
-      in: query
-      required: false
-      style: simple
-      schema:
-        type: array
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/AddressServiceScopes'
-    servicesWith:
-      name: with
-      in: query
-      required: false
-      style: simple
-      schema:
-        type: array
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/ServicesScopes'
     addressServicesWith:
       name: with
       in: query
@@ -882,14 +846,6 @@ components:
         uniqueItems: true
         items:
           $ref: '#/components/schemas/AddressServicesScopes'
-    facilityId:
-      name: facility_id
-      in: path
-      description: ID of the Facility
-      example: 1
-      required: true
-      schema:
-        type: string
     addressId:
       name: address_id
       in: path
@@ -898,7 +854,169 @@ components:
       required: true
       schema:
         type: string
+    servicesWith:
+      name: with
+      in: query
+      required: false
+      style: simple
+      schema:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/ServicesScopes'
+    addressServiceWith:
+      name: with
+      in: query
+      required: false
+      style: simple
+      schema:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/AddressServiceScopes'
+    doctorId:
+      name: doctor_id
+      in: path
+      description: ID of a doctor in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
+    facilityId:
+      name: facility_id
+      in: path
+      description: ID of the Facility
+      example: 1
+      required: true
+      schema:
+        type: string
+    addressServiceId:
+      name: address_service_id
+      in: path
+      description: ID of an address service
+      example: 123
+      required: true
+      schema:
+        type: string
   schemas:
+    ServicesScopes:
+      type: string
+      enum:
+      - services.only_diagnostics
+    UpdateAddressServiceRequest:
+      type: object
+      properties:
+        is_price_from:
+          type: boolean
+          example: true
+          description: If true, the price is the minimum price of the service
+        price:
+          type:
+          - number
+          - 'null'
+          example: 169.9
+          description: Service price. Maximum 2 decimal places; additional decimals are truncated. Invalid formats are rejected with 400 Bad Request
+        description:
+          type:
+          - string
+          - 'null'
+          example: Address service description
+        default_duration:
+          type: integer
+          example: 20
+        is_visible:
+          type: boolean
+          example: true
+        allowed_patients:
+          allOf:
+          - $ref: '#/components/schemas/AllowedPatientsData'
+        custom_name:
+          type:
+          - string
+          - 'null'
+          example: Custom USG Name
+          minLength: 1
+          description: A custom display name for the service. Cannot be an empty string. Send null to clear the custom name.
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
+    AddressServices:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressService'
+    Service:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1
+        name:
+          type: string
+          example: Regular visit
+    AddressServiceScopes:
+      type: string
+      enum:
+      - address_service.allowed_patients
+      - address_service.custom_name
+      - address_service.public_insurance_flow
+    Services:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
+    AddAddressServiceRequest:
+      type: object
+      properties:
+        service_id:
+          type: string
+          example: 123
+          description: ID of a service
+        is_price_from:
+          type: boolean
+          example: true
+          description: If true, the price is the minimum price of the service
+        price:
+          type:
+          - number
+          - 'null'
+          example: 169.9
+          description: Service price. Maximum 2 decimal places; additional decimals are truncated. Invalid formats are rejected with 400 Bad Request
+        description:
+          type:
+          - string
+          - 'null'
+          example: Address service description
+        is_visible:
+          type: boolean
+          example: true
+        default_duration:
+          type:
+          - integer
+          - 'null'
+          example: 20
+        allowed_patients:
+          allOf:
+          - $ref: '#/components/schemas/AllowedPatientsData'
+        custom_name:
+          type:
+          - string
+          - 'null'
+          example: Custom USG Name
+          minLength: 1
+          description: A custom display name for the service. Cannot be an empty string.
+      required:
+      - service_id
     AddressService:
       type: object
       properties:
@@ -945,104 +1063,6 @@ components:
           - string
           - 'null'
           example: Custom Service Name
-    Service:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 1
-        name:
-          type: string
-          example: Regular visit
-    AddressServices:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AddressService'
-    AddressServicesScopes:
-      type: string
-      enum:
-      - address_service.allowed_patients
-      - address_service.custom_name
-      - address_service.public_insurance_flow
-    UpdateAddressServiceRequest:
-      type: object
-      properties:
-        is_price_from:
-          type: boolean
-          example: true
-          description: If true, the price is the minimum price of the service
-        price:
-          type:
-          - number
-          - 'null'
-          example: 169.9
-          description: Service price. Maximum 2 decimal places; additional decimals are truncated. Invalid formats are rejected with 400 Bad Request
-        description:
-          type:
-          - string
-          - 'null'
-          example: Address service description
-        default_duration:
-          type: integer
-          example: 20
-        is_visible:
-          type: boolean
-          example: true
-        allowed_patients:
-          allOf:
-          - $ref: '#/components/schemas/AllowedPatientsData'
-        custom_name:
-          type:
-          - string
-          - 'null'
-          example: Custom USG Name
-          minLength: 1
-          description: A custom display name for the service. Cannot be an empty string. Send null to clear the custom name.
-    AddAddressServiceRequest:
-      type: object
-      properties:
-        service_id:
-          type: string
-          example: 123
-          description: ID of a service
-        is_price_from:
-          type: boolean
-          example: true
-          description: If true, the price is the minimum price of the service
-        price:
-          type:
-          - number
-          - 'null'
-          example: 169.9
-          description: Service price. Maximum 2 decimal places; additional decimals are truncated. Invalid formats are rejected with 400 Bad Request
-        description:
-          type:
-          - string
-          - 'null'
-          example: Address service description
-        is_visible:
-          type: boolean
-          example: true
-        default_duration:
-          type:
-          - integer
-          - 'null'
-          example: 20
-        allowed_patients:
-          allOf:
-          - $ref: '#/components/schemas/AllowedPatientsData'
-        custom_name:
-          type:
-          - string
-          - 'null'
-          example: Custom USG Name
-          minLength: 1
-          description: A custom display name for the service. Cannot be an empty string.
-      required:
-      - service_id
     AllowedPatientsData:
       type: object
       properties:
@@ -1058,32 +1078,12 @@ components:
           - 'null'
           example: 65
           description: Maximum age of patients allowed for this service
-    ServicesScopes:
-      type: string
-      enum:
-      - services.only_diagnostics
-    AddressServiceScopes:
+    AddressServicesScopes:
       type: string
       enum:
       - address_service.allowed_patients
       - address_service.custom_name
       - address_service.public_insurance_flow
-    Services:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Service'
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        message:
-          type: string
   securitySchemes:
     oauth2:
       name: OAuth 2.0

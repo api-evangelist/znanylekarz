@@ -469,45 +469,21 @@ paths:
       x-summary-source: derived
 components:
   examples:
-    UpdateOrCreateAddressInsuranceProvider:
-      value:
-        insurance_provider_id: '3'
-        insurance_plans:
-        - insurance_plan_id: '999'
-        - insurance_plan_id: '1000'
-    DoctorNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this doctor
-    FacilityNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this facility
-    AddAddressInsuranceProviderWithPlans:
-      value:
-        insurance_provider_id: '3'
-        insurance_plans:
-        - insurance_plan_id: '999'
-        - insurance_plan_id: '1000'
-    InsuranceProviderNotFromDictionary:
-      value:
-        errors: []
-        message: Provided insurance provider ID not found in dictionary
-    AddressNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this address
     AddAddressInsuranceProvider:
       value:
         insurance_provider_id: '3'
-    AddAddressInsuranceValidationError:
+    ObjectNotFound:
       value:
         errors: []
-        message: 'Validation error message, e.g.: Insurance provider with given ID is already assigned to this address.'
+        message: Object not found
     DeleteAddressInsuranceValidationError:
       value:
         errors: []
         message: 'Validation error message, e.g.: Insurance provider with given ID is not assigned to this address.'
+    AddressNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this address
     DictionaryInsurancePlans:
       value:
         _items:
@@ -515,10 +491,16 @@ components:
           name: Insurance plan 999
         - insurance_plan_id: '1000'
           name: Insurance plan 1000
-    ObjectNotFound:
+    FacilityNotAuthorized:
       value:
         errors: []
-        message: Object not found
+        message: You are not authorized to see this facility
+    UpdateOrCreateAddressInsuranceProvider:
+      value:
+        insurance_provider_id: '3'
+        insurance_plans:
+        - insurance_plan_id: '999'
+        - insurance_plan_id: '1000'
     AddressInsuranceProviders:
       value:
         _items:
@@ -534,6 +516,18 @@ components:
           name: Insurance provider 2
           insurance_plans:
             _items: []
+    AddAddressInsuranceValidationError:
+      value:
+        errors: []
+        message: 'Validation error message, e.g.: Insurance provider with given ID is already assigned to this address.'
+    InsuranceProviderNotFromDictionary:
+      value:
+        errors: []
+        message: Provided insurance provider ID not found in dictionary
+    DoctorNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this doctor
     DictionaryInsuranceProviders:
       value:
         _items:
@@ -543,69 +537,13 @@ components:
           name: Insurance provider 2
         - insurance_provider_id: '3'
           name: Insurance provider 3
-  parameters:
-    doctorId:
-      name: doctor_id
-      in: path
-      description: ID of a doctor in a facility
-      example: 123
-      required: true
-      schema:
-        type: string
-    insuranceProviderId:
-      name: insurance_provider_id
-      in: path
-      description: ID of an insurance provider from DP dictionary
-      example: 123
-      required: true
-      schema:
-        type: string
-    facilityId:
-      name: facility_id
-      in: path
-      description: ID of the Facility
-      example: 1
-      required: true
-      schema:
-        type: string
-    addressId:
-      name: address_id
-      in: path
-      description: ID of a doctor`s address in a facility
-      example: 123
-      required: true
-      schema:
-        type: string
+    AddAddressInsuranceProviderWithPlans:
+      value:
+        insurance_provider_id: '3'
+        insurance_plans:
+        - insurance_plan_id: '999'
+        - insurance_plan_id: '1000'
   schemas:
-    AddressInsuranceProvider:
-      type: object
-      properties:
-        insurance_provider_id:
-          type: string
-          example: 1
-        name:
-          type: string
-          example: Insurance Provider with plans Sample
-        insurance_plans:
-          $ref: '#/components/schemas/InsurancePlans'
-    AddAddressInsuranceProviderRequest:
-      type: object
-      properties:
-        insurance_provider_id:
-          type: string
-          example: 1
-          description: ID of an insurance provider from DP dictionary
-        insurance_plans:
-          type: array
-          items:
-            type: object
-            properties:
-              insurance_plan_id:
-                type: string
-                example: 999
-                description: ID of an insurance plan from DP dictionary
-      required:
-      - insurance_provider_id
     UpdateOrCreateAddressInsuranceProviderRequest:
       type: object
       properties:
@@ -624,29 +562,13 @@ components:
                 description: ID of an insurance plan from DP dictionary
       required:
       - insurance_provider_id
-    InsurancePlan:
-      type: object
-      properties:
-        insurance_plan_id:
-          type: string
-          example: 1
-        name:
-          type: string
-          example: Insurance Plan Sample
-    AddressInsuranceProviders:
+    InsuranceProviders:
       type: object
       properties:
         _items:
           type: array
           items:
-            $ref: '#/components/schemas/AddressInsuranceProvider'
-    InsurancePlans:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/InsurancePlan'
+            $ref: '#/components/schemas/InsuranceProvider'
     InsuranceProvider:
       type: object
       properties:
@@ -656,13 +578,6 @@ components:
         name:
           type: string
           example: Insurance Provider Sample
-    InsuranceProviders:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/InsuranceProvider'
     Error:
       type: object
       properties:
@@ -672,6 +587,91 @@ components:
             type: string
         message:
           type: string
+    InsurancePlan:
+      type: object
+      properties:
+        insurance_plan_id:
+          type: string
+          example: 1
+        name:
+          type: string
+          example: Insurance Plan Sample
+    InsurancePlans:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InsurancePlan'
+    AddressInsuranceProviders:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressInsuranceProvider'
+    AddAddressInsuranceProviderRequest:
+      type: object
+      properties:
+        insurance_provider_id:
+          type: string
+          example: 1
+          description: ID of an insurance provider from DP dictionary
+        insurance_plans:
+          type: array
+          items:
+            type: object
+            properties:
+              insurance_plan_id:
+                type: string
+                example: 999
+                description: ID of an insurance plan from DP dictionary
+      required:
+      - insurance_provider_id
+    AddressInsuranceProvider:
+      type: object
+      properties:
+        insurance_provider_id:
+          type: string
+          example: 1
+        name:
+          type: string
+          example: Insurance Provider with plans Sample
+        insurance_plans:
+          $ref: '#/components/schemas/InsurancePlans'
+  parameters:
+    addressId:
+      name: address_id
+      in: path
+      description: ID of a doctor`s address in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
+    insuranceProviderId:
+      name: insurance_provider_id
+      in: path
+      description: ID of an insurance provider from DP dictionary
+      example: 123
+      required: true
+      schema:
+        type: string
+    doctorId:
+      name: doctor_id
+      in: path
+      description: ID of a doctor in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
+    facilityId:
+      name: facility_id
+      in: path
+      description: ID of the Facility
+      example: 1
+      required: true
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       name: OAuth 2.0

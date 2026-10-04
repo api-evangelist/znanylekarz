@@ -369,6 +369,179 @@ paths:
       summary: Get doctor
       x-summary-source: derived
 components:
+  examples:
+    DoctorWithProfileUrl:
+      value:
+        id: '123'
+        name: Sample
+        surname: Doctor 123
+        profile_url: http://url-to-doctors-profile
+    DoctorWithAddressBookingExtraFields:
+      value:
+        id: '123'
+        name: Sample
+        surname: Doctor 123
+        addresses:
+          _items:
+          - id: '111'
+            name: Example hospital
+            post_code: xx-xxx
+            street: Some street
+            booking_extra_fields:
+              birth_date: true
+              gender: true
+              nin: true
+        specializations:
+          _items:
+          - id: '12'
+            name: Specialization example 12
+    DoctorsWithProfileUrl:
+      value:
+        _items:
+        - id: '123'
+          name: Sample
+          surname: Doctor 123
+          profile_url: http://url-to-doctors-profile
+        - id: '234'
+          name: Sample
+          surname: Doctor 234
+          profile_url: http://url-to-doctors-profile
+    ObjectNotFound:
+      value:
+        errors: []
+        message: Object not found
+    Doctors:
+      value:
+        _items:
+        - id: '123'
+          name: Sample
+          surname: Doctor 123
+        - id: '234'
+          name: Sample
+          surname: Doctor 234
+    DoctorWithAddresses:
+      value:
+        id: '123'
+        name: Sample
+        surname: Doctor 123
+        addresses:
+          _items:
+          - id: '111'
+            name: Example hospital
+            post_code: xx-xxx
+            street: Some street
+        specializations:
+          _items:
+          - id: '12'
+            name: Specialization example 12
+    FacilityNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this facility
+    DoctorWithLicenseNumbers:
+      value:
+        id: '123'
+        name: Sample
+        surname: Doctor 123
+        license_numbers:
+          _items:
+          - id: '12'
+            license_number: License number 1
+    DoctorsWithSpecializations:
+      value:
+        _items:
+        - id: '123'
+          name: Sample
+          surname: Doctor 123
+          specializations:
+            _items:
+            - id: '12'
+              name: Specialization example 12
+        - id: '234'
+          name: Sample
+          surname: Doctor 234
+          specializations:
+            _items:
+            - id: '23'
+              name: Specialization example 23
+    DoctorsWithLicenseNumbers:
+      value:
+        _items:
+        - id: '123'
+          name: Sample
+          surname: Doctor 123
+          license_numbers:
+            _items:
+            - id: '12'
+              license_number: License number 1
+        - id: '234'
+          name: Sample
+          surname: Doctor 234
+          license_numbers:
+            _items:
+            - id: '23'
+              license_number: License number 2
+    DoctorWithAddressCommercialType:
+      value:
+        id: '123'
+        name: Sample
+        surname: Doctor 123
+        addresses:
+          _items:
+          - id: '111'
+            name: Example hospital
+            post_code: xx-xxx
+            street: Some street
+            commercial_type: basic
+        specializations:
+          _items:
+          - id: '12'
+            name: Specialization example 12
+    DoctorNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this doctor
+    Doctor:
+      value:
+        id: '123'
+        name: Sample
+        surname: Doctor 123
+        specializations:
+          _items:
+          - id: '12'
+            name: Specialization example 12
+    DoctorWithVisitPaymentAddresses:
+      value:
+        id: '123'
+        name: Sample
+        surname: Doctor 123
+        addresses:
+          _items:
+          - id: '111'
+            name: Example hospital
+            post_code: xx-xxx
+            street: Some street
+            visit_payment: false
+        specializations:
+          _items:
+          - id: '12'
+            name: Specialization example 12
+    DoctorWithOnlineOnlyAddresses:
+      value:
+        id: '123'
+        name: Sample
+        surname: Doctor 123
+        addresses:
+          _items:
+          - id: '111'
+            name: Example hospital
+            post_code: xx-xxx
+            street: Some street
+            is_online_only: true
+        specializations:
+          _items:
+          - id: '12'
+            name: Specialization example 12
   schemas:
     Addresses:
       type: object
@@ -377,6 +550,49 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Address'
+    LicenseNumber:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 12
+        license_number:
+          type: string
+          example: License number
+    Doctor:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 123
+        name:
+          type: string
+          example: Sample
+        surname:
+          type: string
+          example: Doctor 123
+        addresses:
+          $ref: '#/components/schemas/Addresses'
+        specialization:
+          $ref: '#/components/schemas/Specializations'
+        license_numbers:
+          $ref: '#/components/schemas/LicenseNumbers'
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
+    LicenseNumbers:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseNumber'
     Address:
       type: object
       properties:
@@ -435,42 +651,12 @@ components:
           - insurance
           - private_and_insurance
           example: private
-    LicenseNumber:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 12
-        license_number:
-          type: string
-          example: License number
-    Doctors:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Doctor'
-    LicenseNumbers:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LicenseNumber'
     DoctorsScopes:
       type: string
       enum:
       - doctor.profile_url
       - doctor.specializations
       - doctor.license_numbers
-    Specializations:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Specialization'
     DoctorScopes:
       type: string
       enum:
@@ -481,6 +667,13 @@ components:
       - address.online_only
       - address.visit_payment
       - address.commercial_type
+    Doctors:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Doctor'
     Specialization:
       type: object
       properties:
@@ -490,33 +683,13 @@ components:
         name:
           type: string
           example: Specialization example
-    Doctor:
+    Specializations:
       type: object
       properties:
-        id:
-          type: string
-          example: 123
-        name:
-          type: string
-          example: Sample
-        surname:
-          type: string
-          example: Doctor 123
-        addresses:
-          $ref: '#/components/schemas/Addresses'
-        specialization:
-          $ref: '#/components/schemas/Specializations'
-        license_numbers:
-          $ref: '#/components/schemas/LicenseNumbers'
-    Error:
-      type: object
-      properties:
-        errors:
+        _items:
           type: array
           items:
-            type: string
-        message:
-          type: string
+            $ref: '#/components/schemas/Specialization'
   parameters:
     doctorWith:
       name: with
@@ -528,6 +701,16 @@ components:
         uniqueItems: true
         items:
           $ref: '#/components/schemas/DoctorScopes'
+    doctorsWith:
+      name: with
+      in: query
+      required: false
+      style: simple
+      schema:
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/DoctorsScopes'
     doctorId:
       name: doctor_id
       in: path
@@ -544,189 +727,6 @@ components:
       required: true
       schema:
         type: string
-    doctorsWith:
-      name: with
-      in: query
-      required: false
-      style: simple
-      schema:
-        type: array
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/DoctorsScopes'
-  examples:
-    Doctor:
-      value:
-        id: '123'
-        name: Sample
-        surname: Doctor 123
-        specializations:
-          _items:
-          - id: '12'
-            name: Specialization example 12
-    DoctorNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this doctor
-    DoctorWithProfileUrl:
-      value:
-        id: '123'
-        name: Sample
-        surname: Doctor 123
-        profile_url: http://url-to-doctors-profile
-    DoctorWithOnlineOnlyAddresses:
-      value:
-        id: '123'
-        name: Sample
-        surname: Doctor 123
-        addresses:
-          _items:
-          - id: '111'
-            name: Example hospital
-            post_code: xx-xxx
-            street: Some street
-            is_online_only: true
-        specializations:
-          _items:
-          - id: '12'
-            name: Specialization example 12
-    Doctors:
-      value:
-        _items:
-        - id: '123'
-          name: Sample
-          surname: Doctor 123
-        - id: '234'
-          name: Sample
-          surname: Doctor 234
-    DoctorsWithLicenseNumbers:
-      value:
-        _items:
-        - id: '123'
-          name: Sample
-          surname: Doctor 123
-          license_numbers:
-            _items:
-            - id: '12'
-              license_number: License number 1
-        - id: '234'
-          name: Sample
-          surname: Doctor 234
-          license_numbers:
-            _items:
-            - id: '23'
-              license_number: License number 2
-    FacilityNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this facility
-    DoctorWithAddresses:
-      value:
-        id: '123'
-        name: Sample
-        surname: Doctor 123
-        addresses:
-          _items:
-          - id: '111'
-            name: Example hospital
-            post_code: xx-xxx
-            street: Some street
-        specializations:
-          _items:
-          - id: '12'
-            name: Specialization example 12
-    DoctorWithVisitPaymentAddresses:
-      value:
-        id: '123'
-        name: Sample
-        surname: Doctor 123
-        addresses:
-          _items:
-          - id: '111'
-            name: Example hospital
-            post_code: xx-xxx
-            street: Some street
-            visit_payment: false
-        specializations:
-          _items:
-          - id: '12'
-            name: Specialization example 12
-    DoctorWithAddressCommercialType:
-      value:
-        id: '123'
-        name: Sample
-        surname: Doctor 123
-        addresses:
-          _items:
-          - id: '111'
-            name: Example hospital
-            post_code: xx-xxx
-            street: Some street
-            commercial_type: basic
-        specializations:
-          _items:
-          - id: '12'
-            name: Specialization example 12
-    DoctorsWithProfileUrl:
-      value:
-        _items:
-        - id: '123'
-          name: Sample
-          surname: Doctor 123
-          profile_url: http://url-to-doctors-profile
-        - id: '234'
-          name: Sample
-          surname: Doctor 234
-          profile_url: http://url-to-doctors-profile
-    ObjectNotFound:
-      value:
-        errors: []
-        message: Object not found
-    DoctorWithLicenseNumbers:
-      value:
-        id: '123'
-        name: Sample
-        surname: Doctor 123
-        license_numbers:
-          _items:
-          - id: '12'
-            license_number: License number 1
-    DoctorsWithSpecializations:
-      value:
-        _items:
-        - id: '123'
-          name: Sample
-          surname: Doctor 123
-          specializations:
-            _items:
-            - id: '12'
-              name: Specialization example 12
-        - id: '234'
-          name: Sample
-          surname: Doctor 234
-          specializations:
-            _items:
-            - id: '23'
-              name: Specialization example 23
-    DoctorWithAddressBookingExtraFields:
-      value:
-        id: '123'
-        name: Sample
-        surname: Doctor 123
-        addresses:
-          _items:
-          - id: '111'
-            name: Example hospital
-            post_code: xx-xxx
-            street: Some street
-            booking_extra_fields:
-              birth_date: true
-              gender: true
-              nin: true
-        specializations:
-          _items:
-          - id: '12'
-            name: Specialization example 12
   securitySchemes:
     oauth2:
       name: OAuth 2.0

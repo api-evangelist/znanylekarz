@@ -689,6 +689,835 @@ paths:
       x-operation-id-source: normalized
       x-operation-id-original: Release Notifications
 components:
+  schemas:
+    BookingConfirmedNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: booking-confirmed
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+            visit_booking:
+              $ref: '#/components/schemas/BookingNotification'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    SlotBookingNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: slot-booking
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+            visit_booking_request:
+              $ref: '#/components/schemas/VisitBookingRequestNotification'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    Addresses:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+    AddressCommercialTypeChangedNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: address-commercial-type-changed
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    BookingNotification:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '2134124'
+        status:
+          type: string
+          example: booked
+        start_at:
+          type: string
+          format: date-time
+          example: '2021-05-26T16:00:00+01:00'
+        end_at:
+          type: string
+          format: date-time
+          example: '2021-05-26T16:30:00+01:00'
+        duration:
+          type: integer
+          example: 30
+        booked_by:
+          type: string
+          enum:
+          - user
+          - doctor
+          - integration
+        canceled_by:
+          type: string
+          enum:
+          - ''
+          - user
+          - doctor
+          - integration
+        booked_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+        canceled_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: '2021-05-16T10:18:34+01:00'
+        address_service:
+          allOf:
+          - $ref: '#/components/schemas/AddressServiceNotification'
+        patient:
+          $ref: '#/components/schemas/Patient'
+        signature:
+          type: string
+          example: 699c9b15-a72f-741b-cd24-fdef7b00551e
+        comment:
+          type: string
+          example: Additional information about the visit
+        insurance:
+          allOf:
+          - $ref: '#/components/schemas/InsuranceNotification'
+        visit_payment:
+          type: boolean
+          example: true
+        videocall_url:
+          type: string
+          example: http://url-to-video-call
+    Patient:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Abraham
+        surname:
+          type: string
+          example: Lincoln
+        email:
+          type:
+          - string
+          - 'null'
+          example: example@example.com
+        phone:
+          type:
+          - string
+          - 'null'
+          example: '+48123123123'
+        birth_date:
+          type:
+          - string
+          - 'null'
+          format: date
+          example: '1985-01-01'
+        nin:
+          type:
+          - string
+          - 'null'
+          example: '894237492'
+        gender:
+          type:
+          - string
+          - 'null'
+          enum:
+          - m
+          - f
+        marketing_consent:
+          type:
+          - boolean
+          - 'null'
+          example: true
+          default: null
+        data_privacy_consent:
+          type:
+          - boolean
+          - 'null'
+          example: true
+          default: null
+      required:
+      - name
+      - phone
+    BreakNotification:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '2573784'
+        since:
+          type: string
+          format: date-time
+          example: '2021-05-14T10:00:00+01:00'
+        till:
+          type: string
+          format: date-time
+          example: '2021-05-14T12:00:00+01:00'
+    LicenseNumber:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 12
+        license_number:
+          type: string
+          example: License number
+    BreakRemovedNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: break-removed
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+            break:
+              $ref: '#/components/schemas/BreakNotification'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    Doctor:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 123
+        name:
+          type: string
+          example: Sample
+        surname:
+          type: string
+          example: Doctor 123
+        addresses:
+          $ref: '#/components/schemas/Addresses'
+        specialization:
+          $ref: '#/components/schemas/Specializations'
+        license_numbers:
+          $ref: '#/components/schemas/LicenseNumbers'
+    Notification:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - slot-booking
+          - slot-booked
+          - booking-canceled
+          - booking-moved
+          - booking-moving
+          - booking-confirmed
+          - break-created
+          - break-moved
+          - break-removed
+          - presence-marked
+          - address-service-created
+          - address-service-deleted
+          - address-service-changed
+          - address-commercial-type-changed
+          example: slot-booked
+        data:
+          type: object
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
+    LicenseNumbers:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseNumber'
+    PullMultipleNotificationsResponse:
+      type: object
+      properties:
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/Notification'
+        remaining:
+          type: integer
+          example: 2
+    AddressUnassignedNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: address-unassigned
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    PresenceMarkedNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: presence-marked
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+            visit_booking:
+              $ref: '#/components/schemas/BookingNotification'
+            presence:
+              type: string
+              enum:
+              - ABSENT
+              - PRESENT
+              example: ABSENT
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    AddressServiceNotification:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 101
+        name:
+          type: string
+          example: USG
+        price:
+          type: integer
+          example: 50
+          description: Integer part of the price (decimals truncated)
+        is_price_from:
+          type: boolean
+          example: false
+          description: If true, the price is the minimum price of the service
+        is_visible:
+          type: boolean
+          example: true
+    BookingCanceledNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: booking-canceled
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+            visit_booking:
+              $ref: '#/components/schemas/BookingNotification'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    AddressServiceChangedNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: address-service-changed
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+            address_service:
+              $ref: '#/components/schemas/AddressService'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    Address:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 333
+        name:
+          type:
+          - string
+          - 'null'
+          example: Test hospital
+        city_name:
+          type:
+          - string
+          - 'null'
+          example: Testing city
+        post_code:
+          type:
+          - string
+          - 'null'
+          example: XX-XXX
+        street:
+          type:
+          - string
+          - 'null'
+          example: Testing street
+        is_online_only:
+          type: boolean
+          example: false
+        visit_payment:
+          type: boolean
+          example: false
+        booking_extra_fields:
+          type: object
+          properties:
+            gender:
+              type: boolean
+              example: true
+            nin:
+              type: boolean
+              example: true
+            birth_date:
+              type: boolean
+              example: true
+        commercial_type:
+          type: string
+          enum:
+          - premium
+          - saas-only
+          - basic
+          example: basic
+        insurance_support:
+          type: string
+          enum:
+          - private
+          - insurance
+          - private_and_insurance
+          example: private
+    VisitBookingRequestNotification:
+      type: object
+      properties:
+        booking_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+        booking_by:
+          type: string
+          enum:
+          - user
+          - doctor
+          - integration
+        duration:
+          type: integer
+          example: 30
+        start_at:
+          type: string
+          format: date-time
+          example: '2021-05-26T16:00:00+01:00'
+        end_at:
+          type: string
+          format: date-time
+          example: '2021-05-26T16:30:00+01:00'
+        address_service:
+          allOf:
+          - $ref: '#/components/schemas/AddressServiceNotification'
+        patient:
+          $ref: '#/components/schemas/Patient'
+        signature:
+          type: string
+          example: 699c9b15-a72f-741b-cd24-fdef7b00551e
+        comment:
+          type: string
+          example: Additional information about the visit
+        visit_payment:
+          type: boolean
+          example: true
+    AddressAssignedNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: address-assigned
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    BreakCreatedNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: break-created
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+            break:
+              $ref: '#/components/schemas/BreakNotification'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    BookingPaymentStatusChangedNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: booking-payment-status-changed
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+            visit_booking:
+              $ref: '#/components/schemas/BookingNotification'
+            visit_payment_status:
+              type: object
+              properties:
+                status_from:
+                  type: string
+                  enum:
+                  - paid
+                  - waiting_for_confirmation
+                  - not-paid
+                  - refunded
+                  - charged_back
+                  example: not-paid
+                status_to:
+                  type: string
+                  enum:
+                  - paid
+                  - waiting_for_confirmation
+                  - not-paid
+                  - refunded
+                  - charged_back
+                  example: paid
+                changed_at:
+                  type: string
+                  format: date-time
+                  example: '2021-05-12T10:18:34+01:00'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    AddressServiceCreatedNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: address-service-created
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+            address_service:
+              $ref: '#/components/schemas/AddressService'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    AddressService:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 468628
+        name:
+          type: string
+          example: EEG
+        price:
+          type:
+          - integer
+          - 'null'
+          example: 500
+          description: Integer part of the price (decimals truncated)
+        is_price_from:
+          type: boolean
+          example: true
+          description: If true, the price is the minimum price of the service
+        is_default:
+          type: boolean
+          example: false
+        service_id:
+          type:
+          - string
+          - 'null'
+          example: null
+        description:
+          type:
+          - string
+          - 'null'
+          example: null
+        duration:
+          type: integer
+          example: 30
+        is_visible:
+          type: boolean
+          example: true
+        allowed_patients:
+          allOf:
+          - $ref: '#/components/schemas/AllowedPatientsData'
+        custom_name:
+          type:
+          - string
+          - 'null'
+          example: Custom Service Name
+    Doctors:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Doctor'
+    BookingMovingNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: booking-moving
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+            canceling_booking:
+              $ref: '#/components/schemas/BookingNotification'
+            creating_booking:
+              $ref: '#/components/schemas/VisitBookingRequestNotification'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    Specialization:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 12
+        name:
+          type: string
+          example: Specialization example
+    AddressServiceDeletedNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: address-service-deleted
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+            address_service:
+              $ref: '#/components/schemas/AddressService'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    Specializations:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Specialization'
+    InsuranceNotification:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1
+        name:
+          type: string
+          example: Sample Insurance 1
+        plan:
+          type: string
+          example: ''
+        plan_id:
+          type: string
+          example: ''
+    AllowedPatientsData:
+      type: object
+      properties:
+        minimum_age:
+          type:
+          - integer
+          - 'null'
+          example: 18
+          description: Minimum age of patients allowed for this service
+        maximum_age:
+          type:
+          - integer
+          - 'null'
+          example: 65
+          description: Maximum age of patients allowed for this service
+    Facility:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1
+        name:
+          type: string
+          example: Sample Clinic 1
+        doctors:
+          $ref: '#/components/schemas/Doctors'
+    BookingMovedNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: booking-moved
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+            old_visit_booking:
+              $ref: '#/components/schemas/BookingNotification'
+            new_visit_booking:
+              $ref: '#/components/schemas/BookingNotification'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    BreakMovedNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: break-moved
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+            break:
+              $ref: '#/components/schemas/BreakNotification'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
+    SlotBookedNotification:
+      type: object
+      properties:
+        name:
+          type: string
+          example: slot-booked
+        data:
+          type: object
+          properties:
+            facility:
+              $ref: '#/components/schemas/Facility'
+            doctor:
+              $ref: '#/components/schemas/Doctor'
+            address:
+              $ref: '#/components/schemas/Address'
+            visit_booking:
+              $ref: '#/components/schemas/BookingNotification'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-05-12T10:18:34+01:00'
   examples:
     BookingPaymentStatusChangedNotification:
       value:
@@ -732,9 +1561,9 @@ components:
             status_to: paid
             changed_at: '2021-05-12T10:18:34+01:00'
         created_at: '2021-05-12T10:18:34+01:00'
-    AddressCommercialTypeChangedNotification:
+    AddressUnassignedNotification:
       value:
-        name: address-commercial-type-changed
+        name: address-unassigned
         data:
           facility:
             id: '1'
@@ -749,6 +1578,91 @@ components:
             street: Some street
             post_code: xx-xxx
             commercial_type: premium
+        created_at: '2021-05-14T15:46:34+01:00'
+    SlotBookedNotification:
+      value:
+        name: slot-booked
+        data:
+          facility:
+            id: '1'
+            name: Sample hospital
+          doctor:
+            id: '123'
+            name: Sample
+            surname: Doctor 123
+          address:
+            id: '111'
+            name: Example hospital
+            street: Some street
+            post_code: xx-xxx
+          visit_booking:
+            id: '6263715'
+            status: booked
+            start_at: '2021-05-26T16:00:00+01:00'
+            end_at: '2021-05-26T16:30:00+01:00'
+            duration: 30
+            booked_by: user
+            canceled_by: ''
+            booked_at: '2021-05-12T10:18:24+01:00'
+            address_service:
+              id: '243665'
+              name: biopsja nerki
+              price: 50
+              is_price_from: false
+              is_visible: true
+            patient:
+              name: Abraham
+              surname: Lincoln
+              email: example@example.com
+              phone: '+48123123123'
+              birth_date: '1985-01-01'
+              nin: '894237492'
+              gender: m
+              insurance_number: CARD-7654321
+            comment: Additional information about the visit
+            insurance:
+              id: '1'
+              name: Sample Insurance 1
+              plan: ''
+              plan_id: ''
+        created_at: '2021-05-12T10:18:34+01:00'
+    PresenceMarkedNotification:
+      value:
+        name: presence-marked
+        data:
+          facility:
+            id: '1'
+            name: Sample hospital
+          doctor:
+            id: '123'
+            name: Sample
+            surname: Doctor 123
+          address:
+            id: '111'
+            name: Example hospital
+            street: Some street
+            post_code: xx-xxx
+          visit_booking:
+            id: '6264532'
+            status: booked
+            start_at: '2021-05-27T11:00:00+01:00'
+            end_at: '2021-05-27T11:30:00+01:00'
+            duration: 30
+            booked_by: user
+            canceled_by: ''
+            booked_at: '2021-05-14T10:19:02+01:00'
+            patient:
+              name: Abraham
+              surname: Lincoln
+              email: example@example.com
+              phone: '+48123123123'
+              birth_date: '1985-01-01'
+              nin: '894237492'
+              gender: m
+              is_returning: true
+              insurance_number: CARD-7654321
+            signature: f6b9b2fc-4faa-feab-58d9-26a3767f1426
+          presence: ABSENT
         created_at: '2021-05-14T15:46:34+01:00'
     SlotBookedWhenVideocallNotification:
       value:
@@ -793,10 +1707,50 @@ components:
             comment: Additional information about the visit
             videocall_url: http://url-to-video-call
         created_at: '2021-05-12T10:18:34+01:00'
-    NotificationNotFound:
+    PullingAllOfRemainingNotifications:
       value:
-        errors: []
-        message: No notifications found
+        notifications:
+        - name: break-created
+          data:
+            facility:
+              id: '1'
+              name: Sample hospital
+            doctor:
+              id: '123'
+              name: Sample
+              surname: Doctor 123
+            address:
+              id: '111'
+              name: Example hospital
+              street: Some street
+              post_code: xx-xxx
+            break:
+              id: '2573784'
+              since: '2021-05-25T10:00:00+01:00'
+              till: '2021-05-25T12:00:00+01:00'
+          created_at: '2021-05-14T15:46:34+01:00'
+        remaining: 0
+    BreakCreatedNotification:
+      value:
+        name: break-created
+        data:
+          facility:
+            id: '1'
+            name: Sample hospital
+          doctor:
+            id: '123'
+            name: Sample
+            surname: Doctor 123
+          address:
+            id: '111'
+            name: Example hospital
+            street: Some street
+            post_code: xx-xxx
+          break:
+            id: '2573784'
+            since: '2021-05-25T10:00:00+01:00'
+            till: '2021-05-25T12:00:00+01:00'
+        created_at: '2021-05-14T15:46:34+01:00'
     AddressServiceCreatedNotification:
       value:
         name: address-service-created
@@ -823,9 +1777,9 @@ components:
             service_id: '1'
             is_visible: true
         created_at: '2021-05-14T15:46:34+01:00'
-    BookingMovingNotification:
+    AddressCommercialTypeChangedNotification:
       value:
-        name: booking-moving
+        name: address-commercial-type-changed
         data:
           facility:
             id: '1'
@@ -839,38 +1793,11 @@ components:
             name: Example hospital
             street: Some street
             post_code: xx-xxx
-          canceling_booking:
-            id: '6263715'
-            start_at: '2021-05-26T16:00:00+01:00'
-            end_at: '2021-05-26T16:30:00+01:00'
-            duration: 30
-            booked_by: user
-            canceling_by: doctor
-            booked_at: '2021-05-12T10:18:24+01:00'
-            canceling_at: '2021-05-14T15:45:57+01:00'
-            address_service:
-              id: '243665'
-              name: biopsja nerki
-              price: 50
-              is_price_from: false
-              is_visible: true
-          creating_booking:
-            start_at: '2021-05-27T11:00:00+01:00'
-            end_at: '2021-05-27T11:30:00+01:00'
-            duration: 30
-            booking_by: doctor
-            booking_at: '2021-05-14T10:19:02+01:00'
-            address_service:
-              id: '243665'
-              name: biopsja nerki
-              price: 50
-              is_price_from: false
-              is_visible: true
-            signature: 699c9b15-a72f-741b-cd24-fdef7b00551e
+            commercial_type: premium
         created_at: '2021-05-14T15:46:34+01:00'
-    SlotBookedByDoctorNotification:
+    BookingCanceledByDoctorNotification:
       value:
-        name: slot-booked
+        name: booking-canceled
         data:
           facility:
             id: '1'
@@ -886,13 +1813,14 @@ components:
             post_code: xx-xxx
           visit_booking:
             id: '6263715'
-            status: booked
+            status: canceled
             start_at: '2021-05-26T16:00:00+01:00'
             end_at: '2021-05-26T16:30:00+01:00'
             duration: 30
-            booked_by: doctor
-            canceled_by: ''
+            booked_by: user
+            canceled_by: doctor
             booked_at: '2021-05-12T10:18:24+01:00'
+            canceled_at: '2021-05-14T15:45:57+01:00'
             address_service:
               id: '243665'
               name: biopsja nerki
@@ -908,8 +1836,33 @@ components:
               nin: '894237492'
               gender: m
               insurance_number: CARD-7654321
-            comment: Additional information about the visit
-        created_at: '2021-05-12T10:18:34+01:00'
+        created_at: '2021-05-14T15:46:34+01:00'
+    AddressServiceDeletedNotification:
+      value:
+        name: address-service-deleted
+        data:
+          facility:
+            id: '1'
+            name: Sample hospital
+          doctor:
+            id: '123'
+            name: Sample
+            surname: Doctor 123
+          address:
+            id: '111'
+            name: Example hospital
+            street: Some street
+            post_code: xx-xxx
+          address_service:
+            id: '111'
+            name: USG
+            price: 150
+            is_price_from: false
+            is_default: true
+            description: Address service description 1
+            service_id: '1'
+            is_visible: true
+        created_at: '2021-05-14T15:46:34+01:00'
     BookingMovedNotification:
       value:
         name: booking-moved
@@ -976,52 +1929,6 @@ components:
               gender: m
               insurance_number: CARD-7654321
         created_at: '2021-05-14T15:46:34+01:00'
-    BookingConfirmedNotification:
-      value:
-        name: booking-confirmed
-        data:
-          facility:
-            id: '1'
-            name: Sample hospital
-          doctor:
-            id: '123'
-            name: Sample
-            surname: Doctor 123
-          address:
-            id: '111'
-            name: Example hospital
-            street: Some street
-            post_code: xx-xxx
-          visit_booking:
-            id: '6263715'
-            status: booked
-            start_at: '2021-05-26T16:00:00+01:00'
-            end_at: '2021-05-26T16:30:00+01:00'
-            duration: 30
-            booked_by: user
-            canceled_by: ''
-            booked_at: '2021-05-12T10:18:24+01:00'
-            address_service:
-              id: '243665'
-              name: biopsja nerki
-              price: 50
-              is_price_from: false
-              is_visible: true
-            patient:
-              name: Abraham
-              surname: Lincoln
-              email: example@example.com
-              phone: '+48123123123'
-              birth_date: '1985-01-01'
-              nin: '894237492'
-              gender: m
-              insurance_number: CARD-7654321
-            comment: Additional information about the visit
-        created_at: '2021-05-12T10:18:34+01:00'
-    NotificationsReleaseForbiddenError:
-      value:
-        errors: []
-        message: You are not allowed to use this method
     AddressAssignedNotification:
       value:
         name: address-assigned
@@ -1040,9 +1947,9 @@ components:
             post_code: xx-xxx
             commercial_type: premium
         created_at: '2021-05-14T15:46:34+01:00'
-    BreakRemovedNotification:
+    SlotBookingWhenVisitPaymentNotification:
       value:
-        name: break-removed
+        name: slot-booking
         data:
           facility:
             id: '1'
@@ -1056,101 +1963,18 @@ components:
             name: Example hospital
             street: Some street
             post_code: xx-xxx
-          break:
-            id: '2573784'
-            since: '2021-05-25T10:00:00+01:00'
-            till: '2021-05-25T12:00:00+01:00'
-        created_at: '2021-05-14T15:46:34+01:00'
-    AddressUnassignedNotification:
-      value:
-        name: address-unassigned
-        data:
-          facility:
-            id: '1'
-            name: Sample hospital
-          doctor:
-            id: '123'
-            name: Sample
-            surname: Doctor 123
-          address:
-            id: '111'
-            name: Example hospital
-            street: Some street
-            post_code: xx-xxx
-            commercial_type: premium
-        created_at: '2021-05-14T15:46:34+01:00'
-    AddressServiceChangedNotification:
-      value:
-        name: address-service-changed
-        data:
-          facility:
-            id: '1'
-            name: Sample hospital
-          doctor:
-            id: '123'
-            name: Sample
-            surname: Doctor 123
-          address:
-            id: '111'
-            name: Example hospital
-            street: Some street
-            post_code: xx-xxx
-          address_service:
-            id: '111'
-            name: USG
-            price: 150
-            is_price_from: false
-            is_default: true
-            description: Address service description 1
-            service_id: '1'
-            is_visible: true
-        created_at: '2021-05-14T15:46:34+01:00'
-    BreakMovedNotification:
-      value:
-        name: break-moved
-        data:
-          facility:
-            id: '1'
-            name: Sample hospital
-          doctor:
-            id: '123'
-            name: Sample
-            surname: Doctor 123
-          address:
-            id: '111'
-            name: Example hospital
-            street: Some street
-            post_code: xx-xxx
-          break:
-            id: '2573784'
-            since: '2021-05-25T10:00:00+01:00'
-            till: '2021-05-25T12:00:00+01:00'
-        created_at: '2021-05-14T15:46:34+01:00'
-    PresenceMarkedNotification:
-      value:
-        name: presence-marked
-        data:
-          facility:
-            id: '1'
-            name: Sample hospital
-          doctor:
-            id: '123'
-            name: Sample
-            surname: Doctor 123
-          address:
-            id: '111'
-            name: Example hospital
-            street: Some street
-            post_code: xx-xxx
-          visit_booking:
-            id: '6264532'
-            status: booked
-            start_at: '2021-05-27T11:00:00+01:00'
-            end_at: '2021-05-27T11:30:00+01:00'
+          visit_booking_request:
+            booking_at: '2021-05-12T10:18:24+01:00'
+            booking_by: user
             duration: 30
-            booked_by: user
-            canceled_by: ''
-            booked_at: '2021-05-14T10:19:02+01:00'
+            start_at: '2021-05-26T16:00:00+01:00'
+            end_at: '2021-05-26T16:30:00+01:00'
+            address_service:
+              id: '243665'
+              name: biopsja nerki
+              price: 50
+              is_price_from: false
+              is_visible: true
             patient:
               name: Abraham
               surname: Lincoln
@@ -1159,38 +1983,11 @@ components:
               birth_date: '1985-01-01'
               nin: '894237492'
               gender: m
-              is_returning: true
               insurance_number: CARD-7654321
-            signature: f6b9b2fc-4faa-feab-58d9-26a3767f1426
-          presence: ABSENT
-        created_at: '2021-05-14T15:46:34+01:00'
-    AddressServiceDeletedNotification:
-      value:
-        name: address-service-deleted
-        data:
-          facility:
-            id: '1'
-            name: Sample hospital
-          doctor:
-            id: '123'
-            name: Sample
-            surname: Doctor 123
-          address:
-            id: '111'
-            name: Example hospital
-            street: Some street
-            post_code: xx-xxx
-          address_service:
-            id: '111'
-            name: USG
-            price: 150
-            is_price_from: false
-            is_default: true
-            description: Address service description 1
-            service_id: '1'
-            is_visible: true
-        created_at: '2021-05-14T15:46:34+01:00'
-    SlotBookedWhenVisitPaymentNotification:
+            comment: Additional information about the visit
+            visit_payment: true
+        created_at: '2021-05-12T10:18:34+01:00'
+    SlotBookedByDoctorNotification:
       value:
         name: slot-booked
         data:
@@ -1212,7 +2009,7 @@ components:
             start_at: '2021-05-26T16:00:00+01:00'
             end_at: '2021-05-26T16:30:00+01:00'
             duration: 30
-            booked_by: user
+            booked_by: doctor
             canceled_by: ''
             booked_at: '2021-05-12T10:18:24+01:00'
             address_service:
@@ -1231,73 +2028,7 @@ components:
               gender: m
               insurance_number: CARD-7654321
             comment: Additional information about the visit
-            visit_payment: true
         created_at: '2021-05-12T10:18:34+01:00'
-    PullingAllOfRemainingNotifications:
-      value:
-        notifications:
-        - name: break-created
-          data:
-            facility:
-              id: '1'
-              name: Sample hospital
-            doctor:
-              id: '123'
-              name: Sample
-              surname: Doctor 123
-            address:
-              id: '111'
-              name: Example hospital
-              street: Some street
-              post_code: xx-xxx
-            break:
-              id: '2573784'
-              since: '2021-05-25T10:00:00+01:00'
-              till: '2021-05-25T12:00:00+01:00'
-          created_at: '2021-05-14T15:46:34+01:00'
-        remaining: 0
-    BookingCanceledByDoctorNotification:
-      value:
-        name: booking-canceled
-        data:
-          facility:
-            id: '1'
-            name: Sample hospital
-          doctor:
-            id: '123'
-            name: Sample
-            surname: Doctor 123
-          address:
-            id: '111'
-            name: Example hospital
-            street: Some street
-            post_code: xx-xxx
-          visit_booking:
-            id: '6263715'
-            status: canceled
-            start_at: '2021-05-26T16:00:00+01:00'
-            end_at: '2021-05-26T16:30:00+01:00'
-            duration: 30
-            booked_by: user
-            canceled_by: doctor
-            booked_at: '2021-05-12T10:18:24+01:00'
-            canceled_at: '2021-05-14T15:45:57+01:00'
-            address_service:
-              id: '243665'
-              name: biopsja nerki
-              price: 50
-              is_price_from: false
-              is_visible: true
-            patient:
-              name: Abraham
-              surname: Lincoln
-              email: example@example.com
-              phone: '+48123123123'
-              birth_date: '1985-01-01'
-              nin: '894237492'
-              gender: m
-              insurance_number: CARD-7654321
-        created_at: '2021-05-14T15:46:34+01:00'
     BookingCanceledNotification:
       value:
         name: booking-canceled
@@ -1399,9 +2130,9 @@ components:
             presence: ABSENT
           created_at: '2021-05-14T15:46:34+01:00'
         remaining: 5
-    SlotBookingNotification:
+    BreakRemovedNotification:
       value:
-        name: slot-booking
+        name: break-removed
         data:
           facility:
             id: '1'
@@ -1415,30 +2146,82 @@ components:
             name: Example hospital
             street: Some street
             post_code: xx-xxx
-          visit_booking_request:
-            booking_at: '2021-05-12T10:18:24+01:00'
-            booking_by: user
-            duration: 30
+          break:
+            id: '2573784'
+            since: '2021-05-25T10:00:00+01:00'
+            till: '2021-05-25T12:00:00+01:00'
+        created_at: '2021-05-14T15:46:34+01:00'
+    BookingMovingNotification:
+      value:
+        name: booking-moving
+        data:
+          facility:
+            id: '1'
+            name: Sample hospital
+          doctor:
+            id: '123'
+            name: Sample
+            surname: Doctor 123
+          address:
+            id: '111'
+            name: Example hospital
+            street: Some street
+            post_code: xx-xxx
+          canceling_booking:
+            id: '6263715'
             start_at: '2021-05-26T16:00:00+01:00'
             end_at: '2021-05-26T16:30:00+01:00'
+            duration: 30
+            booked_by: user
+            canceling_by: doctor
+            booked_at: '2021-05-12T10:18:24+01:00'
+            canceling_at: '2021-05-14T15:45:57+01:00'
             address_service:
               id: '243665'
               name: biopsja nerki
               price: 50
               is_price_from: false
               is_visible: true
-            patient:
-              name: Abraham
-              surname: Lincoln
-              email: example@example.com
-              phone: '+48123123123'
-              birth_date: '1985-01-01'
-              nin: '894237492'
-              gender: m
-              insurance_number: CARD-7654321
-            comment: Additional information about the visit
-        created_at: '2021-05-12T10:18:34+01:00'
-    SlotBookedNotification:
+          creating_booking:
+            start_at: '2021-05-27T11:00:00+01:00'
+            end_at: '2021-05-27T11:30:00+01:00'
+            duration: 30
+            booking_by: doctor
+            booking_at: '2021-05-14T10:19:02+01:00'
+            address_service:
+              id: '243665'
+              name: biopsja nerki
+              price: 50
+              is_price_from: false
+              is_visible: true
+            signature: 699c9b15-a72f-741b-cd24-fdef7b00551e
+        created_at: '2021-05-14T15:46:34+01:00'
+    NotificationNotFound:
+      value:
+        errors: []
+        message: No notifications found
+    BreakMovedNotification:
+      value:
+        name: break-moved
+        data:
+          facility:
+            id: '1'
+            name: Sample hospital
+          doctor:
+            id: '123'
+            name: Sample
+            surname: Doctor 123
+          address:
+            id: '111'
+            name: Example hospital
+            street: Some street
+            post_code: xx-xxx
+          break:
+            id: '2573784'
+            since: '2021-05-25T10:00:00+01:00'
+            till: '2021-05-25T12:00:00+01:00'
+        created_at: '2021-05-14T15:46:34+01:00'
+    SlotBookedWhenVisitPaymentNotification:
       value:
         name: slot-booked
         data:
@@ -1479,15 +2262,11 @@ components:
               gender: m
               insurance_number: CARD-7654321
             comment: Additional information about the visit
-            insurance:
-              id: '1'
-              name: Sample Insurance 1
-              plan: ''
-              plan_id: ''
+            visit_payment: true
         created_at: '2021-05-12T10:18:34+01:00'
-    BreakCreatedNotification:
+    AddressServiceChangedNotification:
       value:
-        name: break-created
+        name: address-service-changed
         data:
           facility:
             id: '1'
@@ -1501,12 +2280,63 @@ components:
             name: Example hospital
             street: Some street
             post_code: xx-xxx
-          break:
-            id: '2573784'
-            since: '2021-05-25T10:00:00+01:00'
-            till: '2021-05-25T12:00:00+01:00'
+          address_service:
+            id: '111'
+            name: USG
+            price: 150
+            is_price_from: false
+            is_default: true
+            description: Address service description 1
+            service_id: '1'
+            is_visible: true
         created_at: '2021-05-14T15:46:34+01:00'
-    SlotBookingWhenVisitPaymentNotification:
+    BookingConfirmedNotification:
+      value:
+        name: booking-confirmed
+        data:
+          facility:
+            id: '1'
+            name: Sample hospital
+          doctor:
+            id: '123'
+            name: Sample
+            surname: Doctor 123
+          address:
+            id: '111'
+            name: Example hospital
+            street: Some street
+            post_code: xx-xxx
+          visit_booking:
+            id: '6263715'
+            status: booked
+            start_at: '2021-05-26T16:00:00+01:00'
+            end_at: '2021-05-26T16:30:00+01:00'
+            duration: 30
+            booked_by: user
+            canceled_by: ''
+            booked_at: '2021-05-12T10:18:24+01:00'
+            address_service:
+              id: '243665'
+              name: biopsja nerki
+              price: 50
+              is_price_from: false
+              is_visible: true
+            patient:
+              name: Abraham
+              surname: Lincoln
+              email: example@example.com
+              phone: '+48123123123'
+              birth_date: '1985-01-01'
+              nin: '894237492'
+              gender: m
+              insurance_number: CARD-7654321
+            comment: Additional information about the visit
+        created_at: '2021-05-12T10:18:34+01:00'
+    NotificationsReleaseForbiddenError:
+      value:
+        errors: []
+        message: You are not allowed to use this method
+    SlotBookingNotification:
       value:
         name: slot-booking
         data:
@@ -1544,837 +2374,7 @@ components:
               gender: m
               insurance_number: CARD-7654321
             comment: Additional information about the visit
-            visit_payment: true
         created_at: '2021-05-12T10:18:34+01:00'
-  schemas:
-    Addresses:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Address'
-    BreakCreatedNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: break-created
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-            break:
-              $ref: '#/components/schemas/BreakNotification'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    Address:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 333
-        name:
-          type:
-          - string
-          - 'null'
-          example: Test hospital
-        city_name:
-          type:
-          - string
-          - 'null'
-          example: Testing city
-        post_code:
-          type:
-          - string
-          - 'null'
-          example: XX-XXX
-        street:
-          type:
-          - string
-          - 'null'
-          example: Testing street
-        is_online_only:
-          type: boolean
-          example: false
-        visit_payment:
-          type: boolean
-          example: false
-        booking_extra_fields:
-          type: object
-          properties:
-            gender:
-              type: boolean
-              example: true
-            nin:
-              type: boolean
-              example: true
-            birth_date:
-              type: boolean
-              example: true
-        commercial_type:
-          type: string
-          enum:
-          - premium
-          - saas-only
-          - basic
-          example: basic
-        insurance_support:
-          type: string
-          enum:
-          - private
-          - insurance
-          - private_and_insurance
-          example: private
-    AddressService:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 468628
-        name:
-          type: string
-          example: EEG
-        price:
-          type:
-          - integer
-          - 'null'
-          example: 500
-          description: Integer part of the price (decimals truncated)
-        is_price_from:
-          type: boolean
-          example: true
-          description: If true, the price is the minimum price of the service
-        is_default:
-          type: boolean
-          example: false
-        service_id:
-          type:
-          - string
-          - 'null'
-          example: null
-        description:
-          type:
-          - string
-          - 'null'
-          example: null
-        duration:
-          type: integer
-          example: 30
-        is_visible:
-          type: boolean
-          example: true
-        allowed_patients:
-          allOf:
-          - $ref: '#/components/schemas/AllowedPatientsData'
-        custom_name:
-          type:
-          - string
-          - 'null'
-          example: Custom Service Name
-    BookingConfirmedNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: booking-confirmed
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-            visit_booking:
-              $ref: '#/components/schemas/BookingNotification'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    AddressAssignedNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: address-assigned
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    BreakRemovedNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: break-removed
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-            break:
-              $ref: '#/components/schemas/BreakNotification'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    LicenseNumber:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 12
-        license_number:
-          type: string
-          example: License number
-    AddressServiceDeletedNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: address-service-deleted
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-            address_service:
-              $ref: '#/components/schemas/AddressService'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    BookingCanceledNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: booking-canceled
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-            visit_booking:
-              $ref: '#/components/schemas/BookingNotification'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    BookingPaymentStatusChangedNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: booking-payment-status-changed
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-            visit_booking:
-              $ref: '#/components/schemas/BookingNotification'
-            visit_payment_status:
-              type: object
-              properties:
-                status_from:
-                  type: string
-                  enum:
-                  - paid
-                  - waiting_for_confirmation
-                  - not-paid
-                  - refunded
-                  - charged_back
-                  example: not-paid
-                status_to:
-                  type: string
-                  enum:
-                  - paid
-                  - waiting_for_confirmation
-                  - not-paid
-                  - refunded
-                  - charged_back
-                  example: paid
-                changed_at:
-                  type: string
-                  format: date-time
-                  example: '2021-05-12T10:18:34+01:00'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    VisitBookingRequestNotification:
-      type: object
-      properties:
-        booking_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-        booking_by:
-          type: string
-          enum:
-          - user
-          - doctor
-          - integration
-        duration:
-          type: integer
-          example: 30
-        start_at:
-          type: string
-          format: date-time
-          example: '2021-05-26T16:00:00+01:00'
-        end_at:
-          type: string
-          format: date-time
-          example: '2021-05-26T16:30:00+01:00'
-        address_service:
-          allOf:
-          - $ref: '#/components/schemas/AddressServiceNotification'
-        patient:
-          $ref: '#/components/schemas/Patient'
-        signature:
-          type: string
-          example: 699c9b15-a72f-741b-cd24-fdef7b00551e
-        comment:
-          type: string
-          example: Additional information about the visit
-        visit_payment:
-          type: boolean
-          example: true
-    AddressServiceCreatedNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: address-service-created
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-            address_service:
-              $ref: '#/components/schemas/AddressService'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    Doctors:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Doctor'
-    Patient:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Abraham
-        surname:
-          type: string
-          example: Lincoln
-        email:
-          type:
-          - string
-          - 'null'
-          example: example@example.com
-        phone:
-          type:
-          - string
-          - 'null'
-          example: '+48123123123'
-        birth_date:
-          type:
-          - string
-          - 'null'
-          format: date
-          example: '1985-01-01'
-        nin:
-          type:
-          - string
-          - 'null'
-          example: '894237492'
-        gender:
-          type:
-          - string
-          - 'null'
-          enum:
-          - m
-          - f
-        marketing_consent:
-          type:
-          - boolean
-          - 'null'
-          example: true
-          default: null
-        data_privacy_consent:
-          type:
-          - boolean
-          - 'null'
-          example: true
-          default: null
-      required:
-      - name
-      - phone
-    InsuranceNotification:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 1
-        name:
-          type: string
-          example: Sample Insurance 1
-        plan:
-          type: string
-          example: ''
-        plan_id:
-          type: string
-          example: ''
-    AddressUnassignedNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: address-unassigned
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    LicenseNumbers:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/LicenseNumber'
-    BookingMovingNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: booking-moving
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-            canceling_booking:
-              $ref: '#/components/schemas/BookingNotification'
-            creating_booking:
-              $ref: '#/components/schemas/VisitBookingRequestNotification'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    BookingMovedNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: booking-moved
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-            old_visit_booking:
-              $ref: '#/components/schemas/BookingNotification'
-            new_visit_booking:
-              $ref: '#/components/schemas/BookingNotification'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    PresenceMarkedNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: presence-marked
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-            visit_booking:
-              $ref: '#/components/schemas/BookingNotification'
-            presence:
-              type: string
-              enum:
-              - ABSENT
-              - PRESENT
-              example: ABSENT
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    BookingNotification:
-      type: object
-      properties:
-        id:
-          type: string
-          example: '2134124'
-        status:
-          type: string
-          example: booked
-        start_at:
-          type: string
-          format: date-time
-          example: '2021-05-26T16:00:00+01:00'
-        end_at:
-          type: string
-          format: date-time
-          example: '2021-05-26T16:30:00+01:00'
-        duration:
-          type: integer
-          example: 30
-        booked_by:
-          type: string
-          enum:
-          - user
-          - doctor
-          - integration
-        canceled_by:
-          type: string
-          enum:
-          - ''
-          - user
-          - doctor
-          - integration
-        booked_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-        canceled_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          example: '2021-05-16T10:18:34+01:00'
-        address_service:
-          allOf:
-          - $ref: '#/components/schemas/AddressServiceNotification'
-        patient:
-          $ref: '#/components/schemas/Patient'
-        signature:
-          type: string
-          example: 699c9b15-a72f-741b-cd24-fdef7b00551e
-        comment:
-          type: string
-          example: Additional information about the visit
-        insurance:
-          allOf:
-          - $ref: '#/components/schemas/InsuranceNotification'
-        visit_payment:
-          type: boolean
-          example: true
-        videocall_url:
-          type: string
-          example: http://url-to-video-call
-    AddressServiceNotification:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 101
-        name:
-          type: string
-          example: USG
-        price:
-          type: integer
-          example: 50
-          description: Integer part of the price (decimals truncated)
-        is_price_from:
-          type: boolean
-          example: false
-          description: If true, the price is the minimum price of the service
-        is_visible:
-          type: boolean
-          example: true
-    AllowedPatientsData:
-      type: object
-      properties:
-        minimum_age:
-          type:
-          - integer
-          - 'null'
-          example: 18
-          description: Minimum age of patients allowed for this service
-        maximum_age:
-          type:
-          - integer
-          - 'null'
-          example: 65
-          description: Maximum age of patients allowed for this service
-    SlotBookingNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: slot-booking
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-            visit_booking_request:
-              $ref: '#/components/schemas/VisitBookingRequestNotification'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    Specializations:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Specialization'
-    PullMultipleNotificationsResponse:
-      type: object
-      properties:
-        notifications:
-          type: array
-          items:
-            $ref: '#/components/schemas/Notification'
-        remaining:
-          type: integer
-          example: 2
-    SlotBookedNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: slot-booked
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-            visit_booking:
-              $ref: '#/components/schemas/BookingNotification'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    AddressServiceChangedNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: address-service-changed
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-            address_service:
-              $ref: '#/components/schemas/AddressService'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    Facility:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 1
-        name:
-          type: string
-          example: Sample Clinic 1
-        doctors:
-          $ref: '#/components/schemas/Doctors'
-    Notification:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - slot-booking
-          - slot-booked
-          - booking-canceled
-          - booking-moved
-          - booking-moving
-          - booking-confirmed
-          - break-created
-          - break-moved
-          - break-removed
-          - presence-marked
-          - address-service-created
-          - address-service-deleted
-          - address-service-changed
-          - address-commercial-type-changed
-          example: slot-booked
-        data:
-          type: object
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    AddressCommercialTypeChangedNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: address-commercial-type-changed
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    Specialization:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 12
-        name:
-          type: string
-          example: Specialization example
-    BreakNotification:
-      type: object
-      properties:
-        id:
-          type: string
-          example: '2573784'
-        since:
-          type: string
-          format: date-time
-          example: '2021-05-14T10:00:00+01:00'
-        till:
-          type: string
-          format: date-time
-          example: '2021-05-14T12:00:00+01:00'
-    BreakMovedNotification:
-      type: object
-      properties:
-        name:
-          type: string
-          example: break-moved
-        data:
-          type: object
-          properties:
-            facility:
-              $ref: '#/components/schemas/Facility'
-            doctor:
-              $ref: '#/components/schemas/Doctor'
-            address:
-              $ref: '#/components/schemas/Address'
-            break:
-              $ref: '#/components/schemas/BreakNotification'
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-05-12T10:18:34+01:00'
-    Doctor:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 123
-        name:
-          type: string
-          example: Sample
-        surname:
-          type: string
-          example: Doctor 123
-        addresses:
-          $ref: '#/components/schemas/Addresses'
-        specialization:
-          $ref: '#/components/schemas/Specializations'
-        license_numbers:
-          $ref: '#/components/schemas/LicenseNumbers'
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        message:
-          type: string
   parameters:
     multipleNotificationsLimit:
       name: limit

@@ -76,3 +76,38 @@ api_access:
     come first, production credentials require client approval or a Customer Success specialist.
   contact: integrations@docplanner.com
   source: https://integrations.docplanner.com/guide/integration-process.html
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - subscription
+  units: []
+  plans:
+  - name: Starter
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Plus
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: VIP
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Noa Notes
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month

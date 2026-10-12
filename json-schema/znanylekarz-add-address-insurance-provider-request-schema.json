@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/znanylekarz/main/json-schema/znanylekarz-add-address-insurance-provider-request-schema.json",
+  "title": "AddAddressInsuranceProviderRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/znanylekarz-insurances-api-openapi.yml#/components/schemas/AddAddressInsuranceProviderRequest",
+  "type": "object",
+  "properties": {
+    "insurance_provider_id": {
+      "type": "string",
+      "description": "ID of an insurance provider from DP dictionary"
+    },
+    "insurance_plans": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "insurance_plan_id": {
+            "type": "string",
+            "description": "ID of an insurance plan from DP dictionary"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "insurance_provider_id"
+  ]
+}

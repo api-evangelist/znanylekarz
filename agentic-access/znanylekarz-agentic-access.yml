@@ -1,0 +1,694 @@
+generated: '2026-10-12'
+method: generated
+source: openapi/znanylekarz-addresses-api-openapi.yml, openapi/znanylekarz-api-notification-callbacks-api-openapi.yml,
+  openapi/znanylekarz-bookings-api-openapi.yml, openapi/znanylekarz-calendar-breaks-api-openapi.yml,
+  openapi/znanylekarz-calendars-api-openapi.yml, openapi/znanylekarz-doctors-api-openapi.yml,
+  openapi/znanylekarz-facilities-api-openapi.yml, openapi/znanylekarz-insurances-api-openapi.yml,
+  openapi/znanylekarz-patient-presence-api-openapi.yml, openapi/znanylekarz-services-api-openapi.yml,
+  openapi/znanylekarz-slots-api-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 44
+  by_action_class:
+    connected: 20
+    acting: 24
+  by_consequence:
+    read: 20
+    write: 22
+    safety-critical: 2
+  human_in_the_loop_required: 2
+operations:
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses
+  method: get
+  operationId: getAddresses
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}
+  method: get
+  operationId: getAddress
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}
+  method: patch
+  operationId: updateAddress
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/integration
+  method: delete
+  operationId: removeAddressIntegration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /{client-endpoint-url}
+  method: post
+  operationId: PushNotifications
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /notifications
+  method: get
+  operationId: PullNotification
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /notifications/multiple
+  method: get
+  operationId: PullMultipleNotification
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /notifications/release
+  method: post
+  operationId: ReleaseNotifications
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings
+  method: get
+  operationId: getBookings
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}
+  method: get
+  operationId: getBooking
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}
+  method: delete
+  operationId: cancelBooking
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}/move
+  method: post
+  operationId: moveBooking
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}/confirm
+  method: put
+  operationId: confirmBooking
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/opinion-request
+  method: put
+  operationId: requestOpinion
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/breaks
+  method: get
+  operationId: getCalendarBreaks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/breaks
+  method: post
+  operationId: addCalendarBreak
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/breaks/{break_id}
+  method: get
+  operationId: getCalendarBreak
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/breaks/{break_id}
+  method: patch
+  operationId: moveCalendarBreak
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/breaks/{break_id}
+  method: delete
+  operationId: deleteCalendarBreak
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/calendar
+  method: get
+  operationId: getCalendar
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/calendar/enable
+  method: post
+  operationId: enableCalendar
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/calendar/disable
+  method: post
+  operationId: disableCalendar
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors
+  method: get
+  operationId: getDoctors
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}
+  method: get
+  operationId: getDoctor
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities
+  method: get
+  operationId: getFacilities
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities/{facility_id}
+  method: get
+  operationId: getFacility
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /insurance-providers
+  method: get
+  operationId: getInsuranceProviders
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /insurance-providers/{insurance_provider_id}/plans
+  method: get
+  operationId: getInsurancePlans
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/insurance-providers
+  method: get
+  operationId: getAddressInsuranceProviders
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/insurance-providers
+  method: post
+  operationId: addAddressInsuranceProvider
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/insurance-providers
+  method: put
+  operationId: updateOrCreateAddressInsuranceProvider
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/insurance-providers/{insurance_provider_id}
+  method: delete
+  operationId: deleteAddressInsuranceProvider
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}/presence/patient
+  method: post
+  operationId: markPatientPresence
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/bookings/{booking_id}/presence/patient
+  method: delete
+  operationId: markPatientAbsence
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /services
+  method: get
+  operationId: getServices
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/services
+  method: get
+  operationId: getAddressServices
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/services
+  method: post
+  operationId: addAddressService
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/services/{address_service_id}
+  method: get
+  operationId: getAddressService
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/services/{address_service_id}
+  method: patch
+  operationId: updateAddressService
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/services/{address_service_id}
+  method: delete
+  operationId: deleteAddressService
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/slots
+  method: get
+  operationId: getSlots
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/slots
+  method: put
+  operationId: replaceSlots
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/slots/{start}/book
+  method: post
+  operationId: bookSlot
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration
+- path: /facilities/{facility_id}/doctors/{doctor_id}/addresses/{address_id}/slots/{date}
+  method: delete
+  operationId: deleteSlots
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - integration

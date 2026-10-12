@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/znanylekarz/main/json-schema/znanylekarz-cancel-booking-request-schema.json",
+  "title": "CancelBookingRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/znanylekarz-bookings-api-openapi.yml#/components/schemas/CancelBookingRequest",
+  "type": "object",
+  "properties": {
+    "reason": {
+      "type": "string",
+      "description": "Reason why visit was canceled"
+    }
+  }
+}

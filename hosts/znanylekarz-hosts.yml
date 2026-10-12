@@ -1,0 +1,102 @@
+generated: '2026-10-12'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 7
+  own: 2
+  other_domain: 3
+  platform: 2
+  roles:
+  - collections
+  - marketing
+  - portal
+  - source
+  - status
+  - support
+  - website
+hosts:
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: help.docplanner.com
+  found_by:
+  - pointer
+  types:
+  - Support
+  serves: []
+  registrable_domain: docplanner.com
+  role: support
+  relation: other-domain
+- host: integrations.docplanner.com
+  found_by:
+  - pointer
+  - apis[]
+  - vendor-detect
+  types:
+  - DeveloperPortal
+  - Documentation
+  - APIReference
+  - GettingStarted
+  serves:
+  - docs
+  - cdn
+  - hosting
+  vendor: fastly
+  registrable_domain: docplanner.com
+  role: portal
+  relation: other-domain
+- host: pro.znanylekarz.pl
+  found_by:
+  - pointer
+  types:
+  - Pricing
+  serves: []
+  registrable_domain: znanylekarz.pl
+  role: marketing
+  relation: own
+- host: status.docplanner.com
+  found_by:
+  - pointer
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: docplanner.com
+  role: status
+  relation: other-domain
+- host: www.postman.com
+  found_by:
+  - pointer
+  - vendor-detect
+  types:
+  - Postman
+  serves:
+  - api-collections
+  vendor: postman
+  registrable_domain: postman.com
+  role: collections
+  relation: platform
+- host: www.znanylekarz.pl
+  found_by:
+  - pointer
+  - apis[]
+  - vendor-detect
+  types:
+  - Website
+  - Blog
+  - SignUp
+  - TermsOfService
+  - PrivacyPolicy
+  serves:
+  - api
+  - cdn
+  vendor: cloudfront
+  registrable_domain: znanylekarz.pl
+  role: website
+  relation: own

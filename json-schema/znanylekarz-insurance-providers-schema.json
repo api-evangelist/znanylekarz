@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/znanylekarz/main/json-schema/znanylekarz-insurance-providers-schema.json",
+  "title": "InsuranceProviders",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/znanylekarz-insurances-api-openapi.yml#/components/schemas/InsuranceProviders",
+  "type": "object",
+  "properties": {
+    "_items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/InsuranceProvider"
+      }
+    }
+  },
+  "$defs": {
+    "InsuranceProvider": {
+      "type": "object",
+      "properties": {
+        "insurance_provider_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

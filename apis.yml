@@ -1,24 +1,31 @@
 aid: znanylekarz
+
 name: ZnanyLekarz
-description: >-
-  ZnanyLekarz is the Polish healthcare marketplace and practice-management platform operated by
-  Docplanner Group, connecting patients with over 146,000 listed doctors and equipping medical
-  practices with online booking, calendar management, appointment reminders, patient reviews,
-  e-prescriptions, video consultations and online payments. ZnanyLekarz.pl is the founding brand
-  of the Docplanner Group and the Polish locale of the group's marketplace, which also trades as
-  Doctoralia, MioDottore, Jameda, Doktor Takvimi and Znamylekar. Its public developer surface is
-  the Docplanner Integrations API — an OAuth 2.0 REST API served on the www.znanylekarz.pl host
-  that lets medical-software vendors synchronise facilities, doctors, addresses, services,
-  insurance providers, calendars, breaks, slots and bookings, and receive push or pull event
-  notifications when patients book, move, confirm or cancel visits.
+
+description: ZnanyLekarz is the Polish healthcare marketplace and practice-management platform operated by Docplanner Group, connecting patients
+  with over 146,000 listed doctors and equipping medical practices with online booking, calendar management, appointment reminders, patient reviews,
+  e-prescriptions, video consultations and online payments. ZnanyLekarz.pl is the founding brand of the Docplanner Group and the Polish locale
+  of the group's marketplace, which also trades as Doctoralia, MioDottore, Jameda, Doktor Takvimi and Znamylekar. Its public developer surface
+  is the Docplanner Integrations API — an OAuth 2.0 REST API served on the www.znanylekarz.pl host that lets medical-software vendors synchronise
+  facilities, doctors, addresses, services, insurance providers, calendars, breaks, slots and bookings, and receive push or pull event notifications
+  when patients book, move, confirm or cancel visits.
+
 url: https://raw.githubusercontent.com/api-evangelist/znanylekarz/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: harvest:secondary-market
+
 x-parent: docplanner
+
 specificationVersion: '0.20'
+
 created: '2026-09-05'
+
 modified: '2026-09-05'
+
 image: https://platform.docplanner.com/img/pl/open-graph/og-v0.png
+
 tags:
 - Company
 - Healthcare
@@ -32,6 +39,7 @@ tags:
 - Poland
 - Practice Management
 - Telehealth
+
 tags_raw:
 - Company
 - Healthcare
@@ -45,210 +53,26 @@ tags_raw:
 - Poland
 - Practice Management
 - Telemedicine
-apis:
-- aid: znanylekarz:znanylekarz-addresses-api
-  name: ZnanyLekarz Addresses API
-  description: >-
-    More information on how we define what a Addresses is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#addresses).
-  humanURL: https://integrations.docplanner.com/docs/
-  baseURL: https://www.znanylekarz.pl/api/v3/integration
-  tags:
-  - Addresses
-  properties:
-  - type: OpenAPI
-    url: openapi/znanylekarz-addresses-api-openapi.yml
-  - type: Postman
-    url: postman/znanylekarz-integrations-api.postman_collection.json
-  - type: Webhooks
-    url: asyncapi/znanylekarz-notifications.yml
-  - type: X-MCPServerCandidate
-    url: mcp/znanylekarz-mcp.yml
-- aid: znanylekarz:znanylekarz-api-notification-callbacks-api
-  name: ZnanyLekarz API Notification Callbacks API
-  description: >-
-    More information on how we define what a API Notification Callbacks is, its use cases and more can
-    be found [here](https://integrations.docplanner.com/guide/callbacks/push-vs-pull.html).
-  humanURL: https://integrations.docplanner.com/docs/
-  baseURL: https://www.znanylekarz.pl/api/v3/integration
-  tags:
-  - API Notification Callbacks
-  properties:
-  - type: OpenAPI
-    url: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml
-  - type: Postman
-    url: postman/znanylekarz-integrations-api.postman_collection.json
-  - type: Webhooks
-    url: asyncapi/znanylekarz-notifications.yml
-  - type: X-MCPServerCandidate
-    url: mcp/znanylekarz-mcp.yml
-- aid: znanylekarz:znanylekarz-bookings-api
-  name: ZnanyLekarz Bookings API
-  description: >-
-    More information on how we define what a Bookings is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#bookings).
 
-    ## addBooking
-
-    In order to add a new booking use **POST** <a href="#operation/bookSlot">`bookSlot`</a> endpoint from
-    <a href="#tag/Slots">`Slots`</a> section.
-  humanURL: https://integrations.docplanner.com/docs/
-  baseURL: https://www.znanylekarz.pl/api/v3/integration
-  tags:
-  - Booking
-  tags_raw:
-  - Bookings
-  properties:
-  - type: OpenAPI
-    url: openapi/znanylekarz-bookings-api-openapi.yml
-  - type: Postman
-    url: postman/znanylekarz-integrations-api.postman_collection.json
-  - type: Webhooks
-    url: asyncapi/znanylekarz-notifications.yml
-  - type: X-MCPServerCandidate
-    url: mcp/znanylekarz-mcp.yml
-- aid: znanylekarz:znanylekarz-calendar-breaks-api
-  name: ZnanyLekarz Calendar Breaks API
-  description: >-
-    More information on how we define what a Calendar Breaks is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#calendar-breaks).
-  humanURL: https://integrations.docplanner.com/docs/
-  baseURL: https://www.znanylekarz.pl/api/v3/integration
-  tags:
-  - Calendar Breaks
-  properties:
-  - type: OpenAPI
-    url: openapi/znanylekarz-calendar-breaks-api-openapi.yml
-  - type: Postman
-    url: postman/znanylekarz-integrations-api.postman_collection.json
-  - type: Webhooks
-    url: asyncapi/znanylekarz-notifications.yml
-  - type: X-MCPServerCandidate
-    url: mcp/znanylekarz-mcp.yml
-- aid: znanylekarz:znanylekarz-calendars-api
-  name: ZnanyLekarz Calendars API
-  description: Simple operations on the calendar belonging to the address
-  humanURL: https://integrations.docplanner.com/docs/
-  baseURL: https://www.znanylekarz.pl/api/v3/integration
-  tags:
-  - Calendar
-  tags_raw:
-  - Calendars
-  properties:
-  - type: OpenAPI
-    url: openapi/znanylekarz-calendars-api-openapi.yml
-  - type: Postman
-    url: postman/znanylekarz-integrations-api.postman_collection.json
-  - type: Webhooks
-    url: asyncapi/znanylekarz-notifications.yml
-  - type: X-MCPServerCandidate
-    url: mcp/znanylekarz-mcp.yml
-- aid: znanylekarz:znanylekarz-doctors-api
-  name: ZnanyLekarz Doctors API
-  description: >-
-    More information on how we define what a Doctors is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#doctors).
-  humanURL: https://integrations.docplanner.com/docs/
-  baseURL: https://www.znanylekarz.pl/api/v3/integration
-  tags:
-  - Doctors
-  properties:
-  - type: OpenAPI
-    url: openapi/znanylekarz-doctors-api-openapi.yml
-  - type: Postman
-    url: postman/znanylekarz-integrations-api.postman_collection.json
-  - type: Webhooks
-    url: asyncapi/znanylekarz-notifications.yml
-  - type: X-MCPServerCandidate
-    url: mcp/znanylekarz-mcp.yml
-- aid: znanylekarz:znanylekarz-facilities-api
-  name: ZnanyLekarz Facilities API
-  description: >-
-    More information on how we define what a Facility is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#facilities).
-  humanURL: https://integrations.docplanner.com/docs/
-  baseURL: https://www.znanylekarz.pl/api/v3/integration
-  tags:
-  - Facilities
-  properties:
-  - type: OpenAPI
-    url: openapi/znanylekarz-facilities-api-openapi.yml
-  - type: Postman
-    url: postman/znanylekarz-integrations-api.postman_collection.json
-  - type: Webhooks
-    url: asyncapi/znanylekarz-notifications.yml
-  - type: X-MCPServerCandidate
-    url: mcp/znanylekarz-mcp.yml
-- aid: znanylekarz:znanylekarz-insurances-api
-  name: ZnanyLekarz Insurances API
-  description: >-
-    More information on how we define what a Insurances is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#insurances).
-  humanURL: https://integrations.docplanner.com/docs/
-  baseURL: https://www.znanylekarz.pl/api/v3/integration
-  tags:
-  - Insurances
-  properties:
-  - type: OpenAPI
-    url: openapi/znanylekarz-insurances-api-openapi.yml
-  - type: Postman
-    url: postman/znanylekarz-integrations-api.postman_collection.json
-  - type: Webhooks
-    url: asyncapi/znanylekarz-notifications.yml
-  - type: X-MCPServerCandidate
-    url: mcp/znanylekarz-mcp.yml
-- aid: znanylekarz:znanylekarz-patient-presence-api
-  name: ZnanyLekarz Patient Presence API
-  description: >-
-    More information on how we define what a Patient Presence is, its use cases and more can be found
-    [here](https://integrations.docplanner.com/guide/api-objects/patient-presence.html).
-  humanURL: https://integrations.docplanner.com/docs/
-  baseURL: https://www.znanylekarz.pl/api/v3/integration
-  tags:
-  - Patient Presence
-  properties:
-  - type: OpenAPI
-    url: openapi/znanylekarz-patient-presence-api-openapi.yml
-  - type: Postman
-    url: postman/znanylekarz-integrations-api.postman_collection.json
-  - type: Webhooks
-    url: asyncapi/znanylekarz-notifications.yml
-  - type: X-MCPServerCandidate
-    url: mcp/znanylekarz-mcp.yml
-- aid: znanylekarz:znanylekarz-services-api
-  name: ZnanyLekarz Services API
-  description: >-
-    More information on how we define what a Services is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#services).
-  humanURL: https://integrations.docplanner.com/docs/
-  baseURL: https://www.znanylekarz.pl/api/v3/integration
-  tags:
-  - Services
-  properties:
-  - type: OpenAPI
-    url: openapi/znanylekarz-services-api-openapi.yml
-  - type: Postman
-    url: postman/znanylekarz-integrations-api.postman_collection.json
-  - type: Webhooks
-    url: asyncapi/znanylekarz-notifications.yml
-  - type: X-MCPServerCandidate
-    url: mcp/znanylekarz-mcp.yml
-- aid: znanylekarz:znanylekarz-slots-api
-  name: ZnanyLekarz Slots API
-  description: >-
-    More information on how we define what a Slots is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#slots).
-  humanURL: https://integrations.docplanner.com/docs/
-  baseURL: https://www.znanylekarz.pl/api/v3/integration
-  tags:
-  - Slots
-  properties:
-  - type: OpenAPI
-    url: openapi/znanylekarz-slots-api-openapi.yml
-  - type: Postman
-    url: postman/znanylekarz-integrations-api.postman_collection.json
-  - type: Webhooks
-    url: asyncapi/znanylekarz-notifications.yml
-  - type: X-MCPServerCandidate
-    url: mcp/znanylekarz-mcp.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
 common:
+- type: AgenticAccess
+  url: agentic-access/znanylekarz-agentic-access.yml
+- type: Spectral
+  url: rules/znanylekarz-rules.yml
+- type: JSONLD
+  url: json-ld/znanylekarz-context.jsonld
+- type: Vocabulary
+  url: vocabulary/znanylekarz-vocabulary.yml
+- type: Hosts
+  url: hosts/znanylekarz-hosts.yml
+- type: Vendors
+  url: vendors/znanylekarz-vendors.yml
 - type: Overlay
   url: overlays/znanylekarz-integrations-api-overlay.yaml
 - type: Website
@@ -319,18 +143,263 @@ common:
   url: rate-limits/znanylekarz-rate-limits.yml
 - type: AgentSkill
   url: skills/_index.yml
-- type: LLMsTxt
-  url: llms/znanylekarz-llms.txt
+
+apis:
+- aid: znanylekarz:znanylekarz-addresses-api
+  name: ZnanyLekarz Addresses API
+  description: More information on how we define what a Addresses is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#addresses).
+  humanURL: https://integrations.docplanner.com/docs/
+  baseURL: https://www.znanylekarz.pl/api/v3/integration
+  tags:
+  - Addresses
+  properties:
+  - type: OpenAPI
+    url: openapi/znanylekarz-addresses-api-openapi.yml
+  - type: Postman
+    url: postman/znanylekarz-integrations-api.postman_collection.json
+  - type: Webhooks
+    url: asyncapi/znanylekarz-notifications.yml
+  - type: X-MCPServerCandidate
+    url: mcp/znanylekarz-mcp.yml
+  - type: JSONSchema
+    url: json-schema/znanylekarz-address-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-update-address-request-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-addresses-schema.json
+- aid: znanylekarz:znanylekarz-api-notification-callbacks-api
+  name: ZnanyLekarz API Notification Callbacks API
+  description: More information on how we define what a API Notification Callbacks is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/callbacks/push-vs-pull.html).
+  humanURL: https://integrations.docplanner.com/docs/
+  baseURL: https://www.znanylekarz.pl/api/v3/integration
+  tags:
+  - API Notification Callbacks
+  properties:
+  - type: OpenAPI
+    url: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml
+  - type: Postman
+    url: postman/znanylekarz-integrations-api.postman_collection.json
+  - type: Webhooks
+    url: asyncapi/znanylekarz-notifications.yml
+  - type: X-MCPServerCandidate
+    url: mcp/znanylekarz-mcp.yml
+  - type: JSONSchema
+    url: json-schema/znanylekarz-notification-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-pull-multiple-notifications-response-schema.json
+- aid: znanylekarz:znanylekarz-bookings-api
+  name: ZnanyLekarz Bookings API
+  description: 'More information on how we define what a Bookings is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#bookings).
+
+    ## addBooking
+
+    In order to add a new booking use **POST** <a href="#operation/bookSlot">`bookSlot`</a> endpoint from <a href="#tag/Slots">`Slots`</a> section.'
+  humanURL: https://integrations.docplanner.com/docs/
+  baseURL: https://www.znanylekarz.pl/api/v3/integration
+  tags:
+  - Booking
+  tags_raw:
+  - Bookings
+  properties:
+  - type: OpenAPI
+    url: openapi/znanylekarz-bookings-api-openapi.yml
+  - type: Postman
+    url: postman/znanylekarz-integrations-api.postman_collection.json
+  - type: Webhooks
+    url: asyncapi/znanylekarz-notifications.yml
+  - type: X-MCPServerCandidate
+    url: mcp/znanylekarz-mcp.yml
+  - type: JSONSchema
+    url: json-schema/znanylekarz-booking-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-bookings-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-move-booking-request-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-confirm-booking-request-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-cancel-booking-request-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-opinion-request-schema.json
+- aid: znanylekarz:znanylekarz-calendar-breaks-api
+  name: ZnanyLekarz Calendar Breaks API
+  description: More information on how we define what a Calendar Breaks is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#calendar-breaks).
+  humanURL: https://integrations.docplanner.com/docs/
+  baseURL: https://www.znanylekarz.pl/api/v3/integration
+  tags:
+  - Calendar Breaks
+  properties:
+  - type: OpenAPI
+    url: openapi/znanylekarz-calendar-breaks-api-openapi.yml
+  - type: Postman
+    url: postman/znanylekarz-integrations-api.postman_collection.json
+  - type: Webhooks
+    url: asyncapi/znanylekarz-notifications.yml
+  - type: X-MCPServerCandidate
+    url: mcp/znanylekarz-mcp.yml
+  - type: JSONSchema
+    url: json-schema/znanylekarz-add-calendar-break-request-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-calendar-break-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-move-calendar-break-request-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-calendar-breaks-schema.json
+- aid: znanylekarz:znanylekarz-calendars-api
+  name: ZnanyLekarz Calendars API
+  description: Simple operations on the calendar belonging to the address
+  humanURL: https://integrations.docplanner.com/docs/
+  baseURL: https://www.znanylekarz.pl/api/v3/integration
+  tags:
+  - Calendar
+  tags_raw:
+  - Calendars
+  properties:
+  - type: OpenAPI
+    url: openapi/znanylekarz-calendars-api-openapi.yml
+  - type: Postman
+    url: postman/znanylekarz-integrations-api.postman_collection.json
+  - type: Webhooks
+    url: asyncapi/znanylekarz-notifications.yml
+  - type: X-MCPServerCandidate
+    url: mcp/znanylekarz-mcp.yml
+  - type: JSONSchema
+    url: json-schema/znanylekarz-calendar-schema.json
+- aid: znanylekarz:znanylekarz-doctors-api
+  name: ZnanyLekarz Doctors API
+  description: More information on how we define what a Doctors is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#doctors).
+  humanURL: https://integrations.docplanner.com/docs/
+  baseURL: https://www.znanylekarz.pl/api/v3/integration
+  tags:
+  - Doctors
+  properties:
+  - type: OpenAPI
+    url: openapi/znanylekarz-doctors-api-openapi.yml
+  - type: Postman
+    url: postman/znanylekarz-integrations-api.postman_collection.json
+  - type: Webhooks
+    url: asyncapi/znanylekarz-notifications.yml
+  - type: X-MCPServerCandidate
+    url: mcp/znanylekarz-mcp.yml
+  - type: JSONSchema
+    url: json-schema/znanylekarz-doctor-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-doctors-schema.json
+- aid: znanylekarz:znanylekarz-facilities-api
+  name: ZnanyLekarz Facilities API
+  description: More information on how we define what a Facility is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#facilities).
+  humanURL: https://integrations.docplanner.com/docs/
+  baseURL: https://www.znanylekarz.pl/api/v3/integration
+  tags:
+  - Facilities
+  properties:
+  - type: OpenAPI
+    url: openapi/znanylekarz-facilities-api-openapi.yml
+  - type: Postman
+    url: postman/znanylekarz-integrations-api.postman_collection.json
+  - type: Webhooks
+    url: asyncapi/znanylekarz-notifications.yml
+  - type: X-MCPServerCandidate
+    url: mcp/znanylekarz-mcp.yml
+  - type: JSONSchema
+    url: json-schema/znanylekarz-facility-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-facilities-schema.json
+- aid: znanylekarz:znanylekarz-insurances-api
+  name: ZnanyLekarz Insurances API
+  description: More information on how we define what a Insurances is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#insurances).
+  humanURL: https://integrations.docplanner.com/docs/
+  baseURL: https://www.znanylekarz.pl/api/v3/integration
+  tags:
+  - Insurances
+  properties:
+  - type: OpenAPI
+    url: openapi/znanylekarz-insurances-api-openapi.yml
+  - type: Postman
+    url: postman/znanylekarz-integrations-api.postman_collection.json
+  - type: Webhooks
+    url: asyncapi/znanylekarz-notifications.yml
+  - type: X-MCPServerCandidate
+    url: mcp/znanylekarz-mcp.yml
+  - type: JSONSchema
+    url: json-schema/znanylekarz-add-address-insurance-provider-request-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-update-or-create-address-insurance-provider-request-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-address-insurance-providers-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-insurance-providers-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-insurance-plans-schema.json
+- aid: znanylekarz:znanylekarz-patient-presence-api
+  name: ZnanyLekarz Patient Presence API
+  description: More information on how we define what a Patient Presence is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/patient-presence.html).
+  humanURL: https://integrations.docplanner.com/docs/
+  baseURL: https://www.znanylekarz.pl/api/v3/integration
+  tags:
+  - Patient Presence
+  properties:
+  - type: OpenAPI
+    url: openapi/znanylekarz-patient-presence-api-openapi.yml
+  - type: Postman
+    url: postman/znanylekarz-integrations-api.postman_collection.json
+  - type: Webhooks
+    url: asyncapi/znanylekarz-notifications.yml
+  - type: X-MCPServerCandidate
+    url: mcp/znanylekarz-mcp.yml
+- aid: znanylekarz:znanylekarz-services-api
+  name: ZnanyLekarz Services API
+  description: More information on how we define what a Services is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#services).
+  humanURL: https://integrations.docplanner.com/docs/
+  baseURL: https://www.znanylekarz.pl/api/v3/integration
+  tags:
+  - Services
+  properties:
+  - type: OpenAPI
+    url: openapi/znanylekarz-services-api-openapi.yml
+  - type: Postman
+    url: postman/znanylekarz-integrations-api.postman_collection.json
+  - type: Webhooks
+    url: asyncapi/znanylekarz-notifications.yml
+  - type: X-MCPServerCandidate
+    url: mcp/znanylekarz-mcp.yml
+  - type: JSONSchema
+    url: json-schema/znanylekarz-add-address-service-request-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-update-address-service-request-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-address-service-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-address-services-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-services-schema.json
+- aid: znanylekarz:znanylekarz-slots-api
+  name: ZnanyLekarz Slots API
+  description: More information on how we define what a Slots is, its use cases and more can be found [here](https://integrations.docplanner.com/guide/api-objects/resources.html#slots).
+  humanURL: https://integrations.docplanner.com/docs/
+  baseURL: https://www.znanylekarz.pl/api/v3/integration
+  tags:
+  - Slots
+  properties:
+  - type: OpenAPI
+    url: openapi/znanylekarz-slots-api-openapi.yml
+  - type: Postman
+    url: postman/znanylekarz-integrations-api.postman_collection.json
+  - type: Webhooks
+    url: asyncapi/znanylekarz-notifications.yml
+  - type: X-MCPServerCandidate
+    url: mcp/znanylekarz-mcp.yml
+  - type: JSONSchema
+    url: json-schema/znanylekarz-booking-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-replace-slots-request-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-book-slot-request-schema.json
+  - type: JSONSchema
+    url: json-schema/znanylekarz-slots-schema.json
+
 x-enrichment:
-  date: '2026-09-05'
+  date: '2026-10-12'
   status: enriched
-  artifacts_added: 28
-  pass: local-v3
-  note: >-
-    Contract discovery hit on the second pass: the Docplanner Integrations API OpenAPI 3.0.3
-    (v1.14.0, 32 paths, 44 operations, 82 schemas, 166 examples, 17 typed callbacks) is not served
-    as a file anywhere — it is embedded in the __redoc_state of the Redoc docs page at
-    integrations.docplanner.com/docs/, and every conventional spec path on that host 404s.
-    Ownership confirmed from the spec itself, not from the fetch URL: its Fundamentals section maps
-    Poland -> znanylekarz.pl, and https://www.znanylekarz.pl/api/v3/integration/facilities returns
-    401 live. No MCP server, no agent card, no llms.txt, no AsyncAPI.
+  artifacts_added: 2
+  pass: local-v5

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/znanylekarz/main/json-schema/znanylekarz-add-calendar-break-request-schema.json",
+  "title": "AddCalendarBreakRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/znanylekarz-calendar-breaks-api-openapi.yml#/components/schemas/AddCalendarBreakRequest",
+  "type": "object",
+  "properties": {
+    "since": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "till": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "description": {
+      "type": "string"
+    },
+    "apply_on_coupled_addresses": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, the same break is also created on the coupled addresses of this doctor in this facility - the online-only ones for an offline address and the other way round. Those breaks are moved and removed together with this one. The response describes only the break created on the requested address.\n"
+    }
+  },
+  "required": [
+    "since",
+    "till"
+  ]
+}

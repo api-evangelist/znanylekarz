@@ -1,0 +1,434 @@
+{
+  "@context": {
+    "@vocab": "https://znanylekarz.pl/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "znanylekarz": "https://znanylekarz.pl/schema#",
+    "Addresses": "znanylekarz:Addresses",
+    "_items": {
+      "@id": "znanylekarz:_items",
+      "@container": "@list"
+    },
+    "AddressesScopes": "znanylekarz:AddressesScopes",
+    "Error": "znanylekarz:Error",
+    "errors": {
+      "@id": "znanylekarz:errors",
+      "@container": "@list"
+    },
+    "message": {
+      "@id": "znanylekarz:message",
+      "@type": "xsd:string"
+    },
+    "Address": "znanylekarz:Address",
+    "id": {
+      "@id": "znanylekarz:id",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "znanylekarz:name",
+      "@type": "xsd:string"
+    },
+    "city_name": {
+      "@id": "znanylekarz:city_name",
+      "@type": "xsd:string"
+    },
+    "post_code": {
+      "@id": "znanylekarz:post_code",
+      "@type": "xsd:string"
+    },
+    "street": {
+      "@id": "znanylekarz:street",
+      "@type": "xsd:string"
+    },
+    "is_online_only": {
+      "@id": "znanylekarz:is_online_only",
+      "@type": "xsd:boolean"
+    },
+    "visit_payment": {
+      "@id": "znanylekarz:visit_payment",
+      "@type": "xsd:boolean"
+    },
+    "booking_extra_fields": {
+      "@id": "znanylekarz:booking_extra_fields"
+    },
+    "commercial_type": {
+      "@id": "znanylekarz:commercial_type",
+      "@type": "xsd:string"
+    },
+    "insurance_support": {
+      "@id": "znanylekarz:insurance_support",
+      "@type": "xsd:string"
+    },
+    "UpdateAddressRequest": "znanylekarz:UpdateAddressRequest",
+    "BookingConfirmedNotification": "znanylekarz:BookingConfirmedNotification",
+    "data": {
+      "@id": "znanylekarz:data"
+    },
+    "created_at": {
+      "@id": "znanylekarz:created_at",
+      "@type": "xsd:dateTime"
+    },
+    "SlotBookingNotification": "znanylekarz:SlotBookingNotification",
+    "AddressCommercialTypeChangedNotification": "znanylekarz:AddressCommercialTypeChangedNotification",
+    "BookingNotification": "znanylekarz:BookingNotification",
+    "status": {
+      "@id": "znanylekarz:status",
+      "@type": "xsd:string"
+    },
+    "start_at": {
+      "@id": "znanylekarz:start_at",
+      "@type": "xsd:dateTime"
+    },
+    "end_at": {
+      "@id": "znanylekarz:end_at",
+      "@type": "xsd:dateTime"
+    },
+    "duration": {
+      "@id": "znanylekarz:duration",
+      "@type": "xsd:integer"
+    },
+    "booked_by": {
+      "@id": "znanylekarz:booked_by",
+      "@type": "xsd:string"
+    },
+    "canceled_by": {
+      "@id": "znanylekarz:canceled_by",
+      "@type": "xsd:string"
+    },
+    "booked_at": {
+      "@id": "znanylekarz:booked_at",
+      "@type": "xsd:dateTime"
+    },
+    "canceled_at": {
+      "@id": "znanylekarz:canceled_at",
+      "@type": "xsd:dateTime"
+    },
+    "address_service": {
+      "@id": "znanylekarz:address_service"
+    },
+    "patient": {
+      "@id": "znanylekarz:patient",
+      "@type": "@id"
+    },
+    "signature": {
+      "@id": "znanylekarz:signature",
+      "@type": "xsd:string"
+    },
+    "comment": {
+      "@id": "znanylekarz:comment",
+      "@type": "xsd:string"
+    },
+    "insurance": {
+      "@id": "znanylekarz:insurance"
+    },
+    "videocall_url": {
+      "@id": "znanylekarz:videocall_url",
+      "@type": "xsd:string"
+    },
+    "Patient": "znanylekarz:Patient",
+    "surname": {
+      "@id": "znanylekarz:surname",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "znanylekarz:email",
+      "@type": "xsd:string"
+    },
+    "phone": {
+      "@id": "znanylekarz:phone",
+      "@type": "xsd:string"
+    },
+    "birth_date": {
+      "@id": "znanylekarz:birth_date",
+      "@type": "xsd:date"
+    },
+    "nin": {
+      "@id": "znanylekarz:nin",
+      "@type": "xsd:string"
+    },
+    "gender": {
+      "@id": "znanylekarz:gender",
+      "@type": "xsd:string"
+    },
+    "marketing_consent": {
+      "@id": "znanylekarz:marketing_consent",
+      "@type": "xsd:boolean"
+    },
+    "data_privacy_consent": {
+      "@id": "znanylekarz:data_privacy_consent",
+      "@type": "xsd:boolean"
+    },
+    "BreakNotification": "znanylekarz:BreakNotification",
+    "since": {
+      "@id": "znanylekarz:since",
+      "@type": "xsd:dateTime"
+    },
+    "till": {
+      "@id": "znanylekarz:till",
+      "@type": "xsd:dateTime"
+    },
+    "LicenseNumber": "znanylekarz:LicenseNumber",
+    "license_number": {
+      "@id": "znanylekarz:license_number",
+      "@type": "xsd:string"
+    },
+    "BreakRemovedNotification": "znanylekarz:BreakRemovedNotification",
+    "Doctor": "znanylekarz:Doctor",
+    "addresses": {
+      "@id": "znanylekarz:addresses",
+      "@type": "@id"
+    },
+    "specialization": {
+      "@id": "znanylekarz:specialization",
+      "@type": "@id"
+    },
+    "license_numbers": {
+      "@id": "znanylekarz:license_numbers",
+      "@type": "@id"
+    },
+    "Notification": "znanylekarz:Notification",
+    "LicenseNumbers": "znanylekarz:LicenseNumbers",
+    "PullMultipleNotificationsResponse": "znanylekarz:PullMultipleNotificationsResponse",
+    "notifications": {
+      "@id": "znanylekarz:notifications",
+      "@container": "@list"
+    },
+    "remaining": {
+      "@id": "znanylekarz:remaining",
+      "@type": "xsd:integer"
+    },
+    "AddressUnassignedNotification": "znanylekarz:AddressUnassignedNotification",
+    "PresenceMarkedNotification": "znanylekarz:PresenceMarkedNotification",
+    "AddressServiceNotification": "znanylekarz:AddressServiceNotification",
+    "price": {
+      "@id": "znanylekarz:price",
+      "@type": "xsd:integer"
+    },
+    "is_price_from": {
+      "@id": "znanylekarz:is_price_from",
+      "@type": "xsd:boolean"
+    },
+    "is_visible": {
+      "@id": "znanylekarz:is_visible",
+      "@type": "xsd:boolean"
+    },
+    "BookingCanceledNotification": "znanylekarz:BookingCanceledNotification",
+    "AddressServiceChangedNotification": "znanylekarz:AddressServiceChangedNotification",
+    "VisitBookingRequestNotification": "znanylekarz:VisitBookingRequestNotification",
+    "booking_at": {
+      "@id": "znanylekarz:booking_at",
+      "@type": "xsd:dateTime"
+    },
+    "booking_by": {
+      "@id": "znanylekarz:booking_by",
+      "@type": "xsd:string"
+    },
+    "AddressAssignedNotification": "znanylekarz:AddressAssignedNotification",
+    "BreakCreatedNotification": "znanylekarz:BreakCreatedNotification",
+    "BookingPaymentStatusChangedNotification": "znanylekarz:BookingPaymentStatusChangedNotification",
+    "AddressServiceCreatedNotification": "znanylekarz:AddressServiceCreatedNotification",
+    "AddressService": "znanylekarz:AddressService",
+    "is_default": {
+      "@id": "znanylekarz:is_default",
+      "@type": "xsd:boolean"
+    },
+    "service_id": {
+      "@id": "znanylekarz:service_id",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "znanylekarz:description",
+      "@type": "xsd:string"
+    },
+    "allowed_patients": {
+      "@id": "znanylekarz:allowed_patients"
+    },
+    "custom_name": {
+      "@id": "znanylekarz:custom_name",
+      "@type": "xsd:string"
+    },
+    "Doctors": "znanylekarz:Doctors",
+    "BookingMovingNotification": "znanylekarz:BookingMovingNotification",
+    "Specialization": "znanylekarz:Specialization",
+    "AddressServiceDeletedNotification": "znanylekarz:AddressServiceDeletedNotification",
+    "Specializations": "znanylekarz:Specializations",
+    "InsuranceNotification": "znanylekarz:InsuranceNotification",
+    "plan": {
+      "@id": "znanylekarz:plan",
+      "@type": "xsd:string"
+    },
+    "plan_id": {
+      "@id": "znanylekarz:plan_id",
+      "@type": "xsd:string"
+    },
+    "AllowedPatientsData": "znanylekarz:AllowedPatientsData",
+    "minimum_age": {
+      "@id": "znanylekarz:minimum_age",
+      "@type": "xsd:integer"
+    },
+    "maximum_age": {
+      "@id": "znanylekarz:maximum_age",
+      "@type": "xsd:integer"
+    },
+    "Facility": "znanylekarz:Facility",
+    "doctors": {
+      "@id": "znanylekarz:doctors",
+      "@type": "@id"
+    },
+    "BookingMovedNotification": "znanylekarz:BookingMovedNotification",
+    "BreakMovedNotification": "znanylekarz:BreakMovedNotification",
+    "SlotBookedNotification": "znanylekarz:SlotBookedNotification",
+    "Booking": "znanylekarz:Booking",
+    "moving": {
+      "@id": "znanylekarz:moving"
+    },
+    "presence": {
+      "@id": "znanylekarz:presence",
+      "@type": "xsd:string"
+    },
+    "visit_payment_status": {
+      "@id": "znanylekarz:visit_payment_status",
+      "@type": "xsd:string"
+    },
+    "BookingScopes": "znanylekarz:BookingScopes",
+    "ConfirmBookingRequest": "znanylekarz:ConfirmBookingRequest",
+    "confirmed_by": {
+      "@id": "znanylekarz:confirmed_by",
+      "@type": "xsd:string"
+    },
+    "Bookings": "znanylekarz:Bookings",
+    "page": {
+      "@id": "znanylekarz:page",
+      "@type": "xsd:integer"
+    },
+    "limit": {
+      "@id": "znanylekarz:limit",
+      "@type": "xsd:integer"
+    },
+    "pages": {
+      "@id": "znanylekarz:pages",
+      "@type": "xsd:integer"
+    },
+    "total": {
+      "@id": "znanylekarz:total",
+      "@type": "xsd:integer"
+    },
+    "Insurance": "znanylekarz:Insurance",
+    "CancelBookingRequest": "znanylekarz:CancelBookingRequest",
+    "reason": {
+      "@id": "znanylekarz:reason",
+      "@type": "xsd:string"
+    },
+    "BookingsScopes": "znanylekarz:BookingsScopes",
+    "OpinionRequest": "znanylekarz:OpinionRequest",
+    "MoveBookingScopes": "znanylekarz:MoveBookingScopes",
+    "MoveBookingRequest": "znanylekarz:MoveBookingRequest",
+    "address_service_id": {
+      "@id": "znanylekarz:address_service_id",
+      "@type": "xsd:string"
+    },
+    "start": {
+      "@id": "znanylekarz:start",
+      "@type": "xsd:dateTime"
+    },
+    "address_id": {
+      "@id": "znanylekarz:address_id",
+      "@type": "xsd:string"
+    },
+    "BookingMoving": "znanylekarz:BookingMoving",
+    "origin_booking_id": {
+      "@id": "znanylekarz:origin_booking_id",
+      "@type": "xsd:string"
+    },
+    "newest_booking_id": {
+      "@id": "znanylekarz:newest_booking_id",
+      "@type": "xsd:string"
+    },
+    "BookingPatient": "znanylekarz:BookingPatient",
+    "is_returning": {
+      "@id": "znanylekarz:is_returning",
+      "@type": "xsd:boolean"
+    },
+    "insurance_number": {
+      "@id": "znanylekarz:insurance_number",
+      "@type": "xsd:string"
+    },
+    "CalendarBreak": "znanylekarz:CalendarBreak",
+    "CalendarBreaks": "znanylekarz:CalendarBreaks",
+    "AddCalendarBreakRequest": "znanylekarz:AddCalendarBreakRequest",
+    "apply_on_coupled_addresses": {
+      "@id": "znanylekarz:apply_on_coupled_addresses",
+      "@type": "xsd:boolean"
+    },
+    "MoveCalendarBreakRequest": "znanylekarz:MoveCalendarBreakRequest",
+    "Calendar": "znanylekarz:Calendar",
+    "DoctorsScopes": "znanylekarz:DoctorsScopes",
+    "DoctorScopes": "znanylekarz:DoctorScopes",
+    "Facilities": "znanylekarz:Facilities",
+    "FacilityScopes": "znanylekarz:FacilityScopes",
+    "UpdateOrCreateAddressInsuranceProviderRequest": "znanylekarz:UpdateOrCreateAddressInsuranceProviderRequest",
+    "insurance_provider_id": {
+      "@id": "znanylekarz:insurance_provider_id",
+      "@type": "xsd:string"
+    },
+    "insurance_plans": {
+      "@id": "znanylekarz:insurance_plans",
+      "@container": "@list"
+    },
+    "InsuranceProviders": "znanylekarz:InsuranceProviders",
+    "InsuranceProvider": "znanylekarz:InsuranceProvider",
+    "InsurancePlan": "znanylekarz:InsurancePlan",
+    "insurance_plan_id": {
+      "@id": "znanylekarz:insurance_plan_id",
+      "@type": "xsd:string"
+    },
+    "InsurancePlans": "znanylekarz:InsurancePlans",
+    "AddressInsuranceProviders": "znanylekarz:AddressInsuranceProviders",
+    "AddAddressInsuranceProviderRequest": "znanylekarz:AddAddressInsuranceProviderRequest",
+    "AddressInsuranceProvider": "znanylekarz:AddressInsuranceProvider",
+    "ServicesScopes": "znanylekarz:ServicesScopes",
+    "UpdateAddressServiceRequest": "znanylekarz:UpdateAddressServiceRequest",
+    "default_duration": {
+      "@id": "znanylekarz:default_duration",
+      "@type": "xsd:integer"
+    },
+    "AddressServices": "znanylekarz:AddressServices",
+    "Service": "znanylekarz:Service",
+    "AddressServiceScopes": "znanylekarz:AddressServiceScopes",
+    "Services": "znanylekarz:Services",
+    "AddAddressServiceRequest": "znanylekarz:AddAddressServiceRequest",
+    "AddressServicesScopes": "znanylekarz:AddressServicesScopes",
+    "SlotsScopes": "znanylekarz:SlotsScopes",
+    "ReplaceSlotsRequest": "znanylekarz:ReplaceSlotsRequest",
+    "slots": {
+      "@id": "znanylekarz:slots",
+      "@container": "@list"
+    },
+    "Slots": "znanylekarz:Slots",
+    "Slot": "znanylekarz:Slot",
+    "address_services": {
+      "@id": "znanylekarz:address_services"
+    },
+    "BookSlotRequest": "znanylekarz:BookSlotRequest",
+    "label": {
+      "@id": "znanylekarz:label",
+      "@type": "xsd:string"
+    },
+    "is_recurring": {
+      "@id": "znanylekarz:is_recurring",
+      "@type": "xsd:boolean"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "ZnanyLekarz API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects ZnanyLekarz's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-12) from openapi/znanylekarz-addresses-api-openapi.yml, openapi/znanylekarz-api-notification-callbacks-api-openapi.yml, openapi/znanylekarz-bookings-api-openapi.yml.",
+  "dcterms:created": "2026-10-12",
+  "dcterms:source": [
+    "openapi/znanylekarz-addresses-api-openapi.yml",
+    "openapi/znanylekarz-api-notification-callbacks-api-openapi.yml",
+    "openapi/znanylekarz-bookings-api-openapi.yml",
+    "openapi/znanylekarz-calendar-breaks-api-openapi.yml",
+    "openapi/znanylekarz-calendars-api-openapi.yml"
+  ]
+}

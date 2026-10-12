@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/znanylekarz/main/json-schema/znanylekarz-update-address-service-request-schema.json",
+  "title": "UpdateAddressServiceRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/znanylekarz-services-api-openapi.yml#/components/schemas/UpdateAddressServiceRequest",
+  "type": "object",
+  "properties": {
+    "is_price_from": {
+      "type": "boolean",
+      "description": "If true, the price is the minimum price of the service"
+    },
+    "price": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Service price. Maximum 2 decimal places; additional decimals are truncated. Invalid formats are rejected with 400 Bad Request"
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "default_duration": {
+      "type": "integer"
+    },
+    "is_visible": {
+      "type": "boolean"
+    },
+    "allowed_patients": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/AllowedPatientsData"
+        }
+      ]
+    },
+    "custom_name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "description": "A custom display name for the service. Cannot be an empty string. Send null to clear the custom name."
+    }
+  },
+  "$defs": {
+    "AllowedPatientsData": {
+      "type": "object",
+      "properties": {
+        "minimum_age": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Minimum age of patients allowed for this service"
+        },
+        "maximum_age": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Maximum age of patients allowed for this service"
+        }
+      }
+    }
+  }
+}

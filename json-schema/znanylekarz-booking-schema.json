@@ -1,0 +1,281 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/znanylekarz/main/json-schema/znanylekarz-booking-schema.json",
+  "title": "Booking",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/znanylekarz-bookings-api-openapi.yml#/components/schemas/Booking",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "start_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "end_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "duration": {
+      "type": "integer"
+    },
+    "booked_by": {
+      "type": "string",
+      "enum": [
+        "user",
+        "doctor",
+        "integration"
+      ]
+    },
+    "canceled_by": {
+      "type": "string",
+      "enum": [
+        "",
+        "user",
+        "doctor",
+        "integration"
+      ]
+    },
+    "booked_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "canceled_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "moving": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/BookingMoving"
+        }
+      ]
+    },
+    "patient": {
+      "$ref": "#/$defs/BookingPatient"
+    },
+    "address_service": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/AddressService"
+        }
+      ]
+    },
+    "comment": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "presence": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "present",
+        "absent"
+      ]
+    },
+    "insurance": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/Insurance"
+        }
+      ]
+    },
+    "visit_payment": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "visit_payment_status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "videocall_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "$defs": {
+    "AddressService": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Integer part of the price (decimals truncated)"
+        },
+        "is_price_from": {
+          "type": "boolean",
+          "description": "If true, the price is the minimum price of the service"
+        },
+        "is_default": {
+          "type": "boolean"
+        },
+        "service_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "duration": {
+          "type": "integer"
+        },
+        "is_visible": {
+          "type": "boolean"
+        },
+        "allowed_patients": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/AllowedPatientsData"
+            }
+          ]
+        },
+        "custom_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "AllowedPatientsData": {
+      "type": "object",
+      "properties": {
+        "minimum_age": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Minimum age of patients allowed for this service"
+        },
+        "maximum_age": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Maximum age of patients allowed for this service"
+        }
+      }
+    },
+    "BookingMoving": {
+      "type": "object",
+      "properties": {
+        "origin_booking_id": {
+          "type": "string"
+        },
+        "newest_booking_id": {
+          "type": "string"
+        }
+      }
+    },
+    "BookingPatient": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        },
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "phone": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "birth_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "nin": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "gender": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "m",
+            "f"
+          ]
+        },
+        "is_returning": {
+          "type": "boolean"
+        },
+        "insurance_number": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "Insurance": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "plan": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "plan_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

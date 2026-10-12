@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/znanylekarz/main/json-schema/znanylekarz-address-schema.json",
+  "title": "Address",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/znanylekarz-addresses-api-openapi.yml#/components/schemas/Address",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "city_name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "post_code": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "street": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "is_online_only": {
+      "type": "boolean"
+    },
+    "visit_payment": {
+      "type": "boolean"
+    },
+    "booking_extra_fields": {
+      "type": "object",
+      "properties": {
+        "gender": {
+          "type": "boolean"
+        },
+        "nin": {
+          "type": "boolean"
+        },
+        "birth_date": {
+          "type": "boolean"
+        }
+      }
+    },
+    "commercial_type": {
+      "type": "string",
+      "enum": [
+        "premium",
+        "saas-only",
+        "basic"
+      ]
+    },
+    "insurance_support": {
+      "type": "string",
+      "enum": [
+        "private",
+        "insurance",
+        "private_and_insurance"
+      ]
+    }
+  }
+}

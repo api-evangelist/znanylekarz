@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/znanylekarz/main/json-schema/znanylekarz-slots-schema.json",
+  "title": "Slots",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/znanylekarz-slots-api-openapi.yml#/components/schemas/Slots",
+  "type": "object",
+  "properties": {
+    "_items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Slot"
+      }
+    }
+  },
+  "$defs": {
+    "AddressService": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Integer part of the price (decimals truncated)"
+        },
+        "is_price_from": {
+          "type": "boolean",
+          "description": "If true, the price is the minimum price of the service"
+        },
+        "is_default": {
+          "type": "boolean"
+        },
+        "service_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "duration": {
+          "type": "integer"
+        },
+        "is_visible": {
+          "type": "boolean"
+        },
+        "allowed_patients": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/AllowedPatientsData"
+            }
+          ]
+        },
+        "custom_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "AddressServices": {
+      "type": "object",
+      "properties": {
+        "_items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AddressService"
+          }
+        }
+      }
+    },
+    "AllowedPatientsData": {
+      "type": "object",
+      "properties": {
+        "minimum_age": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Minimum age of patients allowed for this service"
+        },
+        "maximum_age": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Maximum age of patients allowed for this service"
+        }
+      }
+    },
+    "Slot": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "address_services": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/AddressServices"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

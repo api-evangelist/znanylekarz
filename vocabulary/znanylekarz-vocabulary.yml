@@ -1,0 +1,423 @@
+generated: '2026-10-12'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/znanylekarz-addresses-api-openapi.yml
+- openapi/znanylekarz-api-notification-callbacks-api-openapi.yml
+- openapi/znanylekarz-bookings-api-openapi.yml
+- openapi/znanylekarz-calendar-breaks-api-openapi.yml
+- openapi/znanylekarz-calendars-api-openapi.yml
+vocabulary:
+  name: ZnanyLekarz Domain Vocabulary
+  description: 'Terms declared by ZnanyLekarz''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-12'
+  terms:
+  - term: Addresses
+    definition: More information on how we define what a Addresses is, its use cases and more can be found here.
+    tags:
+    - Resource Group
+    source: openapi/znanylekarz-addresses-api-openapi.yml
+  - term: API Notification Callbacks
+    definition: More information on how we define what a API Notification Callbacks is, its use cases and more can be found here.
+    tags:
+    - Resource Group
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml
+  - term: Bookings
+    definition: 'More information on how we define what a Bookings is, its use cases and more can be found here. ## addBooking In order to add
+      a new booking use **POST** `bookSlot` endpoint from `Slots` section.'
+    tags:
+    - Resource Group
+    source: openapi/znanylekarz-bookings-api-openapi.yml
+  - term: Calendar Breaks
+    definition: More information on how we define what a Calendar Breaks is, its use cases and more can be found here.
+    tags:
+    - Resource Group
+    source: openapi/znanylekarz-calendar-breaks-api-openapi.yml
+  - term: Calendars
+    definition: Simple operations on the calendar belonging to the address
+    tags:
+    - Resource Group
+    source: openapi/znanylekarz-calendars-api-openapi.yml
+  - term: Doctors
+    definition: More information on how we define what a Doctors is, its use cases and more can be found here.
+    tags:
+    - Resource Group
+    source: openapi/znanylekarz-doctors-api-openapi.yml
+  - term: Facilities
+    definition: More information on how we define what a Facility is, its use cases and more can be found here.
+    tags:
+    - Resource Group
+    source: openapi/znanylekarz-facilities-api-openapi.yml
+  - term: Insurances
+    definition: More information on how we define what a Insurances is, its use cases and more can be found here.
+    tags:
+    - Resource Group
+    source: openapi/znanylekarz-insurances-api-openapi.yml
+  - term: Patient Presence
+    definition: More information on how we define what a Patient Presence is, its use cases and more can be found here.
+    tags:
+    - Resource Group
+    source: openapi/znanylekarz-patient-presence-api-openapi.yml
+  - term: Services
+    definition: More information on how we define what a Services is, its use cases and more can be found here.
+    tags:
+    - Resource Group
+    source: openapi/znanylekarz-services-api-openapi.yml
+  - term: Slots
+    definition: More information on how we define what a Slots is, its use cases and more can be found here.
+    tags:
+    - Resource Group
+    source: openapi/znanylekarz-slots-api-openapi.yml
+  - term: AddressesScopes
+    definition: 'Enumeration declared by the contract with values: address.online_only, address.visit_payment, address.commercial_type, address.insurance_support.'
+    tags:
+    - Enumeration
+    source: openapi/znanylekarz-addresses-api-openapi.yml#/components/schemas/AddressesScopes
+  - term: Error
+    definition: 'Object declared by the contract with fields: errors, message.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-addresses-api-openapi.yml#/components/schemas/Error
+  - term: Address
+    definition: 'Object declared by the contract with fields: id, name, city_name, post_code, street, is_online_only, visit_payment, booking_extra_fields,
+      commercial_type, insurance_support.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-addresses-api-openapi.yml#/components/schemas/Address
+  - term: UpdateAddressRequest
+    definition: 'Object declared by the contract with fields: insurance_support.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-addresses-api-openapi.yml#/components/schemas/UpdateAddressRequest
+  - term: BookingConfirmedNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/BookingConfirmedNotification
+  - term: SlotBookingNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/SlotBookingNotification
+  - term: AddressCommercialTypeChangedNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/AddressCommercialTypeChangedNotification
+  - term: BookingNotification
+    definition: 'Object declared by the contract with fields: id, status, start_at, end_at, duration, booked_by, canceled_by, booked_at, canceled_at,
+      address_service, patient, signature. (4 more)'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/BookingNotification
+  - term: Patient
+    definition: 'Object declared by the contract with fields: name, surname, email, phone, birth_date, nin, gender, marketing_consent, data_privacy_consent.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/Patient
+  - term: BreakNotification
+    definition: 'Object declared by the contract with fields: id, since, till.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/BreakNotification
+  - term: LicenseNumber
+    definition: 'Object declared by the contract with fields: id, license_number.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/LicenseNumber
+  - term: BreakRemovedNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/BreakRemovedNotification
+  - term: Doctor
+    definition: 'Object declared by the contract with fields: id, name, surname, addresses, specialization, license_numbers.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/Doctor
+  - term: Notification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/Notification
+  - term: LicenseNumbers
+    definition: 'Object declared by the contract with fields: _items.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/LicenseNumbers
+  - term: PullMultipleNotificationsResponse
+    definition: 'Object declared by the contract with fields: notifications, remaining.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/PullMultipleNotificationsResponse
+  - term: AddressUnassignedNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/AddressUnassignedNotification
+  - term: PresenceMarkedNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/PresenceMarkedNotification
+  - term: AddressServiceNotification
+    definition: 'Object declared by the contract with fields: id, name, price, is_price_from, is_visible.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/AddressServiceNotification
+  - term: BookingCanceledNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/BookingCanceledNotification
+  - term: AddressServiceChangedNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/AddressServiceChangedNotification
+  - term: VisitBookingRequestNotification
+    definition: 'Object declared by the contract with fields: booking_at, booking_by, duration, start_at, end_at, address_service, patient, signature,
+      comment, visit_payment.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/VisitBookingRequestNotification
+  - term: AddressAssignedNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/AddressAssignedNotification
+  - term: BreakCreatedNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/BreakCreatedNotification
+  - term: BookingPaymentStatusChangedNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/BookingPaymentStatusChangedNotification
+  - term: AddressServiceCreatedNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/AddressServiceCreatedNotification
+  - term: AddressService
+    definition: 'Object declared by the contract with fields: id, name, price, is_price_from, is_default, service_id, description, duration, is_visible,
+      allowed_patients, custom_name.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/AddressService
+  - term: BookingMovingNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/BookingMovingNotification
+  - term: Specialization
+    definition: 'Object declared by the contract with fields: id, name.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/Specialization
+  - term: AddressServiceDeletedNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/AddressServiceDeletedNotification
+  - term: Specializations
+    definition: 'Object declared by the contract with fields: _items.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/Specializations
+  - term: InsuranceNotification
+    definition: 'Object declared by the contract with fields: id, name, plan, plan_id.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/InsuranceNotification
+  - term: AllowedPatientsData
+    definition: 'Object declared by the contract with fields: minimum_age, maximum_age.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/AllowedPatientsData
+  - term: Facility
+    definition: 'Object declared by the contract with fields: id, name, doctors.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/Facility
+  - term: BookingMovedNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/BookingMovedNotification
+  - term: BreakMovedNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/BreakMovedNotification
+  - term: SlotBookedNotification
+    definition: 'Object declared by the contract with fields: name, data, created_at.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/SlotBookedNotification
+  - term: Booking
+    definition: 'Object declared by the contract with fields: id, status, start_at, end_at, duration, booked_by, canceled_by, booked_at, canceled_at,
+      moving, patient, address_service. (6 more)'
+    tags:
+    - Object
+    source: openapi/znanylekarz-bookings-api-openapi.yml#/components/schemas/Booking
+  - term: BookingScopes
+    definition: 'Enumeration declared by the contract with values: booking.moving, address_service.public_insurance_flow.'
+    tags:
+    - Enumeration
+    source: openapi/znanylekarz-bookings-api-openapi.yml#/components/schemas/BookingScopes
+  - term: ConfirmBookingRequest
+    definition: 'Object declared by the contract with fields: confirmed_by.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-bookings-api-openapi.yml#/components/schemas/ConfirmBookingRequest
+  - term: Insurance
+    definition: 'Object declared by the contract with fields: id, name, plan, plan_id.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-bookings-api-openapi.yml#/components/schemas/Insurance
+  - term: CancelBookingRequest
+    definition: 'Object declared by the contract with fields: reason.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-bookings-api-openapi.yml#/components/schemas/CancelBookingRequest
+  - term: BookingsScopes
+    definition: 'Enumeration declared by the contract with values: booking.patient, booking.address_service, booking.presence, address_service.public_insurance_flow.'
+    tags:
+    - Enumeration
+    source: openapi/znanylekarz-bookings-api-openapi.yml#/components/schemas/BookingsScopes
+  - term: OpinionRequest
+    definition: 'Object declared by the contract with fields: phone.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-bookings-api-openapi.yml#/components/schemas/OpinionRequest
+  - term: MoveBookingScopes
+    definition: 'Enumeration declared by the contract with values: address_service.public_insurance_flow.'
+    tags:
+    - Enumeration
+    source: openapi/znanylekarz-bookings-api-openapi.yml#/components/schemas/MoveBookingScopes
+  - term: MoveBookingRequest
+    definition: 'Object declared by the contract with fields: address_service_id, start, duration, address_id.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-bookings-api-openapi.yml#/components/schemas/MoveBookingRequest
+  - term: BookingMoving
+    definition: 'Object declared by the contract with fields: origin_booking_id, newest_booking_id.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-bookings-api-openapi.yml#/components/schemas/BookingMoving
+  - term: BookingPatient
+    definition: 'Object declared by the contract with fields: name, surname, email, phone, birth_date, nin, gender, is_returning, insurance_number.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-bookings-api-openapi.yml#/components/schemas/BookingPatient
+  - term: CalendarBreak
+    definition: 'Object declared by the contract with fields: id, since, till, description.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-calendar-breaks-api-openapi.yml#/components/schemas/CalendarBreak
+  - term: CalendarBreaks
+    definition: 'Object declared by the contract with fields: _items.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-calendar-breaks-api-openapi.yml#/components/schemas/CalendarBreaks
+  - term: AddCalendarBreakRequest
+    definition: 'Object declared by the contract with fields: since, till, description, apply_on_coupled_addresses.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-calendar-breaks-api-openapi.yml#/components/schemas/AddCalendarBreakRequest
+  - term: MoveCalendarBreakRequest
+    definition: 'Object declared by the contract with fields: since, till.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-calendar-breaks-api-openapi.yml#/components/schemas/MoveCalendarBreakRequest
+  - term: Calendar
+    definition: 'Object declared by the contract with fields: status.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-calendars-api-openapi.yml#/components/schemas/Calendar
+  - term: DoctorsScopes
+    definition: 'Enumeration declared by the contract with values: doctor.profile_url, doctor.specializations, doctor.license_numbers.'
+    tags:
+    - Enumeration
+    source: openapi/znanylekarz-doctors-api-openapi.yml#/components/schemas/DoctorsScopes
+  - term: DoctorScopes
+    definition: 'Enumeration declared by the contract with values: doctor.profile_url, doctor.addresses, doctor.license_numbers, address.booking_extra_fields,
+      address.online_only, address.visit_payment, address.commercial_type.'
+    tags:
+    - Enumeration
+    source: openapi/znanylekarz-doctors-api-openapi.yml#/components/schemas/DoctorScopes
+  - term: FacilityScopes
+    definition: 'Enumeration declared by the contract with values: facility.doctors.'
+    tags:
+    - Enumeration
+    source: openapi/znanylekarz-facilities-api-openapi.yml#/components/schemas/FacilityScopes
+  - term: UpdateOrCreateAddressInsuranceProviderRequest
+    definition: 'Object declared by the contract with fields: insurance_provider_id, insurance_plans.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-insurances-api-openapi.yml#/components/schemas/UpdateOrCreateAddressInsuranceProviderRequest
+  - term: InsuranceProviders
+    definition: 'Object declared by the contract with fields: _items.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-insurances-api-openapi.yml#/components/schemas/InsuranceProviders
+  - term: InsuranceProvider
+    definition: 'Object declared by the contract with fields: insurance_provider_id, name.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-insurances-api-openapi.yml#/components/schemas/InsuranceProvider
+  - term: InsurancePlan
+    definition: 'Object declared by the contract with fields: insurance_plan_id, name.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-insurances-api-openapi.yml#/components/schemas/InsurancePlan
+  - term: InsurancePlans
+    definition: 'Object declared by the contract with fields: _items.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-insurances-api-openapi.yml#/components/schemas/InsurancePlans
+  - term: AddressInsuranceProviders
+    definition: 'Object declared by the contract with fields: _items.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-insurances-api-openapi.yml#/components/schemas/AddressInsuranceProviders
+  - term: AddAddressInsuranceProviderRequest
+    definition: 'Object declared by the contract with fields: insurance_provider_id, insurance_plans.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-insurances-api-openapi.yml#/components/schemas/AddAddressInsuranceProviderRequest
+  - term: AddressInsuranceProvider
+    definition: 'Object declared by the contract with fields: insurance_provider_id, name, insurance_plans.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-insurances-api-openapi.yml#/components/schemas/AddressInsuranceProvider
+  - term: ServicesScopes
+    definition: 'Enumeration declared by the contract with values: services.only_diagnostics.'
+    tags:
+    - Enumeration
+    source: openapi/znanylekarz-services-api-openapi.yml#/components/schemas/ServicesScopes
+  - term: UpdateAddressServiceRequest
+    definition: 'Object declared by the contract with fields: is_price_from, price, description, default_duration, is_visible, allowed_patients,
+      custom_name.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-services-api-openapi.yml#/components/schemas/UpdateAddressServiceRequest
+  - term: AddressServices
+    definition: 'Object declared by the contract with fields: _items.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-services-api-openapi.yml#/components/schemas/AddressServices
+  - term: Service
+    definition: 'Object declared by the contract with fields: id, name.'
+    tags:
+    - Object
+    source: openapi/znanylekarz-services-api-openapi.yml#/components/schemas/Service
+  - term: AddressServiceScopes
+    definition: 'Enumeration declared by the contract with values: address_service.allowed_patients, address_service.custom_name, address_service.public_insurance_flow.'
+    tags:
+    - Enumeration
+    source: openapi/znanylekarz-services-api-openapi.yml#/components/schemas/AddressServiceScopes

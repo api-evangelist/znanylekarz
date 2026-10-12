@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/znanylekarz/main/json-schema/znanylekarz-add-address-service-request-schema.json",
+  "title": "AddAddressServiceRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/znanylekarz-services-api-openapi.yml#/components/schemas/AddAddressServiceRequest",
+  "type": "object",
+  "properties": {
+    "service_id": {
+      "type": "string",
+      "description": "ID of a service"
+    },
+    "is_price_from": {
+      "type": "boolean",
+      "description": "If true, the price is the minimum price of the service"
+    },
+    "price": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Service price. Maximum 2 decimal places; additional decimals are truncated. Invalid formats are rejected with 400 Bad Request"
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "is_visible": {
+      "type": "boolean"
+    },
+    "default_duration": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "allowed_patients": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/AllowedPatientsData"
+        }
+      ]
+    },
+    "custom_name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "description": "A custom display name for the service. Cannot be an empty string."
+    }
+  },
+  "required": [
+    "service_id"
+  ],
+  "$defs": {
+    "AllowedPatientsData": {
+      "type": "object",
+      "properties": {
+        "minimum_age": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Minimum age of patients allowed for this service"
+        },
+        "maximum_age": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Maximum age of patients allowed for this service"
+        }
+      }
+    }
+  }
+}

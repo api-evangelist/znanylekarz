@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/znanylekarz/main/json-schema/znanylekarz-services-schema.json",
+  "title": "Services",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/znanylekarz-services-api-openapi.yml#/components/schemas/Services",
+  "type": "object",
+  "properties": {
+    "_items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Service"
+      }
+    }
+  },
+  "$defs": {
+    "Service": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

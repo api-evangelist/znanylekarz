@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/znanylekarz/main/json-schema/znanylekarz-facilities-schema.json",
+  "title": "Facilities",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/znanylekarz-facilities-api-openapi.yml#/components/schemas/Facilities",
+  "type": "object",
+  "properties": {
+    "_items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Facility"
+      }
+    }
+  },
+  "$defs": {
+    "Address": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "city_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "post_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "street": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "is_online_only": {
+          "type": "boolean"
+        },
+        "visit_payment": {
+          "type": "boolean"
+        },
+        "booking_extra_fields": {
+          "type": "object",
+          "properties": {
+            "gender": {
+              "type": "boolean"
+            },
+            "nin": {
+              "type": "boolean"
+            },
+            "birth_date": {
+              "type": "boolean"
+            }
+          }
+        },
+        "commercial_type": {
+          "type": "string",
+          "enum": [
+            "premium",
+            "saas-only",
+            "basic"
+          ]
+        },
+        "insurance_support": {
+          "type": "string",
+          "enum": [
+            "private",
+            "insurance",
+            "private_and_insurance"
+          ]
+        }
+      }
+    },
+    "Addresses": {
+      "type": "object",
+      "properties": {
+        "_items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Address"
+          }
+        }
+      }
+    },
+    "Doctor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        },
+        "addresses": {
+          "$ref": "#/$defs/Addresses"
+        },
+        "specialization": {
+          "$ref": "#/$defs/Specializations"
+        },
+        "license_numbers": {
+          "$ref": "#/$defs/LicenseNumbers"
+        }
+      }
+    },
+    "Doctors": {
+      "type": "object",
+      "properties": {
+        "_items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Doctor"
+          }
+        }
+      }
+    },
+    "Facility": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "doctors": {
+          "$ref": "#/$defs/Doctors"
+        }
+      }
+    },
+    "LicenseNumber": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "license_number": {
+          "type": "string"
+        }
+      }
+    },
+    "LicenseNumbers": {
+      "type": "object",
+      "properties": {
+        "_items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LicenseNumber"
+          }
+        }
+      }
+    },
+    "Specialization": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Specializations": {
+      "type": "object",
+      "properties": {
+        "_items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Specialization"
+          }
+        }
+      }
+    }
+  }
+}

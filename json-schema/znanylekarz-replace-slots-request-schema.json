@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/znanylekarz/main/json-schema/znanylekarz-replace-slots-request-schema.json",
+  "title": "ReplaceSlotsRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/znanylekarz-slots-api-openapi.yml#/components/schemas/ReplaceSlotsRequest",
+  "type": "object",
+  "properties": {
+    "slots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "address_services": {
+            "description": "If set to null or empty collection, it will **remove** all the slots from a given time range",
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "object",
+              "properties": {
+                "address_service_id": {
+                  "type": "string"
+                },
+                "duration": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "address_service_id",
+                "duration"
+              ]
+            }
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "insurance_accepted": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "with-and-without-insurance",
+              "without-insurance-only",
+              "with-insurance-only"
+            ],
+            "default": "with-and-without-insurance",
+            "description": "Accepted insurance configuration. If **with-insurance-only** is passed, **insurance_providers** field MUST NOT be empty. If **without-insurance-only** is passed, **insurance_providers** MUST be empty"
+          },
+          "insurance_providers": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "required": [
+          "start",
+          "end"
+        ]
+      }
+    }
+  },
+  "required": [
+    "slots"
+  ]
+}

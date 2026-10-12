@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/znanylekarz/main/json-schema/znanylekarz-book-slot-request-schema.json",
+  "title": "BookSlotRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/znanylekarz-slots-api-openapi.yml#/components/schemas/BookSlotRequest",
+  "type": "object",
+  "properties": {
+    "address_service_id": {
+      "type": "string"
+    },
+    "is_returning": {
+      "type": "boolean"
+    },
+    "patient": {
+      "$ref": "#/$defs/Patient"
+    },
+    "duration": {
+      "type": "integer"
+    },
+    "label": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "default": null
+    },
+    "comment": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "default": null
+    },
+    "insurance_provider_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "default": null
+    },
+    "insurance_plan_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "default": null
+    },
+    "is_recurring": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the visit should be marked as recurrent (there will be no confirmation notification sent to the patient)"
+    }
+  },
+  "required": [
+    "address_service_id",
+    "patient",
+    "duration"
+  ],
+  "$defs": {
+    "Patient": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        },
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "phone": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "birth_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "nin": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "gender": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "m",
+            "f"
+          ]
+        },
+        "marketing_consent": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": null
+        },
+        "data_privacy_consent": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "name",
+        "phone"
+      ]
+    }
+  }
+}

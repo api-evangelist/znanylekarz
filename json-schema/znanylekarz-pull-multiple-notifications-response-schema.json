@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/znanylekarz/main/json-schema/znanylekarz-pull-multiple-notifications-response-schema.json",
+  "title": "PullMultipleNotificationsResponse",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/znanylekarz-api-notification-callbacks-api-openapi.yml#/components/schemas/PullMultipleNotificationsResponse",
+  "type": "object",
+  "properties": {
+    "notifications": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Notification"
+      }
+    },
+    "remaining": {
+      "type": "integer"
+    }
+  },
+  "$defs": {
+    "Notification": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "enum": [
+            "slot-booking",
+            "slot-booked",
+            "booking-canceled",
+            "booking-moved",
+            "booking-moving",
+            "booking-confirmed",
+            "break-created",
+            "break-moved",
+            "break-removed",
+            "presence-marked",
+            "address-service-created",
+            "address-service-deleted",
+            "address-service-changed",
+            "address-commercial-type-changed"
+          ]
+        },
+        "data": {
+          "type": "object"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

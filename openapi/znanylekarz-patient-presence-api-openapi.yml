@@ -351,49 +351,47 @@ paths:
       x-summary-source: derived
 components:
   examples:
-    DeletePresenceValidationError:
-      value:
-        errors: []
-        message: 'Validation error message, e.g.: Visit is in the future'
-    FacilityNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this facility
-    VisitMarkedAsCanceled:
-      value:
-        errors: []
-        message: Visit is marked as canceled
-    ObjectNotFound:
-      value:
-        errors: []
-        message: Object not found
-    DoctorNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this doctor
-    PostPresenceValidationError:
-      value:
-        errors: []
-        message: 'Validation error message, e.g.: Visit is in the future'
-    VisitDoesNotBelongToDoctor:
-      value:
-        errors: []
-        message: This visit does not belong to this doctor
     AddressNotAuthorized:
       value:
         errors: []
         message: You are not authorized to see this address
-  schemas:
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        message:
-          type: string
+    FacilityNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this facility
+    DoctorNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this doctor
+    DeletePresenceValidationError:
+      value:
+        errors: []
+        message: 'Validation error message, e.g.: Visit is in the future'
+    ObjectNotFound:
+      value:
+        errors: []
+        message: Object not found
+    VisitDoesNotBelongToDoctor:
+      value:
+        errors: []
+        message: This visit does not belong to this doctor
+    VisitMarkedAsCanceled:
+      value:
+        errors: []
+        message: Visit is marked as canceled
+    PostPresenceValidationError:
+      value:
+        errors: []
+        message: 'Validation error message, e.g.: Visit is in the future'
   parameters:
+    facilityId:
+      name: facility_id
+      in: path
+      description: ID of the Facility
+      example: 1
+      required: true
+      schema:
+        type: string
     doctorId:
       name: doctor_id
       in: path
@@ -402,11 +400,11 @@ components:
       required: true
       schema:
         type: string
-    facilityId:
-      name: facility_id
+    addressId:
+      name: address_id
       in: path
-      description: ID of the Facility
-      example: 1
+      description: ID of a doctor`s address in a facility
+      example: 123
       required: true
       schema:
         type: string
@@ -418,14 +416,16 @@ components:
       schema:
         type: string
         example: 123
-    addressId:
-      name: address_id
-      in: path
-      description: ID of a doctor`s address in a facility
-      example: 123
-      required: true
-      schema:
-        type: string
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
   securitySchemes:
     oauth2:
       name: OAuth 2.0

@@ -477,192 +477,7 @@ paths:
       summary: Remove address integration
       x-summary-source: derived
 components:
-  examples:
-    AddressesWithInsuranceSupport:
-      value:
-        _items:
-        - id: '111'
-          name: Example hospital
-          post_code: xx-xxx
-          street: Some street
-          booking_extra_fields:
-            birth_date: false
-            gender: false
-            nin: false
-          insurance_support: private
-    CalendarEditionNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to make changes on this calendar
-    AddressWithVisitPayment:
-      value:
-        id: '111'
-        name: Example hospital
-        city_name: Some city
-        post_code: xx-xxx
-        street: Some street
-        booking_extra_fields:
-          birth_date: false
-          gender: false
-          nin: false
-        visit_payment: true
-    ObjectNotFound:
-      value:
-        errors: []
-        message: Object not found
-    AddressWithCommercialType:
-      value:
-        id: '111'
-        name: Example hospital
-        city_name: Some city
-        post_code: xx-xxx
-        street: Some street
-        booking_extra_fields:
-          birth_date: false
-          gender: false
-          nin: false
-        commercial_type: basic
-    UpdateAddress:
-      value:
-        insurance_support: private_and_insurance
-    AddressNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this address
-    AddressDoesNotBelongToFacility:
-      value:
-        errors: []
-        message: This address does not belong to this facility
-    FacilityNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this facility
-    Address:
-      value:
-        id: '111'
-        name: Example hospital
-        city_name: Some city
-        post_code: xx-xxx
-        street: Some street
-        booking_extra_fields:
-          birth_date: false
-          gender: false
-          nin: false
-    AddressDoesNotBelongToDoctor:
-      value:
-        errors: []
-        message: This address does not belong to this doctor
-    Addresses:
-      value:
-        _items:
-        - id: '111'
-          name: Example hospital
-          city_name: Some city
-          post_code: xx-xxx
-          street: Some street
-          booking_extra_fields:
-            birth_date: false
-            gender: false
-            nin: false
-    InvalidArgumentsError:
-      value:
-        errors: []
-        message: Invalid arguments
-    AddressesWithOnlineOnly:
-      value:
-        _items:
-        - id: '111'
-          name: Example hospital
-          city_name: Some city
-          post_code: xx-xxx
-          street: Some street
-          is_online_only: true
-          booking_extra_fields:
-            birth_date: false
-            gender: false
-            nin: false
-    AddressesWithCommercialType:
-      value:
-        _items:
-        - id: '111'
-          name: Example hospital
-          city_name: Some city
-          post_code: xx-xxx
-          street: Some street
-          booking_extra_fields:
-            birth_date: false
-            gender: false
-            nin: false
-          commercial_type: basic
-    AddressWithOnlineOnly:
-      value:
-        id: '111'
-        name: Example hospital
-        city_name: Some city
-        post_code: xx-xxx
-        street: Some street
-        is_online_only: true
-        booking_extra_fields:
-          birth_date: false
-          gender: false
-          nin: false
-    FeatureNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to use this feature
-    AddressWithInsuranceSupport:
-      value:
-        id: '111'
-        name: Example hospital
-        city_name: Some city
-        post_code: xx-xxx
-        street: Some street
-        booking_extra_fields:
-          birth_date: false
-          gender: false
-          nin: false
-        insurance_support: private
-    DoctorNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this doctor
-    AddressesWithVisitPayment:
-      value:
-        _items:
-        - id: '111'
-          name: Example hospital
-          city_name: Some city
-          post_code: xx-xxx
-          street: Some street
-          booking_extra_fields:
-            birth_date: false
-            gender: false
-            nin: false
-          visit_payment: false
   schemas:
-    Addresses:
-      type: object
-      properties:
-        _items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Address'
-    AddressesScopes:
-      type: string
-      enum:
-      - address.online_only
-      - address.visit_payment
-      - address.commercial_type
-      - address.insurance_support
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        message:
-          type: string
     Address:
       type: object
       properties:
@@ -721,6 +536,15 @@ components:
           - insurance
           - private_and_insurance
           example: private
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
     UpdateAddressRequest:
       type: object
       properties:
@@ -730,7 +554,191 @@ components:
           - private
           - insurance
           - private_and_insurance
+    AddressesScopes:
+      type: string
+      enum:
+      - address.online_only
+      - address.visit_payment
+      - address.commercial_type
+      - address.insurance_support
+    Addresses:
+      type: object
+      properties:
+        _items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+  examples:
+    AddressesWithInsuranceSupport:
+      value:
+        _items:
+        - id: '111'
+          name: Example hospital
+          post_code: xx-xxx
+          street: Some street
+          booking_extra_fields:
+            birth_date: false
+            gender: false
+            nin: false
+          insurance_support: private
+    AddressWithVisitPayment:
+      value:
+        id: '111'
+        name: Example hospital
+        city_name: Some city
+        post_code: xx-xxx
+        street: Some street
+        booking_extra_fields:
+          birth_date: false
+          gender: false
+          nin: false
+        visit_payment: true
+    DoctorNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this doctor
+    UpdateAddress:
+      value:
+        insurance_support: private_and_insurance
+    AddressWithCommercialType:
+      value:
+        id: '111'
+        name: Example hospital
+        city_name: Some city
+        post_code: xx-xxx
+        street: Some street
+        booking_extra_fields:
+          birth_date: false
+          gender: false
+          nin: false
+        commercial_type: basic
+    InvalidArgumentsError:
+      value:
+        errors: []
+        message: Invalid arguments
+    FeatureNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to use this feature
+    ObjectNotFound:
+      value:
+        errors: []
+        message: Object not found
+    Address:
+      value:
+        id: '111'
+        name: Example hospital
+        city_name: Some city
+        post_code: xx-xxx
+        street: Some street
+        booking_extra_fields:
+          birth_date: false
+          gender: false
+          nin: false
+    AddressesWithCommercialType:
+      value:
+        _items:
+        - id: '111'
+          name: Example hospital
+          city_name: Some city
+          post_code: xx-xxx
+          street: Some street
+          booking_extra_fields:
+            birth_date: false
+            gender: false
+            nin: false
+          commercial_type: basic
+    Addresses:
+      value:
+        _items:
+        - id: '111'
+          name: Example hospital
+          city_name: Some city
+          post_code: xx-xxx
+          street: Some street
+          booking_extra_fields:
+            birth_date: false
+            gender: false
+            nin: false
+    AddressDoesNotBelongToDoctor:
+      value:
+        errors: []
+        message: This address does not belong to this doctor
+    AddressNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this address
+    AddressWithOnlineOnly:
+      value:
+        id: '111'
+        name: Example hospital
+        city_name: Some city
+        post_code: xx-xxx
+        street: Some street
+        is_online_only: true
+        booking_extra_fields:
+          birth_date: false
+          gender: false
+          nin: false
+    AddressesWithVisitPayment:
+      value:
+        _items:
+        - id: '111'
+          name: Example hospital
+          city_name: Some city
+          post_code: xx-xxx
+          street: Some street
+          booking_extra_fields:
+            birth_date: false
+            gender: false
+            nin: false
+          visit_payment: false
+    AddressWithInsuranceSupport:
+      value:
+        id: '111'
+        name: Example hospital
+        city_name: Some city
+        post_code: xx-xxx
+        street: Some street
+        booking_extra_fields:
+          birth_date: false
+          gender: false
+          nin: false
+        insurance_support: private
+    FacilityNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this facility
+    CalendarEditionNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to make changes on this calendar
+    AddressesWithOnlineOnly:
+      value:
+        _items:
+        - id: '111'
+          name: Example hospital
+          city_name: Some city
+          post_code: xx-xxx
+          street: Some street
+          is_online_only: true
+          booking_extra_fields:
+            birth_date: false
+            gender: false
+            nin: false
+    AddressDoesNotBelongToFacility:
+      value:
+        errors: []
+        message: This address does not belong to this facility
   parameters:
+    doctorId:
+      name: doctor_id
+      in: path
+      description: ID of a doctor in a facility
+      example: 123
+      required: true
+      schema:
+        type: string
     addressesWith:
       name: with
       in: query
@@ -741,27 +749,19 @@ components:
         uniqueItems: true
         items:
           $ref: '#/components/schemas/AddressesScopes'
-    addressId:
-      name: address_id
-      in: path
-      description: ID of a doctor`s address in a facility
-      example: 123
-      required: true
-      schema:
-        type: string
-    doctorId:
-      name: doctor_id
-      in: path
-      description: ID of a doctor in a facility
-      example: 123
-      required: true
-      schema:
-        type: string
     facilityId:
       name: facility_id
       in: path
       description: ID of the Facility
       example: 1
+      required: true
+      schema:
+        type: string
+    addressId:
+      name: address_id
+      in: path
+      description: ID of a doctor`s address in a facility
+      example: 123
       required: true
       schema:
         type: string

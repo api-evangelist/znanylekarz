@@ -389,70 +389,61 @@ paths:
       x-summary-source: derived
 components:
   examples:
-    CalendarEditionNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to make changes on this calendar
-    ObjectNotFound:
-      value:
-        errors: []
-        message: Object not found
     CalendarDisabled:
       value:
         status: disabled
-    AddressDisabled:
-      value:
-        errors: []
-        message: Could not enable calendar on disabled address
-    CalendarNotFound:
-      value:
-        errors: []
-        message: Calendar does not exist
-    AddressNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this address
-    AddressDoesNotBelongToFacility:
-      value:
-        errors: []
-        message: This address does not belong to this facility
-    FacilityNotAuthorized:
-      value:
-        errors: []
-        message: You are not authorized to see this facility
-    AddressDoesNotBelongToDoctor:
-      value:
-        errors: []
-        message: This address does not belong to this doctor
-    CalendarAlreadyEnabled:
-      value:
-        errors: []
-        message: Calendar already enabled
-    CalendarEnabled:
-      value:
-        status: enabled
-    CalendarAlreadyDisabled:
-      value:
-        errors: []
-        message: Calendar already disabled
     DoctorNotAuthorized:
       value:
         errors: []
         message: You are not authorized to see this doctor
+    CalendarEnabled:
+      value:
+        status: enabled
+    ObjectNotFound:
+      value:
+        errors: []
+        message: Object not found
+    CalendarAlreadyDisabled:
+      value:
+        errors: []
+        message: Calendar already disabled
+    AddressDoesNotBelongToDoctor:
+      value:
+        errors: []
+        message: This address does not belong to this doctor
     DoctorOrAddressNotCommercial:
       value:
         errors: []
         message: Cannot activate calendar on address 123, profile/address is not commercial
+    CalendarAlreadyEnabled:
+      value:
+        errors: []
+        message: Calendar already enabled
+    AddressNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this address
+    FacilityNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to see this facility
+    CalendarEditionNotAuthorized:
+      value:
+        errors: []
+        message: You are not authorized to make changes on this calendar
+    CalendarNotFound:
+      value:
+        errors: []
+        message: Calendar does not exist
+    AddressDisabled:
+      value:
+        errors: []
+        message: Could not enable calendar on disabled address
+    AddressDoesNotBelongToFacility:
+      value:
+        errors: []
+        message: This address does not belong to this facility
   schemas:
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        message:
-          type: string
     Calendar:
       type: object
       properties:
@@ -462,15 +453,16 @@ components:
           enum:
           - enabled
           - disabled
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
   parameters:
-    addressId:
-      name: address_id
-      in: path
-      description: ID of a doctor`s address in a facility
-      example: 123
-      required: true
-      schema:
-        type: string
     doctorId:
       name: doctor_id
       in: path
@@ -484,6 +476,14 @@ components:
       in: path
       description: ID of the Facility
       example: 1
+      required: true
+      schema:
+        type: string
+    addressId:
+      name: address_id
+      in: path
+      description: ID of a doctor`s address in a facility
+      example: 123
       required: true
       schema:
         type: string
